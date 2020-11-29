@@ -15,5 +15,15 @@ class dbfuncs:
             return self.cursor.execute(
                 'INSERT INTO "users" ("user_id") VALUES(?)', (user_id,))
 
+    def upd_lang(self, user_id, language):  # set language for user
+        with self.connection:
+            return self.cursor.execute('UPDATE "users" SET "language"=? WHERE "user_id"=?',
+                                       (language, user_id))
+
+    def set_lang(self, user_id):  # proof language
+        with self.connection:
+            return self.cursor.execute('SELECT "language" FROM "users" WHERE "user_id"=?',
+                                       (user_id,))
+
     def close(self):
         self.connection.close()
