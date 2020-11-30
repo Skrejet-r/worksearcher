@@ -1,5 +1,8 @@
 # yeah, i know, im genius
-welcome = ("Welcome back", "Добро пожаловать", "Willkommen zurück", "مرحبا بعودتك")
+welcome = ("Welcome back",
+           "Добро пожаловать",
+           "Willkommen zurück",
+           "مرحبا بعودتك")
 
 helping = ("Hello! It's a bot which can help you find a job in any city.\n"
            "You can use these commands:\n"
@@ -10,3 +13,7 @@ helping = ("Hello! It's a bot which can help you find a job in any city.\n"
            "smth in german",  # deutsch
            "smth in arabic")  # piggisch
 
+sucker = ("I'm just a bot",
+          "Я просто бот...",
+          "Ich bin einfach ein Bot...",
+          "أنا مجرد روبوت ...")
