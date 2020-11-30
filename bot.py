@@ -24,22 +24,33 @@ async def welcome(message: types.Message):
         await message.answer("Welcome")
         # if user isnt in the db - add him
         db.add_user(message.from_user.id)
-        await Status.A2.set()
         await bot.send_message(message.from_user.id, "I see you are new here!\nSet language for yourself:",
                                reply_markup=kb.languages)
+        await Status.A2.set()
     else:
-        await message.answer(lt.alph1[lang(message.from_user.id)])
+        await message.answer(lt.welcome[lang(message.from_user.id)])
+
+
+@dp.message_handler(commands=["help"])
+async def helper(message: types.Message):
+    await bot.send_message(message.from_user.id, lt.helping[lang(message.from_user.id)])
+
+
+@dp.message_handler(commands=["lang"])
+async def lang_choose(message: types.Message):
+    await bot.send_message(message.from_user.id, "Choose the language:",
+                           reply_markup=kb.languages)
 
 
 @dp.message_handler(state=Status.A2)
 async def test(message: types.Message):
-    await message.answer("testtest")
+    await bot.send_message(message.from_user.id, "testtest")
     await Status.A1.set()
 
 
 @dp.callback_query_handler(lambda call: True)
 async def lan_set(call):
-    u_id = call.message.chat.id
+    u_id = call.from_user.id
     try:
         if call.message:
             if call.data == "eng":
