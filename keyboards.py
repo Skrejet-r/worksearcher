@@ -1,10 +1,13 @@
-from aiogram.types import ReplyKeyboardMarkup,  \
-                          KeyboardButton, \
-                          InlineKeyboardButton, \
-                          InlineKeyboardMarkup
+from aiogram.types import ReplyKeyboardMarkup, \
+    KeyboardButton, \
+    InlineKeyboardButton, \
+    InlineKeyboardMarkup
+
 import langtranslator as lt
 from extradef import lang
+from bot import idgetter
 
+s = idgetter()
 
 # --------------------------------------------------------------------------------
 # Keyboard for language-choosing
@@ -16,8 +19,8 @@ ArbLan = InlineKeyboardButton("عربى", callback_data="arb")
 languages = InlineKeyboardMarkup().row(EngLan, RusLan, DeLan, ArbLan)
 # --------------------------------------------------------------------------------
 # Keyboard for status-choosing
-SearcherBut = InlineKeyboardButton(lt.status1[lang(userid)])
-OfferBut = InlineKeyboardButton(lt.status2[lang(userid)])
+SearcherBut = InlineKeyboardButton(lt.status1[lang(s)])
+OfferBut = InlineKeyboardButton(lt.status2[lang(s)])
 
 StatusIn = InlineKeyboardMarkup().row(SearcherBut, OfferBut)
 # --------------------------------------------------------------------------------

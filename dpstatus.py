@@ -6,3 +6,4 @@ class Status(StatesGroup):
     A2 = State()  # lang
     A3 = State()  # reg
     A4 = State()  # reg
+    A5 = State()  # reg

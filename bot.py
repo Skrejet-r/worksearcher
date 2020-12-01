@@ -106,7 +106,14 @@ async def regname(message: types.Message):
     name = message.text
     db.upd_name(message.from_user.id, name)
     await message.answer(lt.naming[lang(message.from_user.id)], str(db.set_name(message.from_user.id)[0]))
+    await Status.A5.set()
     await message.answer(lt.statuswahl[lang(message.from_user.id)], reply_markup=kb.StatusIn)
+
+
+@dp.message_handler()
+async def idgetter(message: types.Message):
+    a = message.from_user.id
+    return a
 
 
 @dp.message_handler(lambda message: message.text == "Hello" or
