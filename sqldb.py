@@ -25,5 +25,15 @@ class dbfuncs:
             return self.cursor.execute('SELECT "language" FROM "users" WHERE "user_id"=?',
                                        (user_id,))
 
+    def upd_name(self, user_id, name):  # set name for user
+        with self.connection:
+            return self.cursor.execute('UPDATE "users" SET "name"=? WHERE "user_id"=?',
+                                       (name, user_id))
+
+    def set_name(self, user_id):  # return the name
+        with self.connection:
+            return self.cursor.execute('SELECT "name" FROM "users" WHERE "user_id"=?',
+                                       (user_id,)).fetchone()
+
     def close(self):
         self.connection.close()
