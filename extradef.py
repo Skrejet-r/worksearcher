@@ -1,5 +1,4 @@
 from sqldb import dbfuncs
-from dpstatus import Status
 
 db = dbfuncs("db_ws.db")
 

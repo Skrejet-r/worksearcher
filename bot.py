@@ -18,6 +18,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 db = dbfuncs("db_ws.db")
 
 
+@dp.message_handler(commands=["start"])
 async def welcome(message: types.Message):
     if not (db.user_exists(message.from_user.id)):
         await message.answer("Welcome")
@@ -28,6 +29,13 @@ async def welcome(message: types.Message):
                                reply_markup=kb.languages)
     else:
         await message.answer(lt.welcome[lang(message.from_user.id)])
+        await Status.A1.set()
+
+
+@dp.message_handler(commands=["start"], state=Status.A1)
+async def welcome(message: types.Message):
+    await message.answer(lt.welcome[lang(message.from_user.id)])
+    await Status.A1.set()
 
 
 @dp.message_handler(commands=["help"], state=Status.A1)
@@ -35,7 +43,7 @@ async def helper(message: types.Message):
     await bot.send_message(message.from_user.id, lt.helping[lang(message.from_user.id)])
 
 
-@dp.message_handler(commands=["lang"], state=Status.A1)
+@dp.message_handler(lambda message:message.text == "lang", commands=["lang"], state=Status.A1,)
 async def lang_choose(message: types.Message):
     await Status.A2.set()
     await bot.send_message(message.from_user.id, "Choose the language:",
