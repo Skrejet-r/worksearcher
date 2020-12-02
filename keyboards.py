@@ -5,9 +5,6 @@ from aiogram.types import ReplyKeyboardMarkup, \
 
 import langtranslator as lt
 from extradef import lang
-from bot import idgetter
-
-s = idgetter()
 
 # --------------------------------------------------------------------------------
 # Keyboard for language-choosing
@@ -18,9 +15,10 @@ ArbLan = InlineKeyboardButton("عربى", callback_data="arb")
 
 languages = InlineKeyboardMarkup().row(EngLan, RusLan, DeLan, ArbLan)
 # --------------------------------------------------------------------------------
-# Keyboard for status-choosing
-SearcherBut = InlineKeyboardButton(lt.status1[lang(s)])
-OfferBut = InlineKeyboardButton(lt.status2[lang(s)])
+'''# Keyboard for status-choosing
+SearcherBut = InlineKeyboardButton(lt.status1[lang()])
+OfferBut = InlineKeyboardButton(lt.status2[lang()])
 
 StatusIn = InlineKeyboardMarkup().row(SearcherBut, OfferBut)
 # --------------------------------------------------------------------------------
+'''

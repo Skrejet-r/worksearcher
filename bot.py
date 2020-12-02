@@ -3,6 +3,10 @@ import logging
 import langtranslator as lt
 import keyboards as kb
 
+from aiogram.types import ReplyKeyboardMarkup, \
+    KeyboardButton, \
+    InlineKeyboardButton, \
+    InlineKeyboardMarkup
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from dpstatus import Status
@@ -96,7 +100,7 @@ async def lan_set(call):
                                         message_id=call.message.message_id,
                                         text="You chose:", reply_markup=None)
             await Status.A4.set()
-            await bot.send_message(u_id, lt.naming2(call.from_user.id))
+            await bot.send_message(u_id, lt.naming2[lang(call.from_user.id)])
     except Exception as e:
         print(repr(e))
 
@@ -105,9 +109,17 @@ async def lan_set(call):
 async def regname(message: types.Message):
     name = message.text
     db.upd_name(message.from_user.id, name)
-    await message.answer(lt.naming[lang(message.from_user.id)], str(db.set_name(message.from_user.id)[0]))
+    await bot.send_message(message.from_user.id, lt.naming[lang(message.from_user.id)],
+                           str(db.set_name(message.from_user.id)[0]))
     await Status.A5.set()
-    await message.answer(lt.statuswahl[lang(message.from_user.id)], reply_markup=kb.StatusIn)
+
+    # keyboard
+    searcherbut = InlineKeyboardButton(lt.status1[lang(message.from_user.id)])
+    offerbut = InlineKeyboardButton(lt.status2[lang(message.from_user.id)])
+
+    statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
+
+    await message.answer(lt.statuswahl[lang(message.from_user.id)], reply_markup=statusin)
 
 
 @dp.message_handler()
