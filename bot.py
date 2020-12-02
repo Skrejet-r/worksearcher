@@ -109,7 +109,7 @@ async def lan_set(call):
 async def regname(message: types.Message):
     name = message.text
     db.upd_name(message.from_user.id, name)
-    await bot.send_message(message.from_user.id, lt.naming[lang(message.from_user.id)],
+    await bot.send_message(message.from_user.id, str(lt.naming[lang(message.from_user.id)]),
                            str(db.set_name(message.from_user.id)[0]))
     await Status.A5.set()
 
