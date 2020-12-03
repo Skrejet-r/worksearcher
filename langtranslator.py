@@ -33,7 +33,7 @@ status1 = ("I'm looking for",
            "Ich suche",
            "أنا أبحث عن")
 
-status2 = ("I suggest"
+status2 = ("I suggest",
            "Я предлагаю",
            "Ich biete an",
            "أقترح")

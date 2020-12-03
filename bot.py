@@ -109,13 +109,13 @@ async def lan_set(call):
 async def regname(message: types.Message):
     name = message.text
     db.upd_name(message.from_user.id, name)
-    await bot.send_message(message.from_user.id, str(lt.naming[lang(message.from_user.id)]),
+    await message.answer(str(lt.naming[lang(message.from_user.id)]) + " " +
                            str(db.set_name(message.from_user.id)[0]))
     await Status.A5.set()
 
     # keyboard
-    searcherbut = InlineKeyboardButton(lt.status1[lang(message.from_user.id)])
-    offerbut = InlineKeyboardButton(lt.status2[lang(message.from_user.id)])
+    searcherbut = InlineKeyboardButton(str(lt.status1[lang(message.from_user.id)]), callback_data="0")
+    offerbut = InlineKeyboardButton(str(lt.status2[lang(message.from_user.id)]), callback_data="1")
 
     statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
 
