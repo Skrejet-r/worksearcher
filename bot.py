@@ -124,7 +124,7 @@ async def regname(message: types.Message):
 
 @dp.message_handler(commands=["cng_name"], state=Status.A1)
 async def regname(message: types.Message):
-    await bot.send_message(message.from_user.id, lt.naming3[lang(message.from_user.id)],
+    await bot.send_message(message.from_user.id, lt.naming3[lang(message.from_user.id)] +
                            db.set_name(message.from_user.id)[0])
     await Status.name.set()
     await bot.send_message(message.from_user.id, lt.naming4[lang(message.from_user.id)])
@@ -135,7 +135,7 @@ async def chname(message: types.Message):
     name = message.text
     db.upd_name(message.from_user.id, name)
     await Status.A1.set()
-    await bot.send_message(message.from_user.id, lt.naming[lang(message.from_user.id)],
+    await bot.send_message(message.from_user.id, lt.naming[lang(message.from_user.id)] +
                            db.set_name(message.from_user.id)[0])
 
 
@@ -143,19 +143,19 @@ async def chname(message: types.Message):
 async def status_set(call):
     try:
         if call.message:
-            if call.data == 0:
+            if call.data == "0":
                 db.upd_status(call.from_user.id, 0)
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s0[lang(call.from_user.id)], reply_markup=None)
-            elif call.data == 1:
+            elif call.data == "1":
                 db.upd_status(call.from_user.id, 1)
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s1[lang(call.from_user.id)], reply_markup=None)
+            await Status.A1.set()
     except Exception as e:
         print(repr(e))
-        Status.A1.set()
 
 
 @dp.message_handler(lambda message: message.text == "Hello" or
