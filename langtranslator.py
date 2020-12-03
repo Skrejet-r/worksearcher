@@ -18,10 +18,20 @@ naming = ("Now your name is ",
           "Jetzt heißt du ",
           " الآن اسمك")
 
-naming2 = ("Send me the name which you would use here",
+naming2 = ("Enter the name which you would use here",
            "Пришли мне имя, которое ты будешь здесь использовать",
            "Schick mir die Name, die du hier verwenden wirst",
            "أرسل لي الاسم الذي ستستخدمه هنا")
+
+naming3 = ("The name is currently used: ",
+           "Сейчас используется имя: ",
+           "Der Name wird derzeit verwendet: ",
+           "الاسم مستخدم حاليا: ")
+
+naming4 = ("Enter the name which you would use here now: ",
+           "Введи имя, которое ты бы использовал здесь сейчас: ",
+           "Geben Sie hier den Namen ein, den Sie jetzt verwenden würden: ",
+           "أدخل الاسم الذي ستستخدمه هنا الآن: ")
 
 statuswahl = ("And lastly, are you looking for a job or you want suggest job?",
               "И, наконец, вы ищете работу или предлагаете?",
@@ -42,3 +52,13 @@ sucker = ("I'm just a bot",
           "Я просто бот...",
           "Ich bin einfach ein Bot...",
           "أنا مجرد روبوت ...")
+
+s0 = ("You are looking for a job",
+      "Ты ищешь работу",
+      "Arbeitgeber",
+      "كنت تبحث عن وظيفة")
+
+s1 = ("You are an Employer ",
+      "Вы работодатель",
+      "Sie sind Arbeitgeber",
+      "أنت صاحب عمل")

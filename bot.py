@@ -111,7 +111,6 @@ async def regname(message: types.Message):
     db.upd_name(message.from_user.id, name)
     await message.answer(str(lt.naming[lang(message.from_user.id)]) + " " +
                            str(db.set_name(message.from_user.id)[0]))
-    await Status.A5.set()
 
     # keyboard
     searcherbut = InlineKeyboardButton(str(lt.status1[lang(message.from_user.id)]), callback_data="0")
@@ -120,12 +119,43 @@ async def regname(message: types.Message):
     statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
 
     await message.answer(lt.statuswahl[lang(message.from_user.id)], reply_markup=statusin)
+    await Status.A5.set()
 
 
-@dp.message_handler()
-async def idgetter(message: types.Message):
-    a = message.from_user.id
-    return a
+@dp.message_handler(commands=["cng_name"], state=Status.A1)
+async def regname(message: types.Message):
+    await bot.send_message(message.from_user.id, lt.naming3[lang(message.from_user.id)],
+                           db.set_name(message.from_user.id)[0])
+    await Status.name.set()
+    await bot.send_message(message.from_user.id, lt.naming4[lang(message.from_user.id)])
+
+
+@dp.message_handler(state=Status.name)
+async def chname(message: types.Message):
+    name = message.text
+    db.upd_name(message.from_user.id, name)
+    await Status.A1.set()
+    await bot.send_message(message.from_user.id, lt.naming[lang(message.from_user.id)],
+                           db.set_name(message.from_user.id)[0])
+
+
+@dp.callback_query_handler(lambda call: True, state=Status.A5)
+async def status_set(call):
+    try:
+        if call.message:
+            if call.data == 0:
+                db.upd_status(call.from_user.id, 0)
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text=lt.s0[lang(call.from_user.id)], reply_markup=None)
+            elif call.data == 1:
+                db.upd_status(call.from_user.id, 1)
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text=lt.s1[lang(call.from_user.id)], reply_markup=None)
+    except Exception as e:
+        print(repr(e))
+        Status.A1.set()
 
 
 @dp.message_handler(lambda message: message.text == "Hello" or

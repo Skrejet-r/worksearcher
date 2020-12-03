@@ -3,8 +3,6 @@ from aiogram.types import ReplyKeyboardMarkup, \
     InlineKeyboardButton, \
     InlineKeyboardMarkup
 
-import langtranslator as lt
-from extradef import lang
 
 # --------------------------------------------------------------------------------
 # Keyboard for language-choosing

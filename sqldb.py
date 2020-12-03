@@ -35,5 +35,15 @@ class dbfuncs:
             return self.cursor.execute('SELECT "name" FROM "users" WHERE "user_id"=?',
                                        (user_id,)).fetchone()
 
+    def upd_status(self, user_id, status):  # set status for user
+        with self.connection:
+            return self.cursor.execute('UPDATE "users" SET "status"=? WHERE "user_id"=?',
+                                       (status, user_id))
+
+    def set_status(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "status" FROM "users" WHERE "user_id"=?',
+                                       (user_id,)).fetchone()
+
     def close(self):
         self.connection.close()
