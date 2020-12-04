@@ -96,6 +96,7 @@ async def lan_set(call):
             elif call.data == "arb":
                 db.upd_lang(u_id, 3)
                 await bot.send_message(call.message.chat.id, "عربى")
+
             await bot.edit_message_text(chat_id=call.message.chat.id,
                                         message_id=call.message.message_id,
                                         text="You chose:", reply_markup=None)
@@ -130,6 +131,36 @@ async def regname(message: types.Message):
     await bot.send_message(message.from_user.id, lt.naming4[lang(message.from_user.id)])
 
 
+@dp.message_handler(commands=["cng_status"], state=Status.A1)
+async def chstatus(message: types.Message):
+    await Status.chst.set()
+    searcherbut = InlineKeyboardButton(str(lt.status1[lang(message.from_user.id)]), callback_data="0")
+    offerbut = InlineKeyboardButton(str(lt.status2[lang(message.from_user.id)]), callback_data="1")
+
+    statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
+
+    await message.answer(lt.statuswahl2[lang(message.from_user.id)], reply_markup=statusin)
+
+
+@dp.callback_query_handler(lambda call: True, state=Status.chst)
+async def status_set(call):
+    try:
+        if call.message:
+            if call.data == "0":
+                db.upd_status(call.from_user.id, 0)
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text=lt.s0[lang(call.from_user.id)], reply_markup=None)
+            elif call.data == "1":
+                db.upd_status(call.from_user.id, 1)
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text=lt.s1[lang(call.from_user.id)], reply_markup=None)
+            await Status.A1.set()
+    except Exception as e:
+        print(repr(e))
+
+
 @dp.message_handler(state=Status.name)
 async def chname(message: types.Message):
     name = message.text
@@ -153,9 +184,13 @@ async def status_set(call):
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s1[lang(call.from_user.id)], reply_markup=None)
-            await Status.A1.set()
+            await Status.A6.set()
     except Exception as e:
         print(repr(e))
+
+
+#  -------------------------------------------------------------------------------------------
+#  if buyer = age , if seller = what for selling (state6)
 
 
 @dp.message_handler(lambda message: message.text == "Hello" or

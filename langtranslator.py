@@ -16,7 +16,7 @@ helping = ("Hello! It's a bot which can help you find a job in any city.\n"
 naming = ("Now your name is ",
           "Теперь твое имя ",
           "Jetzt heißt du ",
-          " الآن اسمك")
+          "الآن اسمك ")
 
 naming2 = ("Enter the name which you would use here",
            "Пришли мне имя, которое ты будешь здесь использовать",
@@ -37,6 +37,11 @@ statuswahl = ("And lastly, are you looking for a job or you want suggest job?",
               "И, наконец, вы ищете работу или предлагаете?",
               "Und schließlich: suchen Sie einen Job oder bieten Sie einen Job an?",
               "أخيرًا ، هل تبحث عن وظيفة أو تعرض وظيفة؟")
+
+statuswahl2 = ("Are you looking for a job or you want suggest job?",
+               "Вы ищете работу или предлогаете?",
+               "Suchen Sie einen Job oder möchten Sie einen Job vorschlagen?",
+               "هل تبحث عن وظيفة أو تريد اقتراح وظيفة؟")
 
 status1 = ("I'm looking for",
            "Я ищу",
