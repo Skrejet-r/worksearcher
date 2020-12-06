@@ -65,5 +65,15 @@ class dbfuncs:
             return self.cursor.execute('SELECT "city" FROM "users" WHERE "user_id"=?',
                                        (user_id,)).fetchone()
 
+    def upd_about(self, user_id, about):
+        with self.connection:
+            return self.cursor.execute('UPDATE "users" SET "about"=? WHERE "user_id"=?',
+                                       (about, user_id))
+
+    def set_about(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "about" FROM "users" WHERE "user_id"=?',
+                                       (user_id,)).fetchone()
+
     def close(self):
         self.connection.close()

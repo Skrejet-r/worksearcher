@@ -54,6 +54,38 @@ async def lang_choose(message: types.Message):
                            reply_markup=kb.languages)
 
 
+@dp.message_handler(commands=["cng_city"], state=Status.A1)
+async def regcity(message: types.Message):
+    await message.answer(lt.citing1[lang(message.from_user.id)])
+    await message.answer(lt.citingB2[lang(message.from_user.id)])
+    await Status.city.set()
+
+
+@dp.message_handler(commands=["cng_age"], state=Status.A1)
+async def age_setter(message: types.Message):
+    await message.answer(lt.aging1[lang(message.from_user.id)])
+    await Status.age2.set()
+
+
+@dp.message_handler(commands=["cng_name"], state=Status.A1)
+async def regname(message: types.Message):
+    await bot.send_message(message.from_user.id, lt.naming3[lang(message.from_user.id)] +
+                           db.set_name(message.from_user.id)[0])
+    await Status.name.set()
+    await bot.send_message(message.from_user.id, lt.naming4[lang(message.from_user.id)])
+
+
+@dp.message_handler(commands=["cng_status"], state=Status.A1)
+async def chstatus(message: types.Message):
+    await Status.chst.set()
+    searcherbut = InlineKeyboardButton(str(lt.status1[lang(message.from_user.id)]), callback_data="0")
+    offerbut = InlineKeyboardButton(str(lt.status2[lang(message.from_user.id)]), callback_data="1")
+
+    statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
+
+    await message.answer(lt.statuswahl2[lang(message.from_user.id)], reply_markup=statusin)
+
+
 @dp.callback_query_handler(lambda call: True, state=Status.A2)
 async def lan_set(call):
     u_id = call.from_user.id
@@ -121,25 +153,6 @@ async def regname(message: types.Message):
 
     await message.answer(lt.statuswahl[lang(message.from_user.id)], reply_markup=statusin)
     await Status.A5.set()
-
-
-@dp.message_handler(commands=["cng_name"], state=Status.A1)
-async def regname(message: types.Message):
-    await bot.send_message(message.from_user.id, lt.naming3[lang(message.from_user.id)] +
-                           db.set_name(message.from_user.id)[0])
-    await Status.name.set()
-    await bot.send_message(message.from_user.id, lt.naming4[lang(message.from_user.id)])
-
-
-@dp.message_handler(commands=["cng_status"], state=Status.A1)
-async def chstatus(message: types.Message):
-    await Status.chst.set()
-    searcherbut = InlineKeyboardButton(str(lt.status1[lang(message.from_user.id)]), callback_data="0")
-    offerbut = InlineKeyboardButton(str(lt.status2[lang(message.from_user.id)]), callback_data="1")
-
-    statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
-
-    await message.answer(lt.statuswahl2[lang(message.from_user.id)], reply_markup=statusin)
 
 
 @dp.callback_query_handler(lambda call: True, state=Status.chst)
@@ -212,13 +225,16 @@ async def city_setter(message: types.Message):
     city = message.text
     db.upd_city(message.from_user.id, city)
     await message.answer(lt.citing[lang(message.from_user.id)] + db.set_city(message.from_user.id)[0])
-    await Status.A1.set()  # --------------------------------------------------------------------------------nice message
+    await Status.A7.set()
+    await message.answer(lt.about0[lang(message.from_user.id)])
 
 
-@dp.message_handler(commands=["cng_age"], state=Status.A1)
-async def age_setter(message: types.Message):
-    await message.answer(lt.aging1[lang(message.from_user.id)])
-    await Status.age2.set()
+@dp.message_handler(state=Status.A7)
+async def regabout(message: types.Message):
+    about = message.text
+    db.upd_about(message.from_user.id, about)
+    await Status.A1.set()
+    # ------------------------------------------------------------------------ profile
 
 
 @dp.message_handler(state=Status.age2)
@@ -238,14 +254,9 @@ async def regcity(message: types.Message):
     db.upd_city(message.from_user.id, city)
     await bot.send_message(message.from_user.id, lt.citing[lang(message.from_user.id)] +
                            db.set_city(message.from_user.id)[0])
-    await Status.A1.set()  # --------------------------------------------------------------------------------nice message
-
-
-@dp.message_handler(commands=["cng_city"], state=Status.A1)
-async def regcity(message: types.Message):
-    await message.answer(lt.citing1[lang(message.from_user.id)])
-    await message.answer(lt.citingB2[lang(message.from_user.id)])
-    await Status.city.set()
+    await Status.A1.set()
+    await bot.send_message(message.from_user.id, lt.nice2[lang(message.from_user.id)])
+    # ------------------------------------------------------------------------------------- profile
 
 
 @dp.message_handler(state=Status.city)

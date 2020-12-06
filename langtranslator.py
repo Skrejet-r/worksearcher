@@ -108,6 +108,92 @@ citing1 = ("What city?",
             "Welche Stadt?",
             "ما اسم المدينة؟")
 
+nice1 = ("Registration is over.\n"
+         "Now you can start looking for a job or a part-time job.\n"
+         "To get help or get acquainted with the functionality - write me the command /help.",
+
+         "Регистрация окончена.\n"
+         "Теперь ты можешь приступить к поиску работы или подработки.\n"
+         "Чтобы получить помощь или ознакомиться с функционалом - напиши мне команду /help.",
+
+         "Die Registrierung ist beendet.\n"
+         "Jetzt kannst Du nach einem Job oder einem Teilzeitjob suchen.\n"
+         "Um Hilfe zu erhalten oder sich mit der Funktionalität vertraut zu machen, schreib mir den Command /help.",
+
+         "انتهى التسجيل."
+         "\nالآن يمكنك البدء في البحث عن وظيفة أو وظيفة بدوام جزئي."
+         "\nللحصول على مساعدة أو للتعرف على الوظيفة - اكتب لي الأمر /help.")
+
+nice2 = ("Registration is over.\n"
+         "Now you can post ads about the search for workers or assistants.\n"
+         "To get help or get acquainted with the functionality - write me the command /help.",
+
+         "Регистрация окончена.\n"
+         "Теперь вы можете выставлять объявления о поиске работников или помощников.\n"
+         "Чтобы получить помощь или ознакомиться с функционалом - напиши мне команду "".",
+
+         "Die Registrierung ist beendet.\n"
+         "Jetzt können Sie Anzeigen schalten, um Mitarbeiter oder Assistenten zu finden.\n"
+         "Um Hilfe zu erhalten oder sich mit der Funktionalität vertraut zu machen, "
+                                                "schreiben Sie mir den Command /help.",
+
+         "انتهى التسجيل."
+         "\nيمكنك الآن نشر إعلانات للبحث عن عمال أو مساعدين.\n"
+         "للحصول على مساعدة أو للتعرف على الوظيفة - اكتب لي أمرًا /help.")
+
+about0 = ("And finally, write something about yourself:",
+          "И напоследок напишите что-нибудь о себе:",
+          "Und zum Schluss schreibe etwas über dich:",
+          "وأخيرًا ، اكتب شيئًا عن نفسك:")
+
+about1 = ("Write something about yourself:",
+          "Напиши что-нибудь о себе:",
+          "Schreib etwas über dich:",
+          "أكتب شيئا عن نفسك:")
+
+# profile for 0 -------------------------------------------------------------------
+pname0 = ("",
+          "",
+          "",
+          "")
+
+page0 = ("",
+         "",
+         "",
+         "")
+
+pcity0 = ("",
+          "",
+          "",
+          "")
+
+pabout0 = ("",
+           "",
+           "",
+           "")
+# ---------------------------------------------------------------------------------
+
+# profile for 0 -------------------------------------------------------------------
+pname1 = ("",
+          "",
+          "",
+          "")
+
+page1 = ("",
+         "",
+         "",
+         "")
+
+pcity1 = ("",
+          "",
+          "",
+          "")
+
+pabout1 = ("",
+           "",
+           "",
+           "")
+# ---------------------------------------------------------------------------------
 x = ("",
      "",
      "",

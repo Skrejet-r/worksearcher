@@ -15,3 +15,4 @@ class Status(StatesGroup):
     A5 = State()  # reg
     A6A = State()  # reg
     A6B = State()  # reg
+    A7 = State()  # reg
