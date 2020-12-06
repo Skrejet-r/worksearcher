@@ -7,6 +7,7 @@ class Status(StatesGroup):
     age = State()  # age reg
     age2 = State()  # cng_age
     city = State()  # cng_city
+    about = State()  # cng_about
     cityA = State()  # city reg
     A1 = State()  # neutral
     A2 = State()  # lang

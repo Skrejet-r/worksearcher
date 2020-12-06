@@ -86,6 +86,12 @@ async def chstatus(message: types.Message):
     await message.answer(lt.statuswahl2[lang(message.from_user.id)], reply_markup=statusin)
 
 
+@dp.message_handler(commands=["cng_about"], state=Status.A1)
+async def chabout(message: types.Message):
+    await Status.about.set()
+    await message.answer(lt.about1[lang(message.from_user.id)])
+
+
 @dp.callback_query_handler(lambda call: True, state=Status.A2)
 async def lan_set(call):
     u_id = call.from_user.id
@@ -264,6 +270,13 @@ async def city_setter(message: types.Message):
     city = message.text
     db.upd_city(message.from_user.id, city)
     await message.answer(lt.citing[lang(message.from_user.id)] + db.set_city(message.from_user.id)[0])
+    await Status.A1.set()
+
+
+@dp.message_handler(state=Status.about)
+async def about_setter(message: types.Message):
+    about = message.text
+    db.upd_about(message.from_user.id, about)
     await Status.A1.set()
 #  -------------------------------------------------------------------------------------------
 
