@@ -196,7 +196,7 @@ async def status_set(call):
 
 @dp.message_handler(state=Status.age)
 async def age_setter(message: types.Message):
-    age = message.text
+    age = int(message.text)
     if age == int:
         db.upd_age(message.from_user.id, age)
     else:
@@ -223,7 +223,7 @@ async def age_setter(message: types.Message):
 
 @dp.message_handler(state=Status.age2)
 async def age_setter(message: types.Message):
-    age = message.text
+    age = int(message.text)
     if age == int:
         db.upd_age(message.from_user.id, age)
     else:

@@ -47,7 +47,7 @@ class dbfuncs:
 
     def upd_age(self, user_id, age):
         with self.connection:
-            return self.cursor.execute('UPDATE "users" SET "age" =? WHERE "user_id" =?',
+            return self.cursor.execute('UPDATE "users" SET "age"=? WHERE "user_id"=?',
                                        (age, user_id))
 
     def set_age(self, user_id):
@@ -57,7 +57,7 @@ class dbfuncs:
 
     def upd_city(self, user_id, city):
         with self.connection:
-            return self.cursor.execute('UPDATE "users" SET "city" =? WHERE "user_id" =?',
+            return self.cursor.execute('UPDATE "users" SET "city"=? WHERE "user_id"=?',
                                        (city, user_id))
 
     def set_city(self, user_id):
