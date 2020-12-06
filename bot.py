@@ -188,7 +188,7 @@ async def status_set(call):
                                             message_id=call.message.message_id,
                                             text=lt.s1[lang(call.from_user.id)], reply_markup=None)
                 await bot.send_message(call.from_user.id, lt.citingB1[lang(call.from_user.id)])
-                await bot.send_message(call.from_user.id, lt.citngB2[lang(call.from_user.id)])
+                await bot.send_message(call.from_user.id, lt.citingB2[lang(call.from_user.id)])
                 await Status.A6B.set()
     except Exception as e:
         print(repr(e))
@@ -197,12 +197,12 @@ async def status_set(call):
 @dp.message_handler(state=Status.age)
 async def age_setter(message: types.Message):
     age = int(message.text)
-    if age == int:
+    if age == int(age):
         db.upd_age(message.from_user.id, age)
     else:
         await message.answer(lt.aging2[lang(message.from_user.id)])
         db.upd_age(message.from_user.id, 0)
-    await Status.cityA
+    await Status.cityA.set()
     await message.answer(lt.citingA1[lang(message.from_user.id)])
     await message.answer(lt.citingB2[lang(message.from_user.id)])
 
@@ -224,7 +224,7 @@ async def age_setter(message: types.Message):
 @dp.message_handler(state=Status.age2)
 async def age_setter(message: types.Message):
     age = int(message.text)
-    if age == int:
+    if age == int(age):
         db.upd_age(message.from_user.id, age)
     else:
         await message.answer(lt.aging2[lang(message.from_user.id)])
@@ -236,7 +236,8 @@ async def age_setter(message: types.Message):
 async def regcity(message: types.Message):
     city = message.text
     db.upd_city(message.from_user.id, city)
-    await message.answer(lt.citing[lang(message.from_user.id)] + db.set_city(message.from_user.id)[0])
+    await bot.send_message(message.from_user.id, lt.citing[lang(message.from_user.id)] +
+                           db.set_city(message.from_user.id)[0])
     await Status.A1.set()  # --------------------------------------------------------------------------------nice message
 
 
