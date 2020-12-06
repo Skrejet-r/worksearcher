@@ -179,18 +179,81 @@ async def status_set(call):
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s0[lang(call.from_user.id)], reply_markup=None)
+                await bot.send_message(call.from_user.id, lt.aging1[lang(call.from_user.id)])
+                await Status.age.set()
+
             elif call.data == "1":
                 db.upd_status(call.from_user.id, 1)
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s1[lang(call.from_user.id)], reply_markup=None)
-            await Status.A6.set()
+                await bot.send_message(call.from_user.id, lt.citingB1[lang(call.from_user.id)])
+                await bot.send_message(call.from_user.id, lt.citngB2[lang(call.from_user.id)])
+                await Status.A6B.set()
     except Exception as e:
         print(repr(e))
 
 
+@dp.message_handler(state=Status.age)
+async def age_setter(message: types.Message):
+    age = message.text
+    if age == int:
+        db.upd_age(message.from_user.id, age)
+    else:
+        await message.answer(lt.aging2[lang(message.from_user.id)])
+        db.upd_age(message.from_user.id, 0)
+    await Status.cityA
+    await message.answer(lt.citingA1[lang(message.from_user.id)])
+    await message.answer(lt.citingB2[lang(message.from_user.id)])
+
+
+@dp.message_handler(state=Status.cityA)
+async def city_setter(message: types.Message):
+    city = message.text
+    db.upd_city(message.from_user.id, city)
+    await message.answer(lt.citing[lang(message.from_user.id)] + db.set_city(message.from_user.id)[0])
+    await Status.A1.set()  # --------------------------------------------------------------------------------nice message
+
+
+@dp.message_handler(commands=["cng_age"], state=Status.A1)
+async def age_setter(message: types.Message):
+    await message.answer(lt.aging1[lang(message.from_user.id)])
+    await Status.age2.set()
+
+
+@dp.message_handler(state=Status.age2)
+async def age_setter(message: types.Message):
+    age = message.text
+    if age == int:
+        db.upd_age(message.from_user.id, age)
+    else:
+        await message.answer(lt.aging2[lang(message.from_user.id)])
+        db.upd_age(message.from_user.id, 0)
+    await Status.A1.set()
+
+
+@dp.message_handler(state=Status.A6B)
+async def regcity(message: types.Message):
+    city = message.text
+    db.upd_city(message.from_user.id, city)
+    await message.answer(lt.citing[lang(message.from_user.id)] + db.set_city(message.from_user.id)[0])
+    await Status.A1.set()  # --------------------------------------------------------------------------------nice message
+
+
+@dp.message_handler(commands=["cng_city"], state=Status.A1)
+async def regcity(message: types.Message):
+    await message.answer(lt.citing1[lang(message.from_user.id)])
+    await message.answer(lt.citingB2[lang(message.from_user.id)])
+    await Status.city.set()
+
+
+@dp.message_handler(state=Status.city)
+async def city_setter(message: types.Message):
+    city = message.text
+    db.upd_city(message.from_user.id, city)
+    await message.answer(lt.citing[lang(message.from_user.id)] + db.set_city(message.from_user.id)[0])
+    await Status.A1.set()
 #  -------------------------------------------------------------------------------------------
-#  if buyer = age , if seller = what for selling (state6)
 
 
 @dp.message_handler(lambda message: message.text == "Hello" or

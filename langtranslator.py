@@ -33,9 +33,9 @@ naming4 = ("Enter the name which you would use here now: ",
            "Geben Sie hier den Namen ein, den Sie jetzt verwenden würden: ",
            "أدخل الاسم الذي ستستخدمه هنا الآن: ")
 
-statuswahl = ("And lastly, are you looking for a job or you want suggest job?",
-              "И, наконец, вы ищете работу или предлагаете?",
-              "Und schließlich: suchen Sie einen Job oder bieten Sie einen Job an?",
+statuswahl = ("Are you looking for a job or you want suggest job?",
+              "Bы ищете работу или предлагаете?",
+              "Suchen Sie einen Job oder bieten Sie einen Job an?",
               "أخيرًا ، هل تبحث عن وظيفة أو تعرض وظيفة؟")
 
 statuswahl2 = ("Are you looking for a job or you want suggest job?",
@@ -67,3 +67,48 @@ s1 = ("You are an Employer ",
       "Вы работодатель",
       "Sie sind Arbeitgeber",
       "أنت صاحب عمل")
+
+aging1 = ("How old are you? (numeral)",
+          "Сколько тебе лет? (цифра)",
+          "Wie alt bist du? (Ziffer)",
+          "كم عمرك؟ (رقمي)")
+
+aging2 = ("An error has occurred. Try again later.",
+          "Произошла ошибка. Попробуй позже еще раз.",
+          "Ein Fehler ist aufgetreten. Versuch später noch einmal.",
+          "حدث خطأ. حاول مرة أخرى في وقت لاحق.")
+
+citing = ("Your city: ",
+          "Твой город: ",
+          "Deine Stadt: ",
+          "مدينتك: ")
+
+citingB1 = ("In which city are you offering a job? (The answer 'All' is available)",
+            "В каком городе вы предлагаете работу? (Доступен ответ 'Все')",
+            "In welcher Stadt bieten Sie einen Job an? (Die Antwort 'Alle' ist verfügbar)",
+            "في أي مدينة تعرض وظيفة؟")
+
+citingA1 = ("In which city are you looking for work? (The answer 'All' is available)",
+            "В каком городе ты ищешь работу? (Доступен ответ 'Все')",
+            "In welcher Stadt suchen Sie Arbeit? (Die Antwort 'Alle' ist verfügbar)",
+            "في أي مدينة تبحث عن عمل؟")
+
+citingB2 = ("IN ENGLISH!!\ne.g .: Berlin, Moscow, London",
+            "ПО-АНГЛИЙСКИ!!\nHапример: Berlin, Moscow, London",
+            "AUF ENGLISCH!!\nz.B: Berlin, Moscow, London",
+            "باللغة الإنجليزية!!\ne.g .: Berlin, Moscow, London")
+
+citing = ("Your city: ",
+          "Твой город: ",
+          "Deine Stadt: ",
+          "مدينتك: ")
+
+citing1 = ("What city?",
+            "Какой город?",
+            "Welche Stadt?",
+            "ما اسم المدينة؟")
+
+x = ("",
+     "",
+     "",
+     "")
