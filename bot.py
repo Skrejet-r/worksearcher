@@ -2,6 +2,7 @@ import config
 import logging
 import langtranslator as lt
 import keyboards as kb
+import time
 
 from aiogram.types import ReplyKeyboardMarkup, \
     KeyboardButton, \
@@ -90,6 +91,17 @@ async def chstatus(message: types.Message):
 async def chabout(message: types.Message):
     await Status.about.set()
     await message.answer(lt.about1[lang(message.from_user.id)])
+
+
+@dp.message_handler(commands=["profile"], state=Status.A1)
+async def chprofil(message: types.Message):
+    ud = message.from_user.id
+    await message.answer(
+        lt.pname0[lang(ud)] + db.set_name(ud)[0] + "\n" +
+        lt.page0[lang(ud)] + db.set_age(ud) + "\n" +
+        lt.pcity[lang(ud)] + db.set_city(ud)[0] + "\n" +
+        lt.pabout0[lang(ud)] + db.set_about(ud)[0]
+    )
 
 
 @dp.callback_query_handler(lambda call: True, state=Status.A2)
@@ -237,10 +249,18 @@ async def city_setter(message: types.Message):
 
 @dp.message_handler(state=Status.A7)
 async def regabout(message: types.Message):
+    ud = message.from_user.id
     about = message.text
-    db.upd_about(message.from_user.id, about)
+    db.upd_about(ud, about)
     await Status.A1.set()
-    # ------------------------------------------------------------------------ profile
+    await message.answer(
+        lt.pname0[lang(ud)] + db.set_name(ud)[0] + "\n" +
+        lt.page0[lang(ud)] + db.set_age(ud) + "\n" +
+        lt.pcity[lang(ud)] + db.set_city(ud)[0] + "\n" +
+        lt.pabout0[lang(ud)] + db.set_about(ud)[0]
+    )
+    time.sleep(30)
+    await message.answer(lt.nice1[lang(ud)])
 
 
 @dp.message_handler(state=Status.age2)
@@ -262,7 +282,6 @@ async def regcity(message: types.Message):
                            db.set_city(message.from_user.id)[0])
     await Status.A1.set()
     await bot.send_message(message.from_user.id, lt.nice2[lang(message.from_user.id)])
-    # ------------------------------------------------------------------------------------- profile
 
 
 @dp.message_handler(state=Status.city)

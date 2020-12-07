@@ -9,6 +9,7 @@ class Status(StatesGroup):
     city = State()  # cng_city
     about = State()  # cng_about
     cityA = State()  # city reg
+    Profile = State()  # profile / reg
     A1 = State()  # neutral
     A2 = State()  # lang
     A3 = State()  # reg
