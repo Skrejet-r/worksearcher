@@ -130,7 +130,7 @@ nice2 = ("Registration is over.\n"
 
          "Регистрация окончена.\n"
          "Теперь вы можете выставлять объявления о поиске работников или помощников.\n"
-         "Чтобы получить помощь или ознакомиться с функционалом - напиши мне команду "".",
+         "Чтобы получить помощь или ознакомиться с функционалом - напиши мне команду /help.",
 
          "Die Registrierung ist beendet.\n"
          "Jetzt können Sie Anzeigen schalten, um Mitarbeiter oder Assistenten zu finden.\n"
@@ -152,6 +152,11 @@ about1 = ("Write something about yourself:",
           "أكتب شيئا عن نفسك:")
 
 # profile for 0 -------------------------------------------------------------------
+pp = ("Your profile",
+      "Твой профиль",
+      "Dein Profil",
+      "ملفك الشخصي")
+
 pname0 = ("Name: ",
           "Имя: ",
           "Name: ",
@@ -163,9 +168,9 @@ page0 = ("Age: ",
          "عمر: ")
 
 pcity0 = ("City: ",
-          "Возраст: ",
+          "Город: ",
           "Stadt: ",
-          "عمر: ")
+          "مدينة: ")
 
 pabout0 = ("About you: ",
            "О тебе: ",

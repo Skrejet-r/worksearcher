@@ -30,6 +30,7 @@ async def welcome(message: types.Message):
         # if user isnt in the db - add him
         db.add_user(message.from_user.id)
         await Status.A3.set()
+        time.sleep(1)
         await bot.send_message(message.from_user.id, "I see you are new here!\nSet language for yourself:",
                                reply_markup=kb.languages)
     else:
@@ -97,10 +98,11 @@ async def chabout(message: types.Message):
 async def chprofil(message: types.Message):
     ud = message.from_user.id
     await message.answer(
-        lt.pname0[lang(ud)] + db.set_name(ud)[0] + "\n" +
-        lt.page0[lang(ud)] + db.set_age(ud) + "\n" +
-        lt.pcity[lang(ud)] + db.set_city(ud)[0] + "\n" +
-        lt.pabout0[lang(ud)] + db.set_about(ud)[0]
+        lt.pp[lang(ud)] + "\n\n" +
+        lt.pname0[lang(ud)] + str(db.set_name(ud)[0]) + "\n" +
+        lt.page0[lang(ud)] + str(db.set_age(ud)[0]) + "\n" +
+        lt.pcity0[lang(ud)] + str(db.set_city(ud)[0]) + "\n" +
+        lt.pabout0[lang(ud)] + str(db.set_about(ud)[0])
     )
 
 
@@ -151,6 +153,7 @@ async def lan_set(call):
                                         message_id=call.message.message_id,
                                         text="You chose:", reply_markup=None)
             await Status.A4.set()
+            time.sleep(1)
             await bot.send_message(u_id, lt.naming2[lang(call.from_user.id)])
     except Exception as e:
         print(repr(e))
@@ -160,6 +163,7 @@ async def lan_set(call):
 async def regname(message: types.Message):
     name = message.text
     db.upd_name(message.from_user.id, name)
+    time.sleep(0.1)
     await message.answer(str(lt.naming[lang(message.from_user.id)]) + " " +
                            str(db.set_name(message.from_user.id)[0]))
 
@@ -169,6 +173,7 @@ async def regname(message: types.Message):
 
     statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
 
+    time.sleep(1)
     await message.answer(lt.statuswahl[lang(message.from_user.id)], reply_markup=statusin)
     await Status.A5.set()
 
@@ -210,6 +215,7 @@ async def status_set(call):
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s0[lang(call.from_user.id)], reply_markup=None)
+                time.sleep(1)
                 await bot.send_message(call.from_user.id, lt.aging1[lang(call.from_user.id)])
                 await Status.age.set()
 
@@ -218,7 +224,9 @@ async def status_set(call):
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s1[lang(call.from_user.id)], reply_markup=None)
+                time.sleep(1)
                 await bot.send_message(call.from_user.id, lt.citingB1[lang(call.from_user.id)])
+                time.sleep(1)
                 await bot.send_message(call.from_user.id, lt.citingB2[lang(call.from_user.id)])
                 await Status.A6B.set()
     except Exception as e:
@@ -235,6 +243,7 @@ async def age_setter(message: types.Message):
         db.upd_age(message.from_user.id, 0)
     await Status.cityA.set()
     await message.answer(lt.citingA1[lang(message.from_user.id)])
+    time.sleep(1)
     await message.answer(lt.citingB2[lang(message.from_user.id)])
 
 
@@ -243,6 +252,7 @@ async def city_setter(message: types.Message):
     city = message.text
     db.upd_city(message.from_user.id, city)
     await message.answer(lt.citing[lang(message.from_user.id)] + db.set_city(message.from_user.id)[0])
+    time.sleep(1)
     await Status.A7.set()
     await message.answer(lt.about0[lang(message.from_user.id)])
 
@@ -254,12 +264,13 @@ async def regabout(message: types.Message):
     db.upd_about(ud, about)
     await Status.A1.set()
     await message.answer(
-        lt.pname0[lang(ud)] + db.set_name(ud)[0] + "\n" +
-        lt.page0[lang(ud)] + db.set_age(ud) + "\n" +
-        lt.pcity[lang(ud)] + db.set_city(ud)[0] + "\n" +
-        lt.pabout0[lang(ud)] + db.set_about(ud)[0]
+        lt.pp[lang(ud)] + "\n\n" +
+        lt.pname0[lang(ud)] + str(db.set_name(ud)[0]) + "\n" +
+        lt.page0[lang(ud)] + str(db.set_age(ud)[0]) + "\n" +
+        lt.pcity0[lang(ud)] + str(db.set_city(ud)[0]) + "\n" +
+        lt.pabout0[lang(ud)] + str(db.set_about(ud)[0])
     )
-    time.sleep(30)
+    time.sleep(2)
     await message.answer(lt.nice1[lang(ud)])
 
 
@@ -281,6 +292,7 @@ async def regcity(message: types.Message):
     await bot.send_message(message.from_user.id, lt.citing[lang(message.from_user.id)] +
                            db.set_city(message.from_user.id)[0])
     await Status.A1.set()
+    time.sleep(1)
     await bot.send_message(message.from_user.id, lt.nice2[lang(message.from_user.id)])
 
 
