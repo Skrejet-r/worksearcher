@@ -10,5 +10,12 @@ def lang(user_id):
     return int(b1[1])
 
 
+def stat(user_id):
+    a = user_id
+    b = db.set_status(a)
+    b1 = ''.join(map(str, b))
+    return int(b1[1])
+
+
 class extraFuncs:
     pass
