@@ -57,7 +57,8 @@ async def welcome(message: types.Message):
 
     mc = (menu0, menu1)
 
-    await message.answer(lt.welcome[lang(message.from_user.id)], reply_markup=mc[stat(message.from_user.id)])
+    await message.answer(lt.welcome[lang(message.from_user.id)],
+                         reply_markup=mc[db.set_status(message.from_user.id)[0]])
     await Status.A1.set()
 
 
