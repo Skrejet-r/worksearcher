@@ -136,11 +136,19 @@ async def lan_set(call):
                 SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
                 SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+                MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
+                AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
+                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
-                menu = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                    .row(SettB, HelpB)
+                menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
                     .row(SettB, HelpB)
 
-                await bot.send_message(call.message.chat.id, "English", reply_markup=menu)
+                mc = (menu0, menu1)
+
+                await bot.send_message(call.message.chat.id, "English",
+                                       reply_markup=mc[db.set_status(u_id)[0]])
 
             elif call.data == "rus":
                 db.upd_lang(u_id, 1)
@@ -149,11 +157,19 @@ async def lan_set(call):
                 SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
                 SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+                MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
+                AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
+                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
-                menu = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                    .row(SettB, HelpB)
+                menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
                     .row(SettB, HelpB)
 
-                await bot.send_message(call.message.chat.id, "Русский", reply_markup=menu)
+                mc = (menu0, menu1)
+
+                await bot.send_message(call.message.chat.id, "Русский",
+                                       reply_markup=mc[db.set_status(u_id)[0]])
 
             elif call.data == "de":
                 db.upd_lang(u_id, 2)
@@ -162,11 +178,19 @@ async def lan_set(call):
                 SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
                 SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+                MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
+                AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
+                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
-                menu = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                    .row(SettB, HelpB)
+                menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
                     .row(SettB, HelpB)
 
-                await bot.send_message(call.message.chat.id, "Deutsch", reply_markup=menu)
+                mc = (menu0, menu1)
+
+                await bot.send_message(call.message.chat.id, "Deutsch",
+                                       reply_markup=mc[db.set_status(u_id)[0]])
 
             elif call.data == "arb":
                 db.upd_lang(u_id, 3)
@@ -175,11 +199,19 @@ async def lan_set(call):
                 SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
                 SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+                MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
+                AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
+                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
-                menu = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+                    .row(SettB, HelpB)
+                menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
                     .row(SettB, HelpB)
 
-                await bot.send_message(call.message.chat.id, "عربى", reply_markup=menu)
+                mc = (menu0, menu1)
+
+                await bot.send_message(call.message.chat.id, "عربى",
+                                       reply_markup=mc[db.set_status(u_id)[0]])
 
             await bot.edit_message_text(chat_id=call.message.chat.id,
                                         message_id=call.message.message_id,
