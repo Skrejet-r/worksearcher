@@ -25,8 +25,17 @@ db = dbfuncs("db_ws.db")
 
 @dp.message_handler(commands=["start"])
 async def welcome(message: types.Message):
+    FavB = KeyboardButton(lt.favb[lang(message.from_user.id)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(message.from_user.id)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(message.from_user.id)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(message.from_user.id)], callback_data="hel")
+
+    global menu
+    menu = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
+
     if not (db.user_exists(message.from_user.id)):
-        await message.answer("Welcome")
+        await message.answer("Welcome", reply_markup=menu)
         # if user isnt in the db - add him
         db.add_user(message.from_user.id)
         await Status.A3.set()
@@ -34,13 +43,13 @@ async def welcome(message: types.Message):
         await bot.send_message(message.from_user.id, "I see you are new here!\nSet language for yourself:",
                                reply_markup=kb.languages)
     else:
-        await message.answer(lt.welcome[lang(message.from_user.id)])
+        await message.answer(lt.welcome[lang(message.from_user.id)], reply_markup=menu)
         await Status.A1.set()
 
 
 @dp.message_handler(commands=["start"], state=Status.A1)
 async def welcome(message: types.Message):
-    await message.answer(lt.welcome[lang(message.from_user.id)])
+    await message.answer(lt.welcome[lang(message.from_user.id)], reply_markup=menu)
     await Status.A1.set()
 
 
@@ -109,20 +118,28 @@ async def chprofil(message: types.Message):
 @dp.callback_query_handler(lambda call: True, state=Status.A2)
 async def lan_set(call):
     u_id = call.from_user.id
+
+    FavB = KeyboardButton(lt.favb[lang(u_id)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+
+    menu = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
     try:
         if call.message:
             if call.data == "eng":
                 db.upd_lang(u_id, 0)
-                await bot.send_message(call.message.chat.id, "English")
+                await bot.send_message(call.message.chat.id, "English", reply_markup=menu)
             elif call.data == "rus":
                 db.upd_lang(u_id, 1)
-                await bot.send_message(call.message.chat.id, "Русский")
+                await bot.send_message(call.message.chat.id, "Русский", reply_markup=menu)
             elif call.data == "de":
                 db.upd_lang(u_id, 2)
-                await bot.send_message(call.message.chat.id, "Deutsch")
+                await bot.send_message(call.message.chat.id, "Deutsch", reply_markup=menu)
             elif call.data == "arb":
                 db.upd_lang(u_id, 3)
-                await bot.send_message(call.message.chat.id, "عربى")
+                await bot.send_message(call.message.chat.id, "عربى", reply_markup=menu)
             await bot.edit_message_text(chat_id=call.message.chat.id,
                                         message_id=call.message.message_id,
                                         text="You chose:", reply_markup=None)
@@ -138,16 +155,16 @@ async def lan_set(call):
         if call.message:
             if call.data == "eng":
                 db.upd_lang(u_id, 0)
-                await bot.send_message(call.message.chat.id, "English")
+                await bot.send_message(call.message.chat.id, "English", reply_markup=menu)
             elif call.data == "rus":
                 db.upd_lang(u_id, 1)
-                await bot.send_message(call.message.chat.id, "Русский")
+                await bot.send_message(call.message.chat.id, "Русский", reply_markup=menu)
             elif call.data == "de":
                 db.upd_lang(u_id, 2)
-                await bot.send_message(call.message.chat.id, "Deutsch")
+                await bot.send_message(call.message.chat.id, "Deutsch", reply_markup=menu)
             elif call.data == "arb":
                 db.upd_lang(u_id, 3)
-                await bot.send_message(call.message.chat.id, "عربى")
+                await bot.send_message(call.message.chat.id, "عربى", reply_markup=menu)
 
             await bot.edit_message_text(chat_id=call.message.chat.id,
                                         message_id=call.message.message_id,
