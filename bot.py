@@ -273,6 +273,23 @@ async def regname(message: types.Message):
 
 @dp.callback_query_handler(lambda call: True, state=Status.chst)
 async def status_set(call):
+
+    u_id = call.from_user.id
+
+    FavB = KeyboardButton(lt.favb[lang(u_id)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+    MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
+    AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
+    AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
+
+    menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
+    menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
+        .row(SettB, HelpB)
+
+    mc = (menu0, menu1)
     try:
         if call.message:
             if call.data == "0":
@@ -280,12 +297,17 @@ async def status_set(call):
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s0[lang(call.from_user.id)], reply_markup=None)
+                await bot.send_message(call.from_user.id, lt.avfunc0[lang(call.from_user.id)],
+                                       reply_markup=mc[0])
             elif call.data == "1":
                 db.upd_status(call.from_user.id, 1)
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text=lt.s1[lang(call.from_user.id)], reply_markup=None)
+                await bot.send_message(call.from_user.id, lt.avfunc1[lang(call.from_user.id)],
+                                       reply_markup=mc[1])
             await Status.A1.set()
+
     except Exception as e:
         print(repr(e))
 
