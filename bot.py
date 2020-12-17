@@ -140,6 +140,13 @@ async def helper(message: types.Message):
         await message.answer("Error")
 
 
+@dp.message_handler(lambda message: message.text in lt.chlangb, state=Status.A1)
+async def lang_choose(message: types.Message):
+    await Status.A2.set()
+    await bot.send_message(message.from_user.id, "Choose the language:",
+                           reply_markup=kb.languages)
+
+
 @dp.message_handler(lambda message: message.text in lt.settb, state=Status.A1)
 async def settings(message: types.Message):
     uid = message.from_user.id
