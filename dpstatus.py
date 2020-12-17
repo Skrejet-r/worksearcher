@@ -12,9 +12,9 @@ class Status(StatesGroup):
     Profile = State()  # profile / reg
     A1 = State()  # neutral
     A2 = State()  # lang
-    A3 = State()  # reg
-    A4 = State()  # reg
-    A5 = State()  # reg
+    A3 = State()  # reg lang
+    A4 = State()  # reg name
+    A5 = State()  # reg status
     A6A = State()  # reg
-    A6B = State()  # reg
-    A7 = State()  # reg
+    A6B = State()  # reg end 1
+    A7 = State()  # reg end 0
