@@ -25,7 +25,6 @@ db = dbfuncs("db_ws.db")
 
 @dp.message_handler(commands=["start"])
 async def welcome(message: types.Message):
-
     if not (db.user_exists(message.from_user.id)):
         await message.answer("Welcome")
         # if user isnt in the db - add him
@@ -41,7 +40,6 @@ async def welcome(message: types.Message):
 
 @dp.message_handler(commands=["start"], state=Status.A1)
 async def welcome(message: types.Message):
-
     FavB = KeyboardButton(lt.favb[lang(message.from_user.id)], callback_data="fav")
     SearchB = KeyboardButton(lt.searchb[lang(message.from_user.id)], callback_data="sea")
     SettB = KeyboardButton(lt.settb[lang(message.from_user.id)], callback_data="set")
@@ -122,6 +120,15 @@ async def chprofil(message: types.Message):
         lt.pcity0[lang(ud)] + str(db.set_city(ud)[0]) + "\n" +
         lt.pabout0[lang(ud)] + str(db.set_about(ud)[0])
     )
+
+
+# -------------------------------------------------------------------------------------------------
+@dp.message_handler(lambda message: message.text in lt.helpb, state=Status.A1)
+async def helper(message: types.Message):
+    await bot.send_message(message.from_user.id, lt.helping[lang(message.from_user.id)])
+
+
+# -------------------------------------------------------------------------------------------------
 
 
 @dp.callback_query_handler(lambda call: True, state=Status.A2)
@@ -258,7 +265,7 @@ async def regname(message: types.Message):
     db.upd_name(message.from_user.id, name)
     time.sleep(0.1)
     await message.answer(str(lt.naming[lang(message.from_user.id)]) + " " +
-                           str(db.set_name(message.from_user.id)[0]))
+                         str(db.set_name(message.from_user.id)[0]))
 
     # keyboard
     searcherbut = InlineKeyboardButton(str(lt.status1[lang(message.from_user.id)]), callback_data="0")
@@ -273,7 +280,6 @@ async def regname(message: types.Message):
 
 @dp.callback_query_handler(lambda call: True, state=Status.chst)
 async def status_set(call):
-
     u_id = call.from_user.id
 
     FavB = KeyboardButton(lt.favb[lang(u_id)], callback_data="fav")
@@ -461,6 +467,8 @@ async def about_setter(message: types.Message):
     about = message.text
     db.upd_about(message.from_user.id, about)
     await Status.A1.set()
+
+
 #  -------------------------------------------------------------------------------------------
 
 
@@ -472,6 +480,7 @@ async def about_setter(message: types.Message):
 async def suck(message: types.Message):
     await bot.send_message(message.from_user.id, lt.sucker[lang(message.from_user.id)])
     await Status.A1.set()
+
 
 if __name__ == "__main__":
     executor.start_polling(dp, skip_updates=True)
