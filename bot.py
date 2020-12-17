@@ -62,7 +62,13 @@ async def welcome(message: types.Message):
 
 @dp.message_handler(commands=["help"], state=Status.A1)
 async def helper(message: types.Message):
-    await bot.send_message(message.from_user.id, lt.helping[lang(message.from_user.id)])
+    userstatus = db.set_status(message.from_user.id)[0]
+    if userstatus == 0:
+        await bot.send_message(message.from_user.id, lt.helping0[lang(message.from_user.id)])
+    elif userstatus == 1:
+        await bot.send_message(message.from_user.id, lt.helping1[lang(message.from_user.id)])
+    else:
+        await message.answer("Error")
 
 
 @dp.message_handler(commands=["lang"], state=Status.A1)
@@ -125,7 +131,13 @@ async def chprofil(message: types.Message):
 # -------------------------------------------------------------------------------------------------
 @dp.message_handler(lambda message: message.text in lt.helpb, state=Status.A1)
 async def helper(message: types.Message):
-    await bot.send_message(message.from_user.id, lt.helping[lang(message.from_user.id)])
+    userstatus = db.set_status(message.from_user.id)[0]
+    if userstatus == 0:
+        await bot.send_message(message.from_user.id, lt.helping0[lang(message.from_user.id)])
+    elif userstatus == 1:
+        await bot.send_message(message.from_user.id, lt.helping1[lang(message.from_user.id)])
+    else:
+        await message.answer("Error")
 
 
 # -------------------------------------------------------------------------------------------------

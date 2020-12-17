@@ -4,14 +4,29 @@ welcome = ("Welcome back",
            "Willkommen zurück",
            "مرحبا بعودتك")
 
-helping = ("Hello! It's a bot which can help you find a job in any city.\n"
-           "You can use these commands:\n"
-           "/start - start the bot\n"
-           "/help - you use it now\n"
-           "/",
-           "smth in russian",  # russian
-           "smth in german",  # deutsch
-           "smth in arabic")  # piggisch
+helping0 = ("Hello! It's a bot which can help you find a job in any city.\n"
+            "You can use these commands:\n"
+            "/start - start the bot\n"
+            "/help - you use it now\n"
+            "/",
+
+            "smth in russian",  # russian
+
+            "smth in german",  # deutsch
+
+            "smth in arabic")  # piggisch
+
+helping1 = ("Hello! It's a bot which can help you find a job in any city.\n"
+            "You can use these commands:\n"
+            "/start - start the bot\n"
+            "/help - you use it now\n"
+            "/",
+
+            "smth in russian",  # russian
+
+            "smth in german",  # deutsch
+
+            "smth in arabic")  # piggisch
 
 naming = ("Now your name is ",
           "Теперь твое имя ",
@@ -104,9 +119,9 @@ citing = ("Your city: ",
           "مدينتك: ")
 
 citing1 = ("What city?",
-            "Какой город?",
-            "Welche Stadt?",
-            "ما اسم المدينة؟")
+           "Какой город?",
+           "Welche Stadt?",
+           "ما اسم المدينة؟")
 
 nice1 = ("Registration is over.\n"
          "Now you can start looking for a job or a part-time job.\n"
@@ -135,7 +150,7 @@ nice2 = ("Registration is over.\n"
          "Die Registrierung ist beendet.\n"
          "Jetzt können Sie Anzeigen schalten, um Mitarbeiter oder Assistenten zu finden.\n"
          "Um Hilfe zu erhalten oder sich mit der Funktionalität vertraut zu machen, "
-                                                "schreiben Sie mir den Command /help.",
+         "schreiben Sie mir den Command /help.",
 
          "انتهى التسجيل."
          "\nيمكنك الآن نشر إعلانات للبحث عن عمال أو مساعدين.\n"
