@@ -387,15 +387,24 @@ async def regabout(message: types.Message):
     )
     time.sleep(2)
 
-    FavB = KeyboardButton(lt.favb[lang(message.from_user.id)], callback_data="fav")
-    SearchB = KeyboardButton(lt.searchb[lang(message.from_user.id)], callback_data="sea")
-    SettB = KeyboardButton(lt.settb[lang(message.from_user.id)], callback_data="set")
-    HelpB = KeyboardButton(lt.helpb[lang(message.from_user.id)], callback_data="hel")
+    u_id = message.from_user.id
 
-    menu = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+    FavB = KeyboardButton(lt.favb[lang(u_id)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+    MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
+    AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
+    AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
+
+    menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
+    menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
         .row(SettB, HelpB)
 
-    await message.answer(lt.nice1[lang(ud)], reply_markup=menu)
+    mc = (menu0, menu1)
+
+    await message.answer(lt.nice1[lang(ud)], reply_markup=mc[0])
 
 
 @dp.message_handler(state=Status.age2)
@@ -417,7 +426,26 @@ async def regcity(message: types.Message):
                            db.set_city(message.from_user.id)[0])
     await Status.A1.set()
     time.sleep(1)
-    await bot.send_message(message.from_user.id, lt.nice2[lang(message.from_user.id)])
+
+    u_id = message.from_user.id
+
+    FavB = KeyboardButton(lt.favb[lang(u_id)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(u_id)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(u_id)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
+    MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
+    AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
+    AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
+
+    menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
+    menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
+        .row(SettB, HelpB)
+
+    mc = (menu0, menu1)
+
+    await bot.send_message(message.from_user.id, lt.nice2[lang(message.from_user.id)],
+                           reply_markup=mc[1])
 
 
 @dp.message_handler(state=Status.city)
