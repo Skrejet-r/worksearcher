@@ -169,6 +169,29 @@ async def settings(message: types.Message):
     await message.answer("⚙", reply_markup=mc1[userstatus])
 
 
+@dp.message_handler(lambda message: message.text in lt.backb, state=Status.A1)
+async def backtomenu(message: types.Message):
+    uid = message.from_user.id
+    userstatus = db.set_status(uid)[0]
+
+    FavB = KeyboardButton(lt.favb[lang(uid)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(uid)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(uid)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(uid)], callback_data="hel")
+    MyB = KeyboardButton(lt.myb[lang(uid)], callback_data="my")
+    AddB = KeyboardButton(lt.addb[lang(uid)], callback_data="add")
+    AplB = KeyboardButton(lt.aplb[lang(uid)], callback_data="apl")
+
+    menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
+    menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
+        .row(SettB, HelpB)
+
+    mc = (menu0, menu1)
+
+    await message.answer("⬅", reply_markup=mc[userstatus])
+
+
 # -------------------------------------------------------------------------------------------------
 
 

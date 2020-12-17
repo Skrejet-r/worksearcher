@@ -271,7 +271,7 @@ profileb = ("My profile",
             "Mein Profil",
             "ملفي")
 
-chlangeb = ("Language",
+chlangb = ("Language",
             "Язык",
             "Sprache",
             "لغة")
@@ -291,7 +291,7 @@ chaboutb = ("About you",
             "Über dich",
             "عنك")
 
-chsityb = ("City",
+chcityb = ("City",
            "Город",
            "Stadt",
            "مدينة")
