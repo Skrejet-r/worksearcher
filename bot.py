@@ -140,6 +140,35 @@ async def helper(message: types.Message):
         await message.answer("Error")
 
 
+@dp.message_handler(lambda message: message.text in lt.settb, state=Status.A1)
+async def settings(message: types.Message):
+    uid = message.from_user.id
+    userstatus = db.set_status(uid)[0]
+
+    LangB = KeyboardButton(lt.chlangb[lang(uid)], callback_data="lang")
+    BackB = KeyboardButton(lt.backb[lang(uid)], callback_data="back")
+    ProfileB = KeyboardButton(lt.profileb[lang(uid)], callback_data="prof")
+    NameB = KeyboardButton(lt.chnameb[lang(uid)], callback_data="name")
+    AgeB = KeyboardButton(lt.chageb[lang(uid)], callback_data="age")
+    AboutB = KeyboardButton(lt.chaboutb[lang(uid)], callback_data="about")
+    CityB = KeyboardButton(lt.chcityb[lang(uid)], callback_data="city")
+    SsB = KeyboardButton(lt.settsearchb[lang(uid)], callback_data="sets")
+    DelB = KeyboardButton(lt.deleteb[lang(uid)], callback_data="del")
+
+    menu01 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB) \
+        .row(LangB, NameB, AgeB) \
+        .row(CityB, AboutB, DelB) \
+        .row(SsB)
+
+    menu11 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB) \
+        .row(LangB, NameB, CityB) \
+        .row(DelB)
+
+    mc1 = (menu01, menu11)
+
+    await message.answer("⚙", reply_markup=mc1[userstatus])
+
+
 # -------------------------------------------------------------------------------------------------
 
 
