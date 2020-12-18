@@ -544,6 +544,7 @@ async def age_setter(message: types.Message):
         await message.answer(lt.aging2[lang(message.from_user.id)])
         db.upd_age(message.from_user.id, 0)
     await Status.A1.set()
+    await message.answer("👍")
 
 
 @dp.message_handler(state=Status.A6B)
@@ -589,6 +590,7 @@ async def about_setter(message: types.Message):
     about = message.text
     db.upd_about(message.from_user.id, about)
     await Status.A1.set()
+    await message.answer("👍")
 
 
 #  -------------------------------------------------------------------------------------------
