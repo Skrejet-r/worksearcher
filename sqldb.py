@@ -75,5 +75,10 @@ class dbfuncs:
             return self.cursor.execute('SELECT "about" FROM "users" WHERE "user_id"=?',
                                        (user_id,)).fetchone()
 
+    def delete(self, user_id):
+        with self.connection:
+            return self.cursor.execute('DELETE * FROM "users" WHERE "user_id"=?'
+                                       (user_id,)).fetchone()
+
     def close(self):
         self.connection.close()
