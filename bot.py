@@ -147,6 +147,45 @@ async def lang_choose(message: types.Message):
                            reply_markup=kb.languages)
 
 
+@dp.message_handler(lambda message: message.text in lt.chnameb, state=Status.A1)
+async def regname(message: types.Message):
+    await bot.send_message(message.from_user.id, lt.naming3[lang(message.from_user.id)] +
+                           db.set_name(message.from_user.id)[0])
+    await Status.name.set()
+    await bot.send_message(message.from_user.id, lt.naming4[lang(message.from_user.id)])
+
+
+@dp.message_handler(lambda message: message.text in lt.chageb, state=Status.A1)
+async def age_setter(message: types.Message):
+    await message.answer(lt.aging1[lang(message.from_user.id)])
+    await Status.age2.set()
+
+
+@dp.message_handler(lambda message: message.text in lt.chcityb, state=Status.A1)
+async def regcity(message: types.Message):
+    await message.answer(lt.citing1[lang(message.from_user.id)])
+    await message.answer(lt.citingB2[lang(message.from_user.id)])
+    await Status.city.set()
+
+
+@dp.message_handler(lambda message: message.text in lt.profileb, state=Status.A1)
+async def chprofil(message: types.Message):
+    ud = message.from_user.id
+    await message.answer(
+        lt.pp[lang(ud)] + "\n\n" +
+        lt.pname0[lang(ud)] + str(db.set_name(ud)[0]) + "\n" +
+        lt.page0[lang(ud)] + str(db.set_age(ud)[0]) + "\n" +
+        lt.pcity0[lang(ud)] + str(db.set_city(ud)[0]) + "\n" +
+        lt.pabout0[lang(ud)] + str(db.set_about(ud)[0])
+    )
+
+
+@dp.message_handler(lambda message: message.text in lt.chaboutb, state=Status.A1)
+async def chabout(message: types.Message):
+    await Status.about.set()
+    await message.answer(lt.about1[lang(message.from_user.id)])
+
+
 @dp.message_handler(lambda message: message.text in lt.settb, state=Status.A1)
 async def settings(message: types.Message):
     uid = message.from_user.id

@@ -272,9 +272,9 @@ profileb = ("My profile",
             "ملفي")
 
 chlangb = ("Language",
-            "Язык",
-            "Sprache",
-            "لغة")
+           "Язык",
+           "Sprache",
+           "لغة")
 
 chnameb = ("Name",
            "Имя",
@@ -305,6 +305,16 @@ deleteb = ("Delete all",
            "Удалить все",
            "Alles löschen",
            "حذف الكل")
+
+chstatusb0 = ("",
+              "",
+              "",
+              "")
+
+chstatusb1 = ("",
+              "",
+              "",
+              "")
 # ----------------------------------------------------------------------------------------------
 avfunc1 = ("Job search functions are no longer available",
            "Функции поиска работы теперь недоступны",
