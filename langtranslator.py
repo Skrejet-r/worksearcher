@@ -306,15 +306,10 @@ deleteb = ("Delete all",
            "Alles löschen",
            "حذف الكل")
 
-chstatusb0 = ("",
-              "",
-              "",
-              "")
-
-chstatusb1 = ("",
-              "",
-              "",
-              "")
+chstatusb = ("Target",
+              "Цель",
+              "Ziel",
+              "استهداف")
 # ----------------------------------------------------------------------------------------------
 avfunc1 = ("Job search functions are no longer available",
            "Функции поиска работы теперь недоступны",

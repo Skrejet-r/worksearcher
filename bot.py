@@ -186,6 +186,17 @@ async def chabout(message: types.Message):
     await message.answer(lt.about1[lang(message.from_user.id)])
 
 
+@dp.message_handler(lambda message: message.text in lt.chstatusb, state=Status.A1)
+async def chstatus(message: types.Message):
+    await Status.chst.set()
+    searcherbut = InlineKeyboardButton(str(lt.status1[lang(message.from_user.id)]), callback_data="0")
+    offerbut = InlineKeyboardButton(str(lt.status2[lang(message.from_user.id)]), callback_data="1")
+
+    statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
+
+    await message.answer(lt.statuswahl2[lang(message.from_user.id)], reply_markup=statusin)
+
+
 @dp.message_handler(lambda message: message.text in lt.settb, state=Status.A1)
 async def settings(message: types.Message):
     uid = message.from_user.id
@@ -200,14 +211,15 @@ async def settings(message: types.Message):
     CityB = KeyboardButton(lt.chcityb[lang(uid)], callback_data="city")
     SsB = KeyboardButton(lt.settsearchb[lang(uid)], callback_data="sets")
     DelB = KeyboardButton(lt.deleteb[lang(uid)], callback_data="del")
+    StatB = KeyboardButton(lt.chstatusb[lang(uid)], callback_data="stat")
 
-    menu01 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB) \
-        .row(LangB, NameB, AgeB) \
-        .row(CityB, AboutB, DelB) \
+    menu01 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB, LangB) \
+        .row(NameB, AgeB, CityB) \
+        .row(AboutB, StatB, DelB) \
         .row(SsB)
 
-    menu11 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB) \
-        .row(LangB, NameB, CityB) \
+    menu11 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB, LangB) \
+        .row(NameB, CityB, StatB) \
         .row(DelB)
 
     mc1 = (menu01, menu11)
