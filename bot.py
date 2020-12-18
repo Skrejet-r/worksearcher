@@ -128,6 +128,12 @@ async def chprofil(message: types.Message):
     )
 
 
+@dp.message_handler(commands=["delete_me"], state=Status.A1)
+async def deleting(message: types.Message):
+    await message.answer(lt.bye[lang(message.from_user.id)])
+    db.delete(message.from_user.id)
+
+
 # -------------------------------------------------------------------------------------------------
 @dp.message_handler(lambda message: message.text in lt.helpb, state=Status.A1)
 async def helper(message: types.Message):

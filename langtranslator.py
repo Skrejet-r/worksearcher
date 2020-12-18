@@ -320,3 +320,8 @@ avfunc0 = ("Nice comeback",
            "Неплохой камбэк",
            "Cooles Comeback",
            "عودة لطيفة")
+
+bye = ("Bye bye",
+       "Пока-пока",
+       "Tschüss",
+       "مع السلامة")
