@@ -4,6 +4,7 @@ import langtranslator as lt
 import keyboards as kb
 import time
 
+from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, \
     KeyboardButton, \
     InlineKeyboardButton, \
@@ -129,8 +130,9 @@ async def chprofil(message: types.Message):
 
 
 @dp.message_handler(commands=["delete_me"], state=Status.A1)
-async def deleting(message: types.Message):
+async def deleting(message: types.Message, state: FSMContext):
     await message.answer(lt.bye[lang(message.from_user.id)])
+    await state.finish()
     db.delete(message.from_user.id)
 
 
@@ -201,6 +203,13 @@ async def chstatus(message: types.Message):
     statusin = InlineKeyboardMarkup().row(searcherbut, offerbut)
 
     await message.answer(lt.statuswahl2[lang(message.from_user.id)], reply_markup=statusin)
+
+
+@dp.message_handler(lambda message: message.text in lt.deleteb, state=Status.A1)
+async def deleting(message: types.Message, state: FSMContext):
+    await message.answer(lt.bye[lang(message.from_user.id)])
+    await state.finish()
+    db.delete(message.from_user.id)
 
 
 @dp.message_handler(lambda message: message.text in lt.settb, state=Status.A1)
