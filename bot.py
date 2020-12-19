@@ -148,6 +148,14 @@ async def deleting(message: types.Message, state: FSMContext):
     db.delete(message.from_user.id)
 
 
+@dp.message_handler(commands=["add_ad"], state=Status.A1)
+async def ad_adder(message: types.Message):
+    if db.set_status(message.from_user.id)[0] == 1:
+        pass
+    else:
+        await message.answer("?")
+
+
 # -------------------------------------------------------------------------------------------------
 @dp.message_handler(lambda message: message.text in lt.helpb, state=Status.A1)
 async def helper(message: types.Message):
