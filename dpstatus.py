@@ -10,11 +10,15 @@ class Status(StatesGroup):
     about = State()  # cng_about
     cityA = State()  # city reg
     Profile = State()  # profile / reg
+
     A1 = State()  # neutral
     A2 = State()  # lang
+
     A3 = State()  # reg lang
     A4 = State()  # reg name
     A5 = State()  # reg status
     A6A = State()  # reg
     A6B = State()  # reg end 1
     A7 = State()  # reg end 0
+
+    ad_naming = State()

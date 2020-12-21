@@ -325,3 +325,13 @@ bye = ("Bye bye",
        "Пока-пока",
        "Tschüss",
        "مع السلامة")
+
+adform = ("Form en",
+           "Form ru",
+           "Form de",
+           "Form ar")
+
+adname = ("Form en",
+           "Form ru",
+           "Form de",
+           "Form ar")

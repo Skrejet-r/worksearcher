@@ -13,7 +13,8 @@ class dbfuncs:
     def add_user(self, user_id):  # add new user
         with self.connection:
             return self.cursor.execute(
-                'INSERT INTO "users" ("user_id") VALUES(?)', (user_id,))
+                'INSERT INTO "users" ("user_id") VALUES(?)', (user_id,)
+            )
 
     def upd_lang(self, user_id, language):  # set language for user
         with self.connection:
@@ -79,6 +80,14 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('DELETE FROM "users" WHERE "user_id"=?',
                                        (user_id,)).fetchone()
+
+    # -------------------------------------------------------------------------------------
+
+    def add_ad(self, user_id, adname):
+        with self.connection:
+            return self.cursor.execute(
+                'INSERT INTO "ads" ("user_id", "ad_name") VALUES (?, ?)', (user_id, adname)
+            )
 
     def close(self):
         self.connection.close()
