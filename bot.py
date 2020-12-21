@@ -233,6 +233,18 @@ async def chabout(message: types.Message):
         await message.answer("?")
 
 
+@dp.message_handler(lambda message: message.text in lt.addb, state=Status.A1)
+async def ad_adder(message: types.Message):
+    if db.set_status(message.from_user.id)[0] == 1:
+        await message.answer(lt.adform[lang(message.from_user.id)])
+        time.sleep(1)
+        await Status.ad_naming.set()
+        await message.answer(lt.adname[lang(message.from_user.id)])
+
+    else:
+        await message.answer("?")
+
+
 @dp.message_handler(lambda message: message.text in lt.chstatusb, state=Status.A1)
 async def chstatus(message: types.Message):
     await Status.chst.set()
