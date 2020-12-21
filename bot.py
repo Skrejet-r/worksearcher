@@ -151,7 +151,11 @@ async def deleting(message: types.Message, state: FSMContext):
 @dp.message_handler(commands=["add_ad"], state=Status.A1)
 async def ad_adder(message: types.Message):
     if db.set_status(message.from_user.id)[0] == 1:
-        pass
+        await message.answer(lt.adform[lang(message.from_user.id)])
+        time.sleep(1)
+        await Status.ad_naming.set()
+        await message.answer(lt.adname[lang(message.from_user.id)])
+
     else:
         await message.answer("?")
 
@@ -641,6 +645,13 @@ async def about_setter(message: types.Message):
     db.upd_about(message.from_user.id, about)
     await Status.A1.set()
     await message.answer("👍")
+
+
+@dp.message_handler(state=Status.ad_naming)
+async def ad_namer(message: types.Message):
+    adname = message.text
+    db.add_ad(message.from_user.id, adname)
+    await Status.A1.set()
 
 
 #  -------------------------------------------------------------------------------------------
