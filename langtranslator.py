@@ -335,3 +335,13 @@ adname = ("Form en",
            "Form ru",
            "Form de",
            "Form ar")
+
+minage = ("minage",
+          "minage",
+          "minage",
+          "minage")
+
+maxage = ("maxage",
+          "maxage",
+          "maxage",
+          "maxage")
