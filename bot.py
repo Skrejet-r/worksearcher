@@ -651,6 +651,22 @@ async def about_setter(message: types.Message):
 async def ad_namer(message: types.Message):
     adname = message.text
     db.add_ad(message.from_user.id, adname)
+    await Status.agefrom.set()
+    await message.answer(lt.minage[lang(message.from_user.id)])
+
+
+@dp.message_handler(state=Status.agefrom)
+async def agefrom(message: types.Message):
+    minage = int(message.text)
+    db.upd_ad_minage(message.from_user.id, minage)
+    await Status.ageto.set()
+    await message.answer(lt.maxage[lang(message.from_user.id)])
+
+
+@dp.message_handler(state=Status.ageto)
+async def agefrom(message: types.Message):
+    maxage = int(message.text)
+    db.upd_ad_maxage(message.from_user.id, maxage)
     await Status.A1.set()
 
 

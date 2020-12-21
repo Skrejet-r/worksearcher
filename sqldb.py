@@ -86,8 +86,18 @@ class dbfuncs:
     def add_ad(self, user_id, adname):
         with self.connection:
             return self.cursor.execute(
-                'INSERT INTO "ads" ("user_id", "ad_name") VALUES (?, ?)', (user_id, adname)
+                'INSERT INTO "ads" ("user_id", "ad_name", "ad_status") VALUES (?, ?, 1 )', (user_id, adname, )
             )
+
+    def upd_ad_minage(self, user_id, ad_age_from):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_minage"=? WHERE ("user_id", "ad_status")=(?, 1)',
+                                       (ad_age_from, user_id))
+
+    def upd_ad_maxage(self, user_id, ad_age_to):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=? WHERE ("user_id", "ad_status")=(?, 1)',
+                                       (ad_age_to, user_id))
 
     def close(self):
         self.connection.close()

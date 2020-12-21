@@ -21,4 +21,6 @@ class Status(StatesGroup):
     A6B = State()  # reg end 1
     A7 = State()  # reg end 0
 
-    ad_naming = State()
+    ad_naming = State()  # name for ad
+    agefrom = State()  # min age for ad
+    ageto = State()  # max age for ad
