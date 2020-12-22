@@ -370,6 +370,11 @@ adabout = ("Describe:",
            "Beschreiben:",
            "وصف:")
 
+adcontact = ("1 c",
+             "2 c",
+             "3 c",
+             "4 c")
+
 ad = ("Your ad:",
       "Ваше объявление:",
       "Ihre Werbung:",

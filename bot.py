@@ -688,7 +688,7 @@ async def adabout(message: types.Message):
     about = str(message.text)
     db.upd_ad_about(message.from_user.id, about)
     await Status.adcontact.set()
-    await message.answer(lt.contact[lang(message.from_user.id)])
+    await message.answer(lt.adcontact[lang(message.from_user.id)])
 
 
 @dp.message_handler(state=Status.adcontact)
@@ -697,13 +697,19 @@ async def adcontact(message: types.Message):
     db.upd_ad_contact(message.from_user.id, contact)
     await Status.ad_end.set()
     uid = message.from_user.id
-    await message.answer(
-        lt.ad[lang(uid)] + "\n\n" +
-        str() + "\n" +
-        str() + "\n" +
-        str() + "\n" +
-        str()
-    )
+    await bot.send_message(uid,
+                           lt.ad[lang(uid)] + "\n\n" +
+                           str(db.set_ad_title(uid)[0]) + "\n" +
+
+                           lt.chageb[lang(uid)] + ": " + str(db.set_ad_minage(uid)[0]) + " - "
+                           + str(db.set_ad_maxage(uid)[0]) + "\n" +
+                           str("------------------------------") + "\n" +
+                           str(db.set_ad_about(uid)[0]) + "\n" +
+                           str("------------------------------") + "\n" +
+                           str(db.set_ad_contact(uid)[0]),
+
+                           reply_markup=None
+                           )
 
 
 #  -------------------------------------------------------------------------------------------
