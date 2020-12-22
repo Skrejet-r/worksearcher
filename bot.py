@@ -745,6 +745,36 @@ async def ad_setting(call):
         print(repr(e))
 
 
+@dp.callback_query_handler(lambda call: True, state=Status.adcontact)
+async def ad_setting(call):
+    u_id = call.from_user.id
+
+    try:
+        if call.message:
+            if call.data == "-":
+                db.upd_ad_contact(u_id, "-")
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="-", reply_markup=None)
+                await Status.ad_end.set()
+                await bot.send_message(u_id,
+                                       lt.ad[lang(u_id)] + "\n\n" +
+                                       str(db.set_ad_title(u_id)[0]) + "\n" +
+
+                                       lt.chageb[lang(u_id)] + ": " + str(db.set_ad_minage(u_id)[0]) + " - "
+                                       + str(db.set_ad_maxage(u_id)[0]) + "\n" +
+                                       str("------------------------------") + "\n" +
+                                       str(db.set_ad_about(u_id)[0]) + "\n" +
+                                       str("------------------------------") + "\n" +
+                                       str(db.set_ad_contact(u_id)[0]),
+
+                                       reply_markup=kb.adset
+                                       )
+
+    except Exception as e:
+        print(repr(e))
+
+
 #  -------------------------------------------------------------------------------------------
 
 
