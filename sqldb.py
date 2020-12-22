@@ -89,25 +89,50 @@ class dbfuncs:
                 'INSERT INTO "ads" ("user_id", "ad_name", "ad_status") VALUES (?, ?, 1 )', (user_id, adname, )
             )
 
+    def set_ad_title(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_name" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
+                                        (user_id, 1, )).fetchone()
+
     def upd_ad_minage(self, user_id, ad_age_from):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_minage"=? WHERE ("user_id", "ad_status")=(?, 1)',
                                        (ad_age_from, user_id))
+
+    def set_ad_minage(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_minage" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
+                                        (user_id, 1, )).fetchone()
 
     def upd_ad_maxage(self, user_id, ad_age_to):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=? WHERE ("user_id", "ad_status")=(?, 1)',
                                        (ad_age_to, user_id))
 
+    def set_ad_maxage(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_maxage" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
+                                        (user_id, 1, )).fetchone()
+
     def upd_ad_about(self, user_id, ad_about):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_about"=? WHERE ("user_id", "ad_status")=(?, 1)',
                                        (ad_about, user_id))
 
+    def set_ad_about(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_about" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
+                                        (user_id, 1, )).fetchone()
+
     def upd_ad_contact(self, user_id, ad_contact):
         with self.connection:
-            return self.cursor.execute('UPDATE "ads" SET "ad_contact"=? WHERE ("user_id", "ad_status")=(?, 1)',
+            return self.cursor.execute('UPDATE "ads" SET "contact"=? WHERE ("user_id", "ad_status")=(?, 1)',
                                        (ad_contact, user_id))
+
+    def set_ad_contact(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "contact" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
+                                        (user_id, 1, )).fetchone()
 
     def close(self):
         self.connection.close()

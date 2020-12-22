@@ -27,3 +27,4 @@ class Status(StatesGroup):
     adcity = State()  # city for ad
     adcontact = State()  # contact for ad
     adabout = State()  # infos about ad
+    ad_end = State()  # the /end of ad-creating
