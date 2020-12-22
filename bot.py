@@ -233,6 +233,18 @@ async def chabout(message: types.Message):
         await message.answer("?")
 
 
+@dp.message_handler(lambda message: message.text in lt.addb, state=Status.A1)
+async def ad_adder(message: types.Message):
+    if db.set_status(message.from_user.id)[0] == 1:
+        await message.answer(lt.adform[lang(message.from_user.id)])
+        time.sleep(1)
+        await Status.ad_naming.set()
+        await message.answer(lt.adname[lang(message.from_user.id)])
+
+    else:
+        await message.answer("?")
+
+
 @dp.message_handler(lambda message: message.text in lt.chstatusb, state=Status.A1)
 async def chstatus(message: types.Message):
     await Status.chst.set()
@@ -667,7 +679,31 @@ async def agefrom(message: types.Message):
 async def agefrom(message: types.Message):
     maxage = int(message.text)
     db.upd_ad_maxage(message.from_user.id, maxage)
-    await Status.A1.set()
+    await Status.adabout.set()
+    await message.answer(lt.adabout[lang(message.from_user.id)])
+
+
+@dp.message_handler(state=Status.adabout)
+async def adabout(message: types.Message):
+    about = str(message.text)
+    db.upd_ad_about(message.from_user.id, about)
+    await Status.adcontact.set()
+    await message.answer(lt.contact[lang(message.from_user.id)])
+
+
+@dp.message_handler(state=Status.adcontact)
+async def adcontact(message: types.Message):
+    contact = message.text
+    db.upd_ad_contact(message.from_user.id, contact)
+    await Status.ad_end.set()
+    uid = message.from_user.id
+    await message.answer(
+        lt.ad[lang(uid)] + "\n\n" +
+        str() + "\n" +
+        str() + "\n" +
+        str() + "\n" +
+        str()
+    )
 
 
 #  -------------------------------------------------------------------------------------------

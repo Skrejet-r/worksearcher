@@ -99,5 +99,15 @@ class dbfuncs:
             return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=? WHERE ("user_id", "ad_status")=(?, 1)',
                                        (ad_age_to, user_id))
 
+    def upd_ad_about(self, user_id, ad_about):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_about"=? WHERE ("user_id", "ad_status")=(?, 1)',
+                                       (ad_about, user_id))
+
+    def upd_ad_contact(self, user_id, ad_contact):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_contact"=? WHERE ("user_id", "ad_status")=(?, 1)',
+                                       (ad_contact, user_id))
+
     def close(self):
         self.connection.close()

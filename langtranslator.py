@@ -326,22 +326,52 @@ bye = ("Bye bye",
        "Tschüss",
        "مع السلامة")
 
-adform = ("Form en",
-           "Form ru",
-           "Form de",
-           "Form ar")
+adform = ("Announcement form:\n\n"
+          "Title\n"
+          "Age (min-max)\n"
+          "Description\n"
+          "Contacts",
 
-adname = ("Form en",
-           "Form ru",
-           "Form de",
-           "Form ar")
+          "Форма объявления:\n\n"
+          "Заголовок\n" 
+          "Возраст (min-max)\n"
+          "Описание\n"
+          "Контакты",
 
-minage = ("minage",
-          "minage",
-          "minage",
-          "minage")
+          "Ankündigungsformular:\n\n"
+          "Title\n"
+          "Alter (min-max)\n"
+          "Beschreibung\n"
+          "Kontakte",
 
-maxage = ("maxage",
-          "maxage",
-          "maxage",
-          "maxage")
+          "نموذج إعلان:\n\n"
+          "اسم\n"
+          "العمر (min-max)\n"
+          "وصف\n"
+          "جهات الاتصال")
+
+adname = ("What title will you give?",
+          "Какой дадите заголовок?",
+          "Welchen Titel werden Sie geben?",
+          "ما هو اللقب الذي ستمنحه؟")
+
+minage = ("Minimum age?",
+          "Минимальный возраст?",
+          "Minimales Alter?",
+          "الحد الإدنى للعمر؟")
+
+maxage = ("Maximum age?",
+          "Максимальный возраст?",
+          "Maximales Alter?",
+          "العمر الأقصى؟")
+
+adabout = ("Describe:",
+           "Опишите:",
+           "Beschreiben:",
+           "وصف:")
+
+ad = ("Your ad:",
+      "Ваше объявление:",
+      "Ihre Werbung:",
+      "إعلانك:")
+
