@@ -24,3 +24,6 @@ class Status(StatesGroup):
     ad_naming = State()  # name for ad
     agefrom = State()  # min age for ad
     ageto = State()  # max age for ad
+    adcity = State()  # city for ad
+    adcontact = State()  # contact for ad
+    adabout = State()  # infos about ad
