@@ -106,7 +106,7 @@ class dbfuncs:
 
     def upd_ad_maxage(self, user_id, ad_age_to):
         with self.connection:
-            return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=? WHERE ("user_id", "ad_status")=(?, 1)',
+            return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=? WHERE ("user_id", "ad_status")=(?,1)',
                                        (ad_age_to, user_id))
 
     def set_ad_maxage(self, user_id):
@@ -116,7 +116,7 @@ class dbfuncs:
 
     def upd_ad_about(self, user_id, ad_about):
         with self.connection:
-            return self.cursor.execute('UPDATE "ads" SET "ad_about"=? WHERE ("user_id", "ad_status")=(?, 1)',
+            return self.cursor.execute('UPDATE "ads" SET "ad_about"=? WHERE ("user_id", "ad_status")=(?,1)',
                                        (ad_about, user_id))
 
     def set_ad_about(self, user_id):
@@ -126,13 +126,23 @@ class dbfuncs:
 
     def upd_ad_contact(self, user_id, ad_contact):
         with self.connection:
-            return self.cursor.execute('UPDATE "ads" SET "contact"=? WHERE ("user_id", "ad_status")=(?, 1)',
+            return self.cursor.execute('UPDATE "ads" SET "contact"=? WHERE ("user_id", "ad_status")=(?,1)',
                                        (ad_contact, user_id))
 
     def set_ad_contact(self, user_id):
         with self.connection:
             return self.cursor.execute('SELECT "contact" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
+
+    def ad_delete(self, user_id):
+        with self.connection:
+            return self.cursor.execute('DELETE FROM "ads" WHERE ("user_id", "ad_status")=(?, 1)',
+                                       (user_id,)).fetchone()
+
+    def ad_saving(self, user_id):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_status"=0 WHERE ("user_id", "ad_status")=(?,1)',
+                                       (user_id,))
 
     def close(self):
         self.connection.close()

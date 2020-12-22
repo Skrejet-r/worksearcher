@@ -688,7 +688,11 @@ async def adabout(message: types.Message):
     about = str(message.text)
     db.upd_ad_about(message.from_user.id, about)
     await Status.adcontact.set()
-    await message.answer(lt.adcontact[lang(message.from_user.id)])
+
+    xButton = InlineKeyboardButton(lt.xButton1[lang(message.from_user.id)], callback_data="-")
+    mButton = InlineKeyboardMarkup().row(xButton)
+
+    await message.answer(lt.adcontact[lang(message.from_user.id)], reply_markup=mButton)
 
 
 @dp.message_handler(state=Status.adcontact)
@@ -696,20 +700,49 @@ async def adcontact(message: types.Message):
     contact = message.text
     db.upd_ad_contact(message.from_user.id, contact)
     await Status.ad_end.set()
-    uid = message.from_user.id
-    await bot.send_message(uid,
-                           lt.ad[lang(uid)] + "\n\n" +
-                           str(db.set_ad_title(uid)[0]) + "\n" +
+    u_id = message.from_user.id
+    await bot.send_message(u_id,
+                           lt.ad[lang(u_id)] + "\n\n" +
+                           str(db.set_ad_title(u_id)[0]) + "\n" +
 
-                           lt.chageb[lang(uid)] + ": " + str(db.set_ad_minage(uid)[0]) + " - "
-                           + str(db.set_ad_maxage(uid)[0]) + "\n" +
+                           lt.chageb[lang(u_id)] + ": " + str(db.set_ad_minage(u_id)[0]) + " - "
+                           + str(db.set_ad_maxage(u_id)[0]) + "\n" +
                            str("------------------------------") + "\n" +
-                           str(db.set_ad_about(uid)[0]) + "\n" +
+                           str(db.set_ad_about(u_id)[0]) + "\n" +
                            str("------------------------------") + "\n" +
-                           str(db.set_ad_contact(uid)[0]),
+                           str(db.set_ad_contact(u_id)[0]),
 
-                           reply_markup=None
+                           reply_markup=kb.adset
                            )
+
+
+@dp.callback_query_handler(lambda call: True, state=Status.ad_end)
+async def ad_setting(call):
+    u_id = call.from_user.id
+
+    try:
+        if call.message:
+            if call.data == "del":
+                db.ad_delete(u_id)
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text=lt.ad_deleting[lang(u_id)], reply_markup=None)
+                await Status.A1.set()
+
+            elif call.data == "upd":
+                pass
+
+            elif call.data == "sav":
+                db.ad_saving(u_id)
+                await Status.A1.set()
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text=lt.ad_saving[lang(u_id)], reply_markup=None)
+                time.sleep(0.5)
+                await bot.send_message(u_id, lt.ad_saving2[lang(u_id)], parse_mode="Markdown")
+
+    except Exception as e:
+        print(repr(e))
 
 
 #  -------------------------------------------------------------------------------------------

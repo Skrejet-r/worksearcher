@@ -368,15 +368,34 @@ maxage = ("Maximum age?",
 adabout = ("Describe:",
            "Опишите:",
            "Beschreiben:",
-           "وصف:")
+           "جهات اتصال إضافية:")
 
-adcontact = ("1 c",
-             "2 c",
-             "3 c",
+adcontact = ("Additional contacts:",
+             "Дополнительные контакты:",
+             "Zusätzliche Kontakte:",
              "4 c")
+
+ad_deleting = ("The ad was successfully removed",
+               "Объявление было успешно удалено",
+               "Die Anzeige wurde erfolgreich entfernt",
+               "تمت إزالة الإعلان بنجاح")
+
+ad_saving = ("The ad was successfully published",
+             "Объявление было успешно опубликовано",
+             "Die Anzeige wurde erfolgreich veröffentlicht",
+             "تم نشر الإعلان بنجاح")
+
+ad_saving2 = ("You can find it in the section *My ads*",
+              "Вы можете найти его в разделе *Мои объявления*",
+              "Sie finden es im Abschnitt *Meine Anzeigen*",
+              "يمكنك العثور عليها في قسم * إعلاناتي *")
 
 ad = ("Your ad:",
       "Ваше объявление:",
       "Ihre Werbung:",
       "إعلانك:")
 
+xButton1 = ("I do not have it",
+            "Нету",
+            "Ich habe es nicht",
+            "لا توجد عندي")
