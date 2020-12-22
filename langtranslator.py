@@ -370,10 +370,10 @@ adabout = ("Describe:",
            "Beschreiben:",
            "جهات اتصال إضافية:")
 
-adcontact = ("Additional contacts:",
-             "Дополнительные контакты:",
-             "Zusätzliche Kontakte:",
-             "4 c")
+adcontact = ("Additional contacts: (for example: email, number)",
+             "Дополнительные контакты: (на пример: email, номер)",
+             "Zusätzliche Kontakte: (zum Beispiel: E-Mail, Nummer)",
+             "جهات اتصال إضافية: (على سبيل المثال: البريد الإلكتروني ، الرقم)")
 
 ad_deleting = ("The ad was successfully removed",
                "Объявление было успешно удалено",
