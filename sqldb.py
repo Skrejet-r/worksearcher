@@ -94,6 +94,11 @@ class dbfuncs:
             return self.cursor.execute('SELECT "ad_name" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
 
+    def upd_ad_title(self, user_id, ad_name):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_name"=? WHERE ("user_id", "ad_status")=(?, 1)',
+                                           (ad_name, user_id))
+
     def upd_ad_minage(self, user_id, ad_age_from):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_minage"=? WHERE ("user_id", "ad_status")=(?, 1)',

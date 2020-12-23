@@ -28,3 +28,12 @@ class Status(StatesGroup):
     adcontact = State()  # contact for ad
     adabout = State()  # infos about ad
     ad_end = State()  # the /end of ad-creating
+    ad_upd = State()  # update of ad
+
+    # extra
+    xad_naming = State()
+    xagefrom = State()
+    xageto = State()
+    xadcity = State()
+    xadcontact = State()
+    xadabout = State()
