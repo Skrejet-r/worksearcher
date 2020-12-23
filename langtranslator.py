@@ -399,3 +399,9 @@ xButton1 = ("I do not have it",
             "Нету",
             "Ich habe es nicht",
             "لا توجد عندي")
+
+xButton2 = ("No matter",
+            "Все равно",
+            "Egal",
+            "لا يهم")
+

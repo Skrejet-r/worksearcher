@@ -144,5 +144,15 @@ class dbfuncs:
             return self.cursor.execute('UPDATE "ads" SET "ad_status"=0 WHERE ("user_id", "ad_status")=(?,1)',
                                        (user_id,))
 
+    def xbutton1(self, user_id):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_minage"=0 WHERE ("user_id", "ad_status")=(?, 1)',
+                                       (user_id,))
+
+    def xbutton2(self, user_id):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=999999 WHERE ("user_id", "ad_status")=(?,1)',
+                                       (user_id,))
+
     def close(self):
         self.connection.close()

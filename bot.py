@@ -661,18 +661,26 @@ async def about_setter(message: types.Message):
 
 @dp.message_handler(state=Status.ad_naming)
 async def ad_namer(message: types.Message):
+    xButton = InlineKeyboardButton(lt.xButton2[lang(message.from_user.id)], callback_data="-")
+    mButton = InlineKeyboardMarkup().row(xButton)
+
     adname = message.text
+
     db.add_ad(message.from_user.id, adname)
     await Status.agefrom.set()
-    await message.answer(lt.minage[lang(message.from_user.id)])
+    await message.answer(lt.minage[lang(message.from_user.id)], reply_markup=mButton)
 
 
 @dp.message_handler(state=Status.agefrom)
 async def agefrom(message: types.Message):
+    xButton = InlineKeyboardButton(lt.xButton2[lang(message.from_user.id)], callback_data="-")
+    mButton = InlineKeyboardMarkup().row(xButton)
+
     minage = int(message.text)
+
     db.upd_ad_minage(message.from_user.id, minage)
     await Status.ageto.set()
-    await message.answer(lt.maxage[lang(message.from_user.id)])
+    await message.answer(lt.maxage[lang(message.from_user.id)], reply_markup=mButton)
 
 
 @dp.message_handler(state=Status.ageto)
@@ -701,19 +709,34 @@ async def adcontact(message: types.Message):
     db.upd_ad_contact(message.from_user.id, contact)
     await Status.ad_end.set()
     u_id = message.from_user.id
-    await bot.send_message(u_id,
-                           lt.ad[lang(u_id)] + "\n\n" +
-                           str(db.set_ad_title(u_id)[0]) + "\n" +
+    if (db.set_ad_minage(u_id)[0], db.set_ad_maxage(u_id)[0]) == (0, 999999):
+        await bot.send_message(u_id,
+                               lt.ad[lang(u_id)] + "\n\n" +
+                               str(db.set_ad_title(u_id)[0]) + "\n" +
 
-                           lt.chageb[lang(u_id)] + ": " + str(db.set_ad_minage(u_id)[0]) + " - "
-                           + str(db.set_ad_maxage(u_id)[0]) + "\n" +
-                           str("------------------------------") + "\n" +
-                           str(db.set_ad_about(u_id)[0]) + "\n" +
-                           str("------------------------------") + "\n" +
-                           str(db.set_ad_contact(u_id)[0]),
+                               lt.chageb[lang(u_id)] + ": " + " - " + "\n" +
+                               str("------------------------------") + "\n" +
+                               str(db.set_ad_about(u_id)[0]) + "\n" +
+                               str("------------------------------") + "\n" +
+                               str(db.set_ad_contact(u_id)[0]),
 
-                           reply_markup=kb.adset
-                           )
+                               reply_markup=kb.adset
+                               )
+
+    else:
+        await bot.send_message(u_id,
+                               lt.ad[lang(u_id)] + "\n\n" +
+                               str(db.set_ad_title(u_id)[0]) + "\n" +
+
+                               lt.chageb[lang(u_id)] + ": " + str(db.set_ad_minage(u_id)[0]) + " - "
+                               + str(db.set_ad_maxage(u_id)[0]) + "\n" +
+                               str("------------------------------") + "\n" +
+                               str(db.set_ad_about(u_id)[0]) + "\n" +
+                               str("------------------------------") + "\n" +
+                               str(db.set_ad_contact(u_id)[0]),
+
+                               reply_markup=kb.adset
+                               )
 
 
 @dp.callback_query_handler(lambda call: True, state=Status.ad_end)
@@ -757,19 +780,73 @@ async def ad_setting(call):
                                             message_id=call.message.message_id,
                                             text="-", reply_markup=None)
                 await Status.ad_end.set()
-                await bot.send_message(u_id,
-                                       lt.ad[lang(u_id)] + "\n\n" +
-                                       str(db.set_ad_title(u_id)[0]) + "\n" +
+                if (db.set_ad_minage(u_id)[0], db.set_ad_maxage(u_id)[0]) == (0, 999999):
+                    await bot.send_message(u_id,
+                                           lt.ad[lang(u_id)] + "\n\n" +
+                                           str(db.set_ad_title(u_id)[0]) + "\n" +
 
-                                       lt.chageb[lang(u_id)] + ": " + str(db.set_ad_minage(u_id)[0]) + " - "
-                                       + str(db.set_ad_maxage(u_id)[0]) + "\n" +
-                                       str("------------------------------") + "\n" +
-                                       str(db.set_ad_about(u_id)[0]) + "\n" +
-                                       str("------------------------------") + "\n" +
-                                       str(db.set_ad_contact(u_id)[0]),
+                                           lt.chageb[lang(u_id)] + ": " + " - " + "\n" +
+                                           str("------------------------------") + "\n" +
+                                           str(db.set_ad_about(u_id)[0]) + "\n" +
+                                           str("------------------------------") + "\n" +
+                                           str(db.set_ad_contact(u_id)[0]),
 
-                                       reply_markup=kb.adset
-                                       )
+                                           reply_markup=kb.adset
+                                           )
+
+                else:
+                    await bot.send_message(u_id,
+                                           lt.ad[lang(u_id)] + "\n\n" +
+                                           str(db.set_ad_title(u_id)[0]) + "\n" +
+
+                                           lt.chageb[lang(u_id)] + ": " + str(db.set_ad_minage(u_id)[0]) + " - "
+                                           + str(db.set_ad_maxage(u_id)[0]) + "\n" +
+                                           str("------------------------------") + "\n" +
+                                           str(db.set_ad_about(u_id)[0]) + "\n" +
+                                           str("------------------------------") + "\n" +
+                                           str(db.set_ad_contact(u_id)[0]),
+
+                                           reply_markup=kb.adset
+                                           )
+
+    except Exception as e:
+        print(repr(e))
+
+
+@dp.callback_query_handler(lambda call: True, state=Status.agefrom)
+async def ad_setting(call):
+    u_id = call.from_user.id
+
+    xButton = InlineKeyboardButton(lt.xButton2[lang(u_id)], callback_data="-")
+    mButton = InlineKeyboardMarkup().row(xButton)
+
+    try:
+        if call.message:
+            if call.data == "-":
+                db.xbutton1(u_id)
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="-", reply_markup=None)
+                await Status.ageto.set()
+                await bot.send_message(u_id, lt.maxage[lang(u_id)], reply_markup=mButton)
+
+    except Exception as e:
+        print(repr(e))
+
+
+@dp.callback_query_handler(lambda call: True, state=Status.ageto)
+async def ad_setting(call):
+    u_id = call.from_user.id
+
+    try:
+        if call.message:
+            if call.data == "-":
+                db.xbutton2(u_id)
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="-", reply_markup=None)
+                await Status.adabout.set()
+                await bot.send_message(u_id, lt.adabout[lang(u_id)])
 
     except Exception as e:
         print(repr(e))
