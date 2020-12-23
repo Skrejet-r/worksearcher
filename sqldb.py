@@ -83,11 +83,11 @@ class dbfuncs:
 
     # -------------------------------------------------------------------------------------
 
-    def add_ad(self, user_id, adname):
+    def add_ad(self, user_id, adname, city):
         with self.connection:
             return self.cursor.execute(
-                'INSERT INTO "ads" ("user_id", "ad_name", "ad_status") VALUES (?, ?, 1 )', (user_id, adname, )
-            )
+                'INSERT INTO "ads" ("user_id", "ad_name", "ad_city", "ad_status") VALUES (?, ?, ?, 1 )',
+                (user_id, adname, city, ))
 
     def set_ad_title(self, user_id):
         with self.connection:
@@ -138,6 +138,11 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('SELECT "contact" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
+
+    def upd_ad_city(self, user_id, city):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ad_city"=? WHERE ("user_id", "ad_status")=(?, 1)',
+                                       (city, user_id))
 
     def ad_delete(self, user_id):
         with self.connection:
