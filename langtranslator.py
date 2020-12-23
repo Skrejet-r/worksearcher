@@ -444,3 +444,25 @@ b5 = ("City",
       "Город",
       "Stadt",
       "مدينة")
+
+ad_city = ("You set a special city for this ad\n"
+           "-> By default, the city that you selected during registration was set",
+
+           "Вы устанавливаете специальный город для этого объявления\n"
+           "-> По умолчанию был установлен город, который вы выбрали при регистрации",
+
+           "Sie legen eine spezielle Stadt für diese Anzeige fest\n"
+           "-> Standardmäßig wurde die Stadt festgelegt, die Sie bei der Registrierung ausgewählt haben",
+
+           "قمت بتعيين مدينة خاصة لهذا الإعلان\n"
+           "-> افتراضيًا ، تم تعيين المدينة التي حددتها أثناء التسجيل")
+
+ad_city1 = ("What city? (in English)",
+            "Какой город? (in English)",
+            "Welche Stadt? (in English)",
+            "كاكوي غورود؟ (in English)")
+
+xad_contact = ("Send me your new additional contacts: (for example: email, number)",
+               "Отправьте мне свои новые дополнительные контакты: (на пример: email, номер)",
+               "Senden Sie mir Ihre neuen zusätzlichen Kontakte: (zum Beispiel: E-Mail, Nummer)",
+               "أرسل لي جهات اتصالك الإضافية الجديدة: (على سبيل المثال: البريد الإلكتروني ، الرقم)")
