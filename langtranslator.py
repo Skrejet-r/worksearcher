@@ -405,3 +405,42 @@ xButton2 = ("No matter",
             "Egal",
             "لا يهم")
 
+cancelb = ("cancel",
+           "отменить",
+           "abbrechen",
+           "إلغاء")
+
+canceled = ("The action was canceled",
+            "Действие было отменено",
+            "Die Aktion wurde abgebrochen",
+            "تم إلغاء الإجراء")
+
+ch = ("🔄 What do you want to change?",
+      "🔄 Что вы хотите изменить?",
+      "🔄 Was möchten Sie ändern?",
+      "🔄 مذا تريد ان تغير؟")
+
+b1 = ("Title",
+      "Заголовок",
+      "Title",
+      "اسم")
+
+b2 = ("Age (min-max)",
+      "Возраст (min-max)",
+      "Alter (min-max)",
+      "العمر (min-max)")
+
+b3 = ("Description",
+      "Описание",
+      "Beschreibung",
+      "وصف")
+
+b4 = ("Contacts",
+      "Контакты",
+      "Kontakte",
+      "جهات الاتصال")
+
+b5 = ("City",
+      "Город",
+      "Stadt",
+      "مدينة")
