@@ -162,7 +162,38 @@ async def ad_adder(message: types.Message):
 
 @dp.message_handler(commands=["my_ads"], state=Status.A1)
 async def all_ads(message: types.Message):
-    pass
+    u_id = message.from_user.id
+    ad_id = db.nn(message.from_user.id)  # all ids of ads
+    for n in range(len(ad_id)):
+        num = ad_id[n]  # only 1 certain id of certain ad
+
+        title = db.set_ad_title2(u_id, num[0])[0]
+
+        min_age = db.set_ad_minage2(u_id, num[0])[0]
+        if min_age == 0:
+            min_age = ""
+
+        max_age = db.set_ad_maxage2(u_id, num[0])[0]
+        if max_age == 999999:
+            max_age = ""
+
+        about = db.set_ad_about2(u_id, num[0])[0]
+
+        city = db.set_ad_city2(u_id, num[0])[0]
+
+        contact = db.set_ad_contact2(u_id, num[0])[0]
+
+        time.sleep(0.1)
+        await bot.send_message(u_id,
+                               "(" + str(city) + ")" + str(title) + "\n" +
+                               lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                               "-----------------------------------" + "\n" +
+                               " " + str(about) + "\n" +
+                               "-----------------------------------" + "\n" +
+                               "✉ " + str(contact),
+
+                               reply_markup=kb.adupd
+                               )
 
 
 # -------------------------------------------------------------------------------------------------

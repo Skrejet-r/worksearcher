@@ -94,6 +94,11 @@ class dbfuncs:
             return self.cursor.execute('SELECT "ad_name" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
 
+    def set_ad_title2(self, user_id, ad_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_name" FROM "ads" WHERE ("user_id", "id", "ad_status")=(?,?,?)',
+                                        (user_id, ad_id, 0, )).fetchone()
+
     def upd_ad_title(self, user_id, ad_name):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_name"=? WHERE ("user_id", "ad_status")=(?, 1)',
@@ -109,6 +114,11 @@ class dbfuncs:
             return self.cursor.execute('SELECT "ad_minage" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
 
+    def set_ad_minage2(self, user_id, ad_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_minage" FROM "ads" WHERE ("user_id", "id", "ad_status")=(?,?,?)',
+                                        (user_id, ad_id, 0, )).fetchone()
+
     def upd_ad_maxage(self, user_id, ad_age_to):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=? WHERE ("user_id", "ad_status")=(?,1)',
@@ -118,6 +128,11 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('SELECT "ad_maxage" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
+
+    def set_ad_maxage2(self, user_id, ad_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_maxage" FROM "ads" WHERE ("user_id", "id", "ad_status")=(?,?,?)',
+                                        (user_id, ad_id, 0, )).fetchone()
 
     def upd_ad_about(self, user_id, ad_about):
         with self.connection:
@@ -129,6 +144,11 @@ class dbfuncs:
             return self.cursor.execute('SELECT "ad_about" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
 
+    def set_ad_about2(self, user_id, ad_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_about" FROM "ads" WHERE ("user_id", "id", "ad_status")=(?,?,?)',
+                                        (user_id, ad_id, 0, )).fetchone()
+
     def upd_ad_contact(self, user_id, ad_contact):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "contact"=? WHERE ("user_id", "ad_status")=(?,1)',
@@ -139,10 +159,20 @@ class dbfuncs:
             return self.cursor.execute('SELECT "contact" FROM "ads" WHERE ("user_id", "ad_status")=(?,?)',
                                         (user_id, 1, )).fetchone()
 
+    def set_ad_contact2(self, user_id, ad_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "contact" FROM "ads" WHERE ("user_id", "id", "ad_status")=(?,?,?)',
+                                        (user_id, ad_id, 0, )).fetchone()
+
     def upd_ad_city(self, user_id, city):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_city"=? WHERE ("user_id", "ad_status")=(?, 1)',
                                        (city, user_id))
+
+    def set_ad_city2(self, user_id, ad_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "ad_city" FROM "ads" WHERE ("user_id", "id", "ad_status")=(?,?,?)',
+                                       (user_id, ad_id, 0,)).fetchone()
 
     def ad_delete(self, user_id):
         with self.connection:
@@ -163,6 +193,11 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_maxage"=999999 WHERE ("user_id", "ad_status")=(?,1)',
                                        (user_id,))
+
+    def nn(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "id" FROM "ads" WHERE "user_id"=?',
+                                       (user_id,)).fetchall()
 
     def close(self):
         self.connection.close()
