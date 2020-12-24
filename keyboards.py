@@ -19,9 +19,6 @@ SaveB = InlineKeyboardButton("✅", callback_data="sav")
 
 adset = InlineKeyboardMarkup().row(DeleteB, UpdateB, SaveB)
 # --------------------------------------------------------------------------------
-DeleteB = InlineKeyboardButton("❌", callback_data="del")
-UpdateB = InlineKeyboardButton("🔄", callback_data="upd")
-
 adupd = InlineKeyboardMarkup().row(DeleteB, UpdateB)
 # --------------------------------------------------------------------------------
 '''# Keyboard for status-choosing

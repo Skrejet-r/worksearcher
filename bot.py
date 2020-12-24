@@ -150,8 +150,11 @@ async def deleting(message: types.Message, state: FSMContext):
 
 @dp.message_handler(commands=["add_ad"], state=Status.A1)
 async def ad_adder(message: types.Message):
+    CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
+    mButton = InlineKeyboardMarkup().row(CancelB)
+
     if db.set_status(message.from_user.id)[0] == 1:
-        await message.answer(lt.adform[lang(message.from_user.id)])
+        await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
         time.sleep(1)
         await Status.ad_naming.set()
         await message.answer(lt.adname[lang(message.from_user.id)])
@@ -164,6 +167,7 @@ async def ad_adder(message: types.Message):
 async def all_ads(message: types.Message):
     u_id = message.from_user.id
     ad_id = db.nn(message.from_user.id)  # all ids of ads
+    await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
     for n in range(len(ad_id)):
         num = ad_id[n]  # only 1 certain id of certain ad
 
@@ -183,14 +187,17 @@ async def all_ads(message: types.Message):
 
         contact = db.set_ad_contact2(u_id, num[0])[0]
 
+        ader = db.set_name(u_id)[0]
+
         time.sleep(0.1)
         await bot.send_message(u_id,
+                               str(n+1) + ".\n" +
                                "(" + str(city) + ")" + str(title) + "\n" +
                                lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
-                               "-----------------------------------" + "\n" +
+                               "-----------------------------------\n" +
                                " " + str(about) + "\n" +
-                               "-----------------------------------" + "\n" +
-                               "✉ " + str(contact),
+                               "-----------------------------------\n" +
+                               "✉ " + str(contact) + " - " + str(ader),
 
                                reply_markup=kb.adupd
                                )
@@ -699,8 +706,6 @@ async def about_setter(message: types.Message):
 
 
 # --------------------------------------------------------------------------------------------------------
-
-
 @dp.message_handler(state=Status.ad_naming)
 async def ad_namer(message: types.Message):
     xButton = InlineKeyboardButton(lt.xButton2[lang(message.from_user.id)], callback_data="-")
@@ -709,6 +714,7 @@ async def ad_namer(message: types.Message):
     adname = message.text
 
     db.add_ad(message.from_user.id, adname, db.set_city(message.from_user.id)[0])
+    db.ad_admin(message.from_user.id, db.set_name(message.from_user.id)[0])
     await Status.agefrom.set()
     await message.answer(lt.minage[lang(message.from_user.id)], reply_markup=mButton)
 
@@ -1372,6 +1378,23 @@ async def ad_city(message: types.Message):
 
                                reply_markup=kb.adset
                                )
+
+
+#  -------------------------------------------------------------------------------------------
+@dp.callback_query_handler(state=Status.A1)
+async def updater(call):
+    u_id = call.from_user.id
+
+    try:
+        if call.message:
+            if call.data == "del":
+                pass
+
+            elif call.data == "upd":
+                pass
+
+    except Exception as e:
+        print(repr(e))
 
 
 #  -------------------------------------------------------------------------------------------

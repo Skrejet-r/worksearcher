@@ -199,5 +199,10 @@ class dbfuncs:
             return self.cursor.execute('SELECT "id" FROM "ads" WHERE "user_id"=?',
                                        (user_id,)).fetchall()
 
+    def ad_admin(self, user_id, name):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ader_name"=? WHERE ("user_id", "ad_status")=(?,1)',
+                                       (name, user_id,))
+
     def close(self):
         self.connection.close()

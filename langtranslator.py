@@ -469,5 +469,5 @@ xad_contact = ("Send me your new additional contacts: (for example: email, numbe
 
 n_ads = ("Number of your ads: ",
          "Количество ваших объявленийКоличество ваших объявлений: ",
-         "Anzahl Ihrer Anzeigen:",
+         "Anzahl Ihrer Anzeigen: ",
          "عدد إعلاناتك: ")
