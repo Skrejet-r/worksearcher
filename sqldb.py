@@ -167,7 +167,7 @@ class dbfuncs:
     def upd_ad_city(self, user_id, city):
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ad_city"=? WHERE ("user_id", "ad_status")=(?, 1)',
-                                       (city, user_id))
+                                        (city, user_id))
 
     def set_ad_city2(self, user_id, ad_id):
         with self.connection:
@@ -203,6 +203,25 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ader_name"=? WHERE ("user_id", "ad_status")=(?,1)',
                                        (name, user_id,))
+
+    def all_ads(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
+                                        (user_id,)).fetchone()
+
+    def plus_ad(self, user_id):
+        with self.connection:
+            a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
+                                    (user_id,)).fetchone()
+            b = a[0] + 1
+            return b
+
+    def minus_ad(self, user_id):
+        with self.connection:
+            a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
+                                    (user_id,)).fetchone()
+            b = a[0] - 1
+            return b
 
     def close(self):
         self.connection.close()
