@@ -153,14 +153,19 @@ async def ad_adder(message: types.Message):
     CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
     mButton = InlineKeyboardMarkup().row(CancelB)
 
-    if db.set_status(message.from_user.id)[0] == 1:
-        await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
-        time.sleep(1)
-        await Status.ad_naming.set()
-        await message.answer(lt.adname[lang(message.from_user.id)])
-
+    if db.all_ads(message.from_user.id)[0] >= 3:
+        await message.answer(lt.pososi1[lang(message.from_user.id)])
+    elif db.all_ads(message.from_user.id)[0] < 0:
+        await message.answer(lt.pososi2[lang(message.from_user.id)])
     else:
-        await message.answer("?")
+        if db.set_status(message.from_user.id)[0] == 1:
+            await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
+            time.sleep(1)
+            await Status.ad_naming.set()
+            await message.answer(lt.adname[lang(message.from_user.id)])
+
+        else:
+            await message.answer("?")
 
 
 @dp.message_handler(commands=["my_ads"], state=Status.A1)
@@ -281,14 +286,19 @@ async def ad_adder(message: types.Message):
     CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
     mButton = InlineKeyboardMarkup().row(CancelB)
 
-    if db.set_status(message.from_user.id)[0] == 1:
-        await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
-        time.sleep(1)
-        await Status.ad_naming.set()
-        await message.answer(lt.adname[lang(message.from_user.id)])
-
+    if db.all_ads(message.from_user.id)[0] >= 3:
+        await message.answer(lt.pososi1[lang(message.from_user.id)])
+    elif db.all_ads(message.from_user.id)[0] < 0:
+        await message.answer(lt.pososi2[lang(message.from_user.id)])
     else:
-        await message.answer("?")
+        if db.set_status(message.from_user.id)[0] == 1:
+            await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
+            time.sleep(1)
+            await Status.ad_naming.set()
+            await message.answer(lt.adname[lang(message.from_user.id)])
+
+        else:
+            await message.answer("?")
 
 
 @dp.message_handler(lambda message: message.text in lt.chstatusb, state=Status.A1)
@@ -847,6 +857,7 @@ async def ad_setting(call):
                                            )
 
             elif call.data == "sav":
+                db.plus_ad(u_id)
                 db.ad_saving(u_id)
                 await Status.A1.set()
                 await bot.edit_message_text(chat_id=call.message.chat.id,
@@ -1388,7 +1399,10 @@ async def updater(call):
     try:
         if call.message:
             if call.data == "del":
-                pass
+                if db.all_ads(u_id)[0] < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
 
             elif call.data == "upd":
                 pass
