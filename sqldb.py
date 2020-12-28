@@ -223,5 +223,17 @@ class dbfuncs:
             b = a[0] - 1
             return b
 
+    def num_ad(self, user_id):
+        with self.connection:
+            a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
+                                        (user_id,)).fetchone()
+            return self.cursor.execute(f'UPDATE "ads" SET "n"={a} WHERE ("user_id", "ad_status")=(?,1)',
+                                       (user_id,))
+
+    def del_ad(self, user_id):
+        with self.connection:
+            a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
+                                        (user_id,)).fetchone()
+
     def close(self):
         self.connection.close()

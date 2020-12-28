@@ -171,7 +171,7 @@ async def ad_adder(message: types.Message):
 @dp.message_handler(commands=["my_ads"], state=Status.A1)
 async def all_ads(message: types.Message):
     u_id = message.from_user.id
-    ad_id = db.nn(message.from_user.id)  # all ids of ads
+    ad_id = db.nn(message.from_user.id).sort()  # all ids of ads
     await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
     for n in range(len(ad_id)):
         num = ad_id[n]  # only 1 certain id of certain ad
@@ -194,6 +194,8 @@ async def all_ads(message: types.Message):
 
         ader = db.set_name(u_id)[0]
 
+        nkb = n
+
         time.sleep(0.1)
         await bot.send_message(u_id,
                                str(n+1) + ".\n" +
@@ -204,7 +206,7 @@ async def all_ads(message: types.Message):
                                "-----------------------------------\n" +
                                "✉ " + str(contact) + " - " + str(ader),
 
-                               reply_markup=kb.adupd
+                               reply_markup=kb.adupd(nkb)
                                )
 
 
@@ -857,6 +859,7 @@ async def ad_setting(call):
                                            )
 
             elif call.data == "sav":
+                db.num_ad(u_id)
                 db.plus_ad(u_id)
                 db.ad_saving(u_id)
                 await Status.A1.set()
@@ -1395,6 +1398,16 @@ async def ad_city(message: types.Message):
 @dp.callback_query_handler(state=Status.A1)
 async def updater(call):
     u_id = call.from_user.id
+    ad_id = db.nn(u_id).sort()
+
+    B1 = InlineKeyboardButton(lt.b1[lang(u_id)], callback_data="b1")
+    B2 = InlineKeyboardButton(lt.b2[lang(u_id)], callback_data="b2")
+    B3 = InlineKeyboardButton(lt.b3[lang(u_id)], callback_data="b3")
+    B4 = InlineKeyboardButton(lt.b4[lang(u_id)], callback_data="b4")
+    B5 = InlineKeyboardButton(lt.b5[lang(u_id)], callback_data="b5")
+    CancelB = InlineKeyboardButton(lt.cancelb1[lang(u_id)], callback_data="-")
+
+    Changes_ad = InlineKeyboardMarkup().add(B1).add(B2).add(B3).add(B4).add(B5).add(CancelB)
 
     try:
         if call.message:
@@ -1404,7 +1417,237 @@ async def updater(call):
                 else:
                     db.minus_ad(u_id)
 
-            elif call.data == "upd":
+            elif call.data == "upd1":
+                n = ad_id[0]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd2":
+                n = ad_id[1]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd3":
+                n = ad_id[2]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd4":
+                n = ad_id[3]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd5":
+                n = ad_id[4]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd6":
+                n = ad_id[5]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd7":
+                n = ad_id[6]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd8":
+                n = ad_id[7]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+            elif call.data == "upd9":
+                n = ad_id[8]
+                await Status.ad_changing.set()
+                await bot.send_message(u_id, "———————————————————————————————")
+                min_age = db.set_ad_minage2(u_id, n)[0]
+                if min_age == 0:
+                    min_age = ""
+
+                max_age = db.set_ad_maxage2(u_id, n)[0]
+                if max_age == 999999:
+                    max_age = ""
+                await bot.send_message(u_id,
+                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+
+                                       reply_markup=Changes_ad
+                                       )
+
+    except Exception as e:
+        print(repr(e))
+
+
+@dp.callback_query_handler(state=Status.ad_changing)
+async def updating(call):
+    try:
+        if call.message:
+            if call.data == "-":
+                await Status.A1.set()
+
+            elif call.data == "b1":
+                pass
+
+            elif call.data == "b2":
+                pass
+
+            elif call.data == "b3":
+                pass
+
+            elif call.data == "b4":
+                pass
+
+            elif call.data == "b5":
                 pass
 
     except Exception as e:

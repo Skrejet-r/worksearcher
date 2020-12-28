@@ -37,3 +37,6 @@ class Status(StatesGroup):
     xadcity = State()
     xadcontact = State()
     xadabout = State()
+
+    # bljat eto pizdez
+    ad_changing = State()

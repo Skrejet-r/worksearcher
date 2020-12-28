@@ -405,6 +405,11 @@ xButton2 = ("No matter",
             "Egal",
             "لا يهم")
 
+cancelb1 = ("⬅Back",
+           "⬅Назад",
+           "⬅Zurück",
+           "⬅العودة")
+
 cancelb = ("cancel",
            "отменить",
            "abbrechen",
