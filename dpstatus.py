@@ -37,3 +37,12 @@ class Status(StatesGroup):
     xadcity = State()
     xadcontact = State()
     xadabout = State()
+
+    # extra 2 (upd/del in all_ads)
+    ad_changing = State()
+    xad_naming2 = State()
+    xagefrom2 = State()
+    xageto2 = State()
+    xadcity2 = State()
+    xadcontact2 = State()
+    xadabout2 = State()

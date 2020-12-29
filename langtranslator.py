@@ -405,6 +405,11 @@ xButton2 = ("No matter",
             "Egal",
             "لا يهم")
 
+cancelb1 = ("⬅Back",
+            "⬅Назад",
+            "⬅Zurück",
+            "⬅العودة")
+
 cancelb = ("cancel",
            "отменить",
            "abbrechen",
@@ -481,3 +486,28 @@ pososi2 = ("",  # if a<3
            "",
            "",
            "")
+
+dtitle = ("Title changed✅",
+          "Заголовок был изменен✅",
+          "Der Titel wurde geändert✅",
+          "تم تغيير العنوان✅")
+
+dage = ("Age changed✅",
+        "Возраст изменен✅",
+        "Alter geändert✅",
+        "تغير العمر✅")
+
+dabout = ("Description changed✅",
+          "Описание изменено✅",
+          "Beschreibung geändert✅",
+          "تم تغيير الوصف✅")
+
+dcontact = ("Contacts changed✅",
+            "Контакты изменены✅",
+            "Kontakte geändert✅",
+            "تغيرت جهات الاتصال✅")
+
+dcity = ("City changed✅",
+         "Город изменен✅",
+         "Stadt verändert✅",
+         "تغيرت المدينة✅")
