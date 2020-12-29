@@ -153,9 +153,9 @@ async def ad_adder(message: types.Message):
     CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
     mButton = InlineKeyboardMarkup().row(CancelB)
 
-    if db.all_ads(message.from_user.id)[0] >= 3:
+    if int(db.all_ads(message.from_user.id)[0]) >= 3:
         await message.answer(lt.pososi1[lang(message.from_user.id)])
-    elif db.all_ads(message.from_user.id)[0] < 0:
+    elif int(db.all_ads(message.from_user.id)[0]) < 0:
         await message.answer(lt.pososi2[lang(message.from_user.id)])
     else:
         if db.set_status(message.from_user.id)[0] == 1:
@@ -171,7 +171,7 @@ async def ad_adder(message: types.Message):
 @dp.message_handler(commands=["my_ads"], state=Status.A1)
 async def all_ads(message: types.Message):
     u_id = message.from_user.id
-    ad_id = db.nn(message.from_user.id).sort()  # all ids of ads
+    ad_id = db.nn(u_id)  # all ids of ads
     await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
     for n in range(len(ad_id)):
         num = ad_id[n]  # only 1 certain id of certain ad
@@ -206,7 +206,7 @@ async def all_ads(message: types.Message):
                                "-----------------------------------\n" +
                                "✉ " + str(contact) + " - " + str(ader),
 
-                               reply_markup=kb.adupd(nkb)
+                               reply_markup=kb.adupd[nkb]
                                )
 
 
@@ -288,9 +288,9 @@ async def ad_adder(message: types.Message):
     CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
     mButton = InlineKeyboardMarkup().row(CancelB)
 
-    if db.all_ads(message.from_user.id)[0] >= 3:
+    if int(db.all_ads(message.from_user.id)[0]) >= 3:
         await message.answer(lt.pososi1[lang(message.from_user.id)])
-    elif db.all_ads(message.from_user.id)[0] < 0:
+    elif int(db.all_ads(message.from_user.id)[0]) < 0:
         await message.answer(lt.pososi2[lang(message.from_user.id)])
     else:
         if db.set_status(message.from_user.id)[0] == 1:
@@ -859,8 +859,8 @@ async def ad_setting(call):
                                            )
 
             elif call.data == "sav":
-                db.num_ad(u_id)
                 db.plus_ad(u_id)
+                db.num_ad(u_id)
                 db.ad_saving(u_id)
                 await Status.A1.set()
                 await bot.edit_message_text(chat_id=call.message.chat.id,
@@ -999,13 +999,14 @@ async def ad_updating(call):
                 await Status.xadcontact.set()
 
             elif call.data == "b5":
+                xButton = InlineKeyboardButton(lt.xButton1[lang(call.from_user.id)], callback_data="-")
+                mButton = InlineKeyboardMarkup().row(xButton)
+
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text="🔄", reply_markup=None)
-                await bot.send_message(u_id, lt.ad_city[lang(u_id)])
-                time.sleep(0.1)
+                await bot.send_message(u_id, lt.citing1[lang(u_id)], reply_markup=mButton)
                 await Status.xadcity.set()
-                await bot.send_message(u_id, lt.ad_city1[lang(u_id)])
 
             elif call.data == "-":
                 await bot.edit_message_text(chat_id=call.message.chat.id,
@@ -1398,7 +1399,7 @@ async def ad_city(message: types.Message):
 @dp.callback_query_handler(state=Status.A1)
 async def updater(call):
     u_id = call.from_user.id
-    ad_id = db.nn(u_id).sort()
+    ad_id = db.nn(u_id)
 
     B1 = InlineKeyboardButton(lt.b1[lang(u_id)], callback_data="b1")
     B2 = InlineKeyboardButton(lt.b2[lang(u_id)], callback_data="b2")
@@ -1412,12 +1413,12 @@ async def updater(call):
     try:
         if call.message:
             if call.data == "del":
-                if db.all_ads(u_id)[0] < 0:
+                if int(db.all_ads(u_id)[0]) < 0:
                     await bot.send_message(u_id, "?")
                 else:
                     db.minus_ad(u_id)
 
-            elif call.data == "upd1":
+            elif call.data == "u1":
                 n = ad_id[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1440,7 +1441,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd2":
+            elif call.data == "u2":
                 n = ad_id[1]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1463,7 +1464,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd3":
+            elif call.data == "u3":
                 n = ad_id[2]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1486,7 +1487,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd4":
+            elif call.data == "u4":
                 n = ad_id[3]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1509,7 +1510,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd5":
+            elif call.data == "u5":
                 n = ad_id[4]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1532,7 +1533,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd6":
+            elif call.data == "u6":
                 n = ad_id[5]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1555,7 +1556,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd7":
+            elif call.data == "u7":
                 n = ad_id[6]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1578,7 +1579,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd8":
+            elif call.data == "u8":
                 n = ad_id[7]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1601,7 +1602,7 @@ async def updater(call):
                                        reply_markup=Changes_ad
                                        )
 
-            elif call.data == "upd9":
+            elif call.data == "u9":
                 n = ad_id[8]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
@@ -1630,28 +1631,111 @@ async def updater(call):
 
 @dp.callback_query_handler(state=Status.ad_changing)
 async def updating(call):
+    u_id = call.from_user.id
     try:
         if call.message:
             if call.data == "-":
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text=lt.cancelb1)
                 await Status.A1.set()
+                u_id = call.from_user.id
+                ad_id = db.nn(call.from_user.id).sort()  # all ids of ads
+                await bot.send_message(u_id, lt.n_ads[lang(u_id)] + str(len(ad_id)))
+                for n in range(len(ad_id)):
+                    num = ad_id[n]  # only 1 certain id of certain ad
+
+                    title = db.set_ad_title2(u_id, num[0])[0]
+
+                    min_age = db.set_ad_minage2(u_id, num[0])[0]
+                    if min_age == 0:
+                        min_age = ""
+
+                    max_age = db.set_ad_maxage2(u_id, num[0])[0]
+                    if max_age == 999999:
+                        max_age = ""
+
+                    about = db.set_ad_about2(u_id, num[0])[0]
+
+                    city = db.set_ad_city2(u_id, num[0])[0]
+
+                    contact = db.set_ad_contact2(u_id, num[0])[0]
+
+                    ader = db.set_name(u_id)[0]
+
+                    nkb = n
+
+                    time.sleep(0.1)
+                    await bot.send_message(u_id,
+                                           str(n + 1) + ".\n" +
+                                           "(" + str(city) + ")" + str(title) + "\n" +
+                                           lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                           "-----------------------------------\n" +
+                                           " " + str(about) + "\n" +
+                                           "-----------------------------------\n" +
+                                           "✉ " + str(contact) + " - " + str(ader),
+
+                                           reply_markup=kb.adupd(nkb)
+                                           )
 
             elif call.data == "b1":
-                pass
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="🔄", reply_markup=None)
+                await Status.xad_naming2.set()
+                await bot.send_message(u_id, lt.adname[lang(u_id)])
 
             elif call.data == "b2":
-                pass
+                xButton = InlineKeyboardButton(lt.xButton2[lang(u_id)], callback_data="-")
+                mButton = InlineKeyboardMarkup().row(xButton)
+
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="🔄", reply_markup=None)
+
+                await Status.xagefrom2.set()
+                await bot.send_message(u_id, lt.minage[lang(u_id)], reply_markup=mButton)
 
             elif call.data == "b3":
-                pass
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="🔄", reply_markup=None)
+                await Status.xadabout2.set()
+                await bot.send_message(u_id, lt.adabout[lang(u_id)])
 
             elif call.data == "b4":
-                pass
+                xButton = InlineKeyboardButton(lt.xButton1[lang(call.from_user.id)], callback_data="-")
+                mButton = InlineKeyboardMarkup().row(xButton)
+
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="🔄", reply_markup=None)
+                await bot.send_message(u_id, lt.xad_contact[lang(u_id)], reply_markup=mButton)
+                await Status.xadcontact2.set()
 
             elif call.data == "b5":
-                pass
+                xButton = InlineKeyboardButton(lt.xButton1[lang(call.from_user.id)], callback_data="-")
+                mButton = InlineKeyboardMarkup().row(xButton)
+
+                await bot.edit_message_text(chat_id=call.message.chat.id,
+                                            message_id=call.message.message_id,
+                                            text="🔄", reply_markup=None)
+                await bot.send_message(u_id, lt.citing1[lang(u_id)], reply_markup=mButton)
+                await Status.xadcity2.set()
 
     except Exception as e:
         print(repr(e))
+
+
+@dp.callback_query_handler(state=Status.xad_naming2)
+async def ad_namer2(message: types.Message):
+    u_id = message.from_user.id
+
+    adname = message.text
+    db.upd_ad_title(u_id, adname)
+
+    await Status.A1.set()
+    await bot.send_message(u_id, lt.dtitle[lang(u_id)])
 
 
 #  -------------------------------------------------------------------------------------------

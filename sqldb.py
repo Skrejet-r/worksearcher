@@ -214,26 +214,29 @@ class dbfuncs:
             a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
                                     (user_id,)).fetchone()
             b = a[0] + 1
-            return b
+            return self.cursor.execute('UPDATE "users" SET "n_ads" = ? WHERE "user_id"=?',
+                                       (int(b), user_id,))
 
     def minus_ad(self, user_id):
         with self.connection:
             a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
                                     (user_id,)).fetchone()
             b = a[0] - 1
-            return b
+            return self.cursor.execute('UPDATE "users" SET "n_ads"=? WHERE "user_id"=?',
+                                       (int(b), user_id,))
 
     def num_ad(self, user_id):
         with self.connection:
             a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
                                         (user_id,)).fetchone()
-            return self.cursor.execute(f'UPDATE "ads" SET "n"={a} WHERE ("user_id", "ad_status")=(?,1)',
-                                       (user_id,))
+            return self.cursor.execute('UPDATE "ads" SET "n"=? WHERE ("user_id", "ad_status")=(?,1)',
+                                       (int(a[0]), user_id,))
 
     def del_ad(self, user_id):
         with self.connection:
             a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
                                         (user_id,)).fetchone()
+            return a
 
     def close(self):
         self.connection.close()
