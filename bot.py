@@ -1419,7 +1419,8 @@ async def updater(call):
                     db.minus_ad(u_id)
 
             elif call.data == "u1":
-                n = ad_id[0]
+                n1 = ad_id[0]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1442,7 +1443,8 @@ async def updater(call):
                                        )
 
             elif call.data == "u2":
-                n = ad_id[1]
+                n1 = ad_id[1]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1465,7 +1467,8 @@ async def updater(call):
                                        )
 
             elif call.data == "u3":
-                n = ad_id[2]
+                n1 = ad_id[2]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1488,7 +1491,8 @@ async def updater(call):
                                        )
 
             elif call.data == "u4":
-                n = ad_id[3]
+                n1 = ad_id[3]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1511,7 +1515,8 @@ async def updater(call):
                                        )
 
             elif call.data == "u5":
-                n = ad_id[4]
+                n1 = ad_id[4]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1534,7 +1539,8 @@ async def updater(call):
                                        )
 
             elif call.data == "u6":
-                n = ad_id[5]
+                n1 = ad_id[5]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1560,27 +1566,29 @@ async def updater(call):
                 n = ad_id[6]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
-                min_age = db.set_ad_minage2(u_id, n)[0]
+                min_age = db.set_ad_minage2(u_id, n[0])[0]
                 if min_age == 0:
                     min_age = ""
 
-                max_age = db.set_ad_maxage2(u_id, n)[0]
+                max_age = db.set_ad_maxage2(u_id, n[0])[0]
                 if max_age == 999999:
                     max_age = ""
                 await bot.send_message(u_id,
-                                       "(" + str(db.set_ad_city2(u_id, n)[0]) + ")" + str(db.set_ad_title2(u_id, n)[0])
+                                       "(" + str(db.set_ad_city2(u_id, n[0])[0]) + ")" +
+                                       str(db.set_ad_title2(u_id, n[0])[0])
                                        + "\n" +
                                        lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
                                        "-----------------------------------\n" +
-                                       " " + str(db.set_ad_about2(u_id, n)[0]) + "\n" +
+                                       " " + str(db.set_ad_about2(u_id, n[0])[0]) + "\n" +
                                        "-----------------------------------\n" +
-                                       "✉ " + str(db.set_ad_contact2(u_id, n)[0]) + " - " + str(db.set_name(u_id)),
+                                       "✉ " + str(db.set_ad_contact2(u_id, n[0])[0]) + " - " + str(db.set_name(u_id)),
 
                                        reply_markup=Changes_ad
                                        )
 
             elif call.data == "u8":
-                n = ad_id[7]
+                n1 = ad_id[7]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1603,7 +1611,8 @@ async def updater(call):
                                        )
 
             elif call.data == "u9":
-                n = ad_id[8]
+                n1 = ad_id[8]
+                n = n1[0]
                 await Status.ad_changing.set()
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
@@ -1637,10 +1646,9 @@ async def updating(call):
             if call.data == "-":
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
-                                            text=lt.cancelb1)
+                                            text=lt.cancelb1[lang(u_id)])
                 await Status.A1.set()
-                u_id = call.from_user.id
-                ad_id = db.nn(call.from_user.id).sort()  # all ids of ads
+                ad_id = db.nn(u_id)  # all ids of ads
                 await bot.send_message(u_id, lt.n_ads[lang(u_id)] + str(len(ad_id)))
                 for n in range(len(ad_id)):
                     num = ad_id[n]  # only 1 certain id of certain ad
