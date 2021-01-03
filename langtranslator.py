@@ -355,15 +355,15 @@ adname = ("What title will you give?",
           "Welchen Titel werden Sie geben?",
           "ما هو اللقب الذي ستمنحه؟")
 
-minage = ("Minimum age?",
-          "Минимальный возраст?",
-          "Minimales Alter?",
-          "الحد الإدنى للعمر؟")
+minage = ("Minimum age? (just a number)",
+          "Минимальный возраст? (просто число)",
+          "Minimales Alter? (nur eine Nummer)",
+          "الحد الإدنى للعمر؟ (مجرد رقم)")
 
-maxage = ("Maximum age?",
-          "Максимальный возраст?",
-          "Maximales Alter?",
-          "العمر الأقصى؟")
+maxage = ("Maximum age? (just a number)",
+          "Максимальный возраст? (просто число)",
+          "Maximales Alter? (nur eine Nummer)",
+          "العمر الأقصى؟ (مجرد رقم)")
 
 adabout = ("Describe:",
            "Опишите:",
@@ -511,3 +511,8 @@ dcity = ("City changed✅",
          "Город изменен✅",
          "Stadt verändert✅",
          "تغيرت المدينة✅")
+
+aderrror1 = ("You have no ads",
+             "У тебя нет объявлений",
+             "Sie haben keine Anzeigen",
+             "ليس لديك إعلانات")
