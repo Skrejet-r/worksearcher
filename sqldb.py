@@ -243,5 +243,10 @@ class dbfuncs:
             return self.cursor.execute('UPDATE "ads" SET "ad_status"=1 WHERE ("user_id", "id")=(?,?)',
                                        (user_id, ad_id,))
 
+    def change_ader_all_ads(self, user_id, name):
+        with self.connection:
+            return self.cursor.execute('UPDATE "ads" SET "ader_name"=? WHERE "user_id"=?',
+                                       (name, user_id,))
+
     def close(self):
         self.connection.close()

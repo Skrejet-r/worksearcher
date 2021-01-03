@@ -512,7 +512,7 @@ dcity = ("City changed✅",
          "Stadt verändert✅",
          "تغيرت المدينة✅")
 
-aderrror1 = ("You have no ads",
+aderror1 = ("You have no ads",
              "У тебя нет объявлений",
              "Sie haben keine Anzeigen",
              "ليس لديك إعلانات")
