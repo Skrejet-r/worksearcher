@@ -170,47 +170,51 @@ async def ad_adder(message: types.Message):
 
 @dp.message_handler(commands=["my_ads"], state=Status.A1)
 async def all_ads(message: types.Message):
-    u_id = message.from_user.id
-    ad_id = db.nn(u_id)  # all ids of ads
-    await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
-    for n in range(len(ad_id)):
-        num = ad_id[n]  # only 1 certain id of certain ad
+    if True:
+        u_id = message.from_user.id
+        ad_id = db.nn(u_id)  # all ids of ads
+        await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
+        for n in range(len(ad_id)):
+            num = ad_id[n]  # only 1 certain id of certain ad
 
-        title = db.set_ad_title2(u_id, num[0])[0]
+            title = db.set_ad_title2(u_id, num[0])[0]
 
-        min_age = db.set_ad_minage2(u_id, num[0])[0]
-        if min_age == 0:
-            min_age = ""
+            min_age = db.set_ad_minage2(u_id, num[0])[0]
+            if min_age == 0:
+                min_age = ""
 
-        max_age = db.set_ad_maxage2(u_id, num[0])[0]
-        if max_age == 999999:
-            max_age = ""
+            max_age = db.set_ad_maxage2(u_id, num[0])[0]
+            if max_age == 999999:
+                max_age = ""
 
-        about = db.set_ad_about2(u_id, num[0])[0]
+            about = db.set_ad_about2(u_id, num[0])[0]
 
-        city = db.set_ad_city2(u_id, num[0])[0]
+            city = db.set_ad_city2(u_id, num[0])[0]
 
-        contact = db.set_ad_contact2(u_id, num[0])[0]
+            contact = db.set_ad_contact2(u_id, num[0])[0]
 
-        ader = db.set_name(u_id)[0]
+            ader = db.set_name(u_id)[0]
 
-        nkb = n
+            nkb = n
 
-        time.sleep(0.1)
-        await bot.send_message(u_id,
-                               str(n+1) + ".\n" +
-                               "(" + str(city) + ")" + str(title) + "\n" +
-                               lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
-                               "-----------------------------------\n" +
-                               " " + str(about) + "\n" +
-                               "-----------------------------------\n" +
-                               "✉ " + str(contact) + " - " + str(ader),
+            time.sleep(0.1)
+            await bot.send_message(u_id,
+                                   str(n+1) + ".\n" +
+                                   "(" + str(city) + ")" + str(title) + "\n" +
+                                   lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                   "-----------------------------------\n" +
+                                   " " + str(about) + "\n" +
+                                   "-----------------------------------\n" +
+                                   "✉ " + str(contact) + " - " + str(ader),
 
-                               reply_markup=kb.adupd[nkb]
-                               )
+                                   reply_markup=kb.adupd[nkb]
+                                   )
+        else:
+            await bot.send_message(u_id, lt.aderror1[lang(u_id)])
 
 
-# -------------------------------------------------------------------------------------------------
+# ---------------------------------------------
+# +----------------------------------------------------
 @dp.message_handler(lambda message: message.text in lt.helpb, state=Status.A1)
 async def helper(message: types.Message):
     userstatus = db.set_status(message.from_user.id)[0]
@@ -1441,11 +1445,13 @@ async def updater(call):
 
                                        reply_markup=Changes_ad
                                        )
+                db.avaiable(u_id, n)
 
             elif call.data == "u2":
                 n1 = ad_id[1]
                 n = n1[0]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
                 if min_age == 0:
@@ -1470,6 +1476,7 @@ async def updater(call):
                 n1 = ad_id[2]
                 n = n1[0]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
                 if min_age == 0:
@@ -1494,6 +1501,7 @@ async def updater(call):
                 n1 = ad_id[3]
                 n = n1[0]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
                 if min_age == 0:
@@ -1518,6 +1526,7 @@ async def updater(call):
                 n1 = ad_id[4]
                 n = n1[0]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
                 if min_age == 0:
@@ -1542,6 +1551,7 @@ async def updater(call):
                 n1 = ad_id[5]
                 n = n1[0]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
                 if min_age == 0:
@@ -1565,6 +1575,7 @@ async def updater(call):
             elif call.data == "u7":
                 n = ad_id[6]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n[0])[0]
                 if min_age == 0:
@@ -1590,6 +1601,7 @@ async def updater(call):
                 n1 = ad_id[7]
                 n = n1[0]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
                 if min_age == 0:
@@ -1614,6 +1626,7 @@ async def updater(call):
                 n1 = ad_id[8]
                 n = n1[0]
                 await Status.ad_changing.set()
+                db.avaiable(u_id, n)
                 await bot.send_message(u_id, "———————————————————————————————")
                 min_age = db.set_ad_minage2(u_id, n)[0]
                 if min_age == 0:
@@ -1690,19 +1703,17 @@ async def updating(call):
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text="🔄", reply_markup=None)
+
                 await Status.xad_naming2.set()
                 await bot.send_message(u_id, lt.adname[lang(u_id)])
 
             elif call.data == "b2":
-                xButton = InlineKeyboardButton(lt.xButton2[lang(u_id)], callback_data="-")
-                mButton = InlineKeyboardMarkup().row(xButton)
-
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text="🔄", reply_markup=None)
 
                 await Status.xagefrom2.set()
-                await bot.send_message(u_id, lt.minage[lang(u_id)], reply_markup=mButton)
+                await bot.send_message(u_id, lt.minage[lang(u_id)])
 
             elif call.data == "b3":
                 await bot.edit_message_text(chat_id=call.message.chat.id,
@@ -1712,40 +1723,92 @@ async def updating(call):
                 await bot.send_message(u_id, lt.adabout[lang(u_id)])
 
             elif call.data == "b4":
-                xButton = InlineKeyboardButton(lt.xButton1[lang(call.from_user.id)], callback_data="-")
-                mButton = InlineKeyboardMarkup().row(xButton)
-
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text="🔄", reply_markup=None)
-                await bot.send_message(u_id, lt.xad_contact[lang(u_id)], reply_markup=mButton)
+                await bot.send_message(u_id, lt.xad_contact[lang(u_id)])
                 await Status.xadcontact2.set()
 
             elif call.data == "b5":
-                xButton = InlineKeyboardButton(lt.xButton1[lang(call.from_user.id)], callback_data="-")
-                mButton = InlineKeyboardMarkup().row(xButton)
-
                 await bot.edit_message_text(chat_id=call.message.chat.id,
                                             message_id=call.message.message_id,
                                             text="🔄", reply_markup=None)
-                await bot.send_message(u_id, lt.citing1[lang(u_id)], reply_markup=mButton)
+                await bot.send_message(u_id, lt.citing1[lang(u_id)])
                 await Status.xadcity2.set()
 
     except Exception as e:
         print(repr(e))
 
 
-@dp.callback_query_handler(state=Status.xad_naming2)
+@dp.message_handler(state=Status.xad_naming2)
 async def ad_namer2(message: types.Message):
     u_id = message.from_user.id
 
     adname = message.text
     db.upd_ad_title(u_id, adname)
+    db.ad_saving(u_id)
 
-    await Status.A1.set()
     await bot.send_message(u_id, lt.dtitle[lang(u_id)])
+    await Status.A1.set()
 
 
+@dp.message_handler(state=Status.xagefrom2)
+async def minage_changer(message: types.Message):
+    u_id = message.from_user.id
+
+    minage = message.text
+    db.upd_ad_minage(u_id, minage)
+
+    await message.answer(lt.maxage[lang(u_id)])
+    await Status.xageto2.set()
+
+
+@dp.message_handler(state=Status.xageto2)
+async def maxage_changer(message: types.Message):
+    u_id = message.from_user.id
+
+    maxage = message.text
+    db.upd_ad_maxage(u_id, maxage)
+    db.ad_saving(u_id)
+
+    await message.answer(lt.dage[lang(u_id)])
+    await Status.A1.set()
+
+
+@dp.message_handler(state=Status.xadabout2)
+async def about_changer(message: types.Message):
+    u_id = message.from_user.id
+
+    about = message.text
+    db.upd_ad_about(u_id, about)
+    db.ad_saving(u_id)
+
+    await message.answer(lt.dabout[lang(u_id)])
+    await Status.A1.set()
+
+
+@dp.message_handler(state=Status.xadcontact2)
+async def contact_changer(message: types.Message):
+    u_id = message.from_user.id
+
+    contacts = message.text
+    db.upd_ad_contact(u_id, contacts)
+    db.ad_saving(u_id)
+
+    await message.answer(lt.dcontact[lang(u_id)])
+    await Status.A1.set()
+
+
+@dp.message_handler(state=Status.xadcity2)
+async def contact_changer(message: types.Message):
+    u_id = message.from_user.id
+
+    city = message.text
+    db.upd_ad_contact(u_id, city)
+    db.ad_saving(u_id)
+
+    await message.answer(lt.dcity[lang(u_id)])
+    await Status.A1.set()
 #  -------------------------------------------------------------------------------------------
 
 
