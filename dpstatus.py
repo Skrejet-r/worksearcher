@@ -46,3 +46,6 @@ class Status(StatesGroup):
     xadcity2 = State()
     xadcontact2 = State()
     xadabout2 = State()
+
+    # user 0
+    search = State()
