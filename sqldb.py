@@ -232,11 +232,10 @@ class dbfuncs:
             return self.cursor.execute('UPDATE "ads" SET "n"=? WHERE ("user_id", "ad_status")=(?,1)',
                                        (int(a[0]), user_id,))
 
-    def del_ad(self, user_id):
+    def del_ad(self, ad_id):
         with self.connection:
-            a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
-                                        (user_id,)).fetchone()
-            return a
+            return self.cursor.execute('DELETE FROM "ads" WHERE "id"=?',
+                                       (ad_id,)).fetchone()
 
     def avaiable(self, user_id, ad_id):
         with self.connection:
@@ -247,6 +246,19 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('UPDATE "ads" SET "ader_name"=? WHERE "user_id"=?',
                                        (name, user_id,))
+
+    def getting_all_suitable_ads(self, city, age):
+        with self.connection:
+            return self.cursor.execute('SELECT "id" FROM "ads" WHERE ("ad_city")=(?) AND'
+                                       '                              ("ad_minage")<=(?) AND'
+                                       '                              ("ad_maxage")>=(?)',
+                                       (city, age, age)).fetchall()
+
+    def ad(self, ad_id):
+        with self.connection:
+            return self.cursor.execute('SELECT ("ad_name", "ader_name",'
+                                       '"ad_city", "contact") FROM "ads" WHERE "id"=?',
+                                       (ad_id,)).fetchone()
 
     def close(self):
         self.connection.close()

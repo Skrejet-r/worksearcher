@@ -3,6 +3,7 @@ import logging
 import langtranslator as lt
 import keyboards as kb
 import time
+import random
 
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, \
@@ -150,70 +151,103 @@ async def deleting(message: types.Message, state: FSMContext):
 
 @dp.message_handler(commands=["add_ad"], state=Status.A1)
 async def ad_adder(message: types.Message):
-    CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
-    mButton = InlineKeyboardMarkup().row(CancelB)
+    if db.set_status(message.from_user.id)[0] == 1:
+        CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
+        mButton = InlineKeyboardMarkup().row(CancelB)
 
-    if int(db.all_ads(message.from_user.id)[0]) >= 3:
-        await message.answer(lt.pososi1[lang(message.from_user.id)])
-    elif int(db.all_ads(message.from_user.id)[0]) < 0:
-        await message.answer(lt.pososi2[lang(message.from_user.id)])
-    else:
-        if db.set_status(message.from_user.id)[0] == 1:
-            await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
-            time.sleep(1)
-            await Status.ad_naming.set()
-            await message.answer(lt.adname[lang(message.from_user.id)])
-
+        if int(db.all_ads(message.from_user.id)[0]) >= 3:
+            await message.answer(lt.pososi1[lang(message.from_user.id)])
+        elif int(db.all_ads(message.from_user.id)[0]) < 0:
+            await message.answer(lt.pososi2[lang(message.from_user.id)])
         else:
-            await message.answer("?")
+            if db.set_status(message.from_user.id)[0] == 1:
+                await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
+                time.sleep(1)
+                await Status.ad_naming.set()
+                await message.answer(lt.adname[lang(message.from_user.id)])
+
+            else:
+                await message.answer("?")
+    else:
+        await message.answer("?")
 
 
 @dp.message_handler(commands=["my_ads"], state=Status.A1)
 async def all_ads(message: types.Message):
-    if True:
-        u_id = message.from_user.id
-        ad_id = db.nn(u_id)  # all ids of ads
-        await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
-        for n in range(len(ad_id)):
-            num = ad_id[n]  # only 1 certain id of certain ad
+    if db.set_status(message.from_user.id)[0] == 1:
+        if True:
+            u_id = message.from_user.id
+            ad_id = db.nn(u_id)  # all ids of ads
+            await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
+            for n in range(len(ad_id)):
+                num = ad_id[n]  # only 1 certain id of certain ad
 
-            title = db.set_ad_title2(u_id, num[0])[0]
+                title = db.set_ad_title2(u_id, num[0])[0]
 
-            min_age = db.set_ad_minage2(u_id, num[0])[0]
-            if min_age == 0:
-                min_age = ""
+                min_age = db.set_ad_minage2(u_id, num[0])[0]
+                if min_age == 0:
+                    min_age = ""
 
-            max_age = db.set_ad_maxage2(u_id, num[0])[0]
-            if max_age == 999999:
-                max_age = ""
+                max_age = db.set_ad_maxage2(u_id, num[0])[0]
+                if max_age == 999999:
+                    max_age = ""
 
-            about = db.set_ad_about2(u_id, num[0])[0]
+                about = db.set_ad_about2(u_id, num[0])[0]
 
-            city = db.set_ad_city2(u_id, num[0])[0]
+                city = db.set_ad_city2(u_id, num[0])[0]
 
-            contact = db.set_ad_contact2(u_id, num[0])[0]
+                contact = db.set_ad_contact2(u_id, num[0])[0]
 
-            ader = db.set_name(u_id)[0]
+                ader = db.set_name(u_id)[0]
 
-            nkb = n
+                nkb = n
 
-            time.sleep(0.1)
-            await bot.send_message(u_id,
-                                   str(n+1) + ".\n" +
-                                   "(" + str(city) + ")" + str(title) + "\n" +
-                                   lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
-                                   "-----------------------------------\n" +
-                                   " " + str(about) + "\n" +
-                                   "-----------------------------------\n" +
-                                   "✉ " + str(contact) + " - " + str(ader),
+                time.sleep(0.1)
+                await bot.send_message(u_id,
+                                       str(n+1) + ".\n" +
+                                       "(" + str(city) + ")" + str(title) + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(about) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(contact) + " - " + str(ader),
 
-                                   reply_markup=kb.adupd[nkb]
-                                   )
-        else:
-            await bot.send_message(u_id, lt.aderror1[lang(u_id)])
+                                       reply_markup=kb.adupd[nkb]
+                                       )
+            else:
+                await bot.send_message(u_id, lt.aderror1[lang(u_id)])
+    else:
+        await message.answer("?")
 
 
-# ---------------------------------------------
+@dp.message_handler(commands=["search"], state=Status.A1)
+async def job_searching(message: types.Message):
+    u_id = message.from_user.id
+    if db.set_status(u_id)[0] == 0:
+        await Status.search.set()
+
+        MenuB = KeyboardButton(lt.menub[lang(u_id)], callback_data="inmenu")
+        NextB = KeyboardButton(lt.nextb[lang(u_id)], callback_data="next")
+
+        searchkb = ReplyKeyboardMarkup(resize_keyboard=True).row(MenuB, NextB)
+
+        await message.answer(lt.searching[lang(u_id)], reply_markup=searchkb)
+
+        age = db.set_age(u_id)[0]
+        city = db.set_city(u_id)[0]
+        ids = db.getting_all_suitable_ads(city, age)
+        num_ids = len(ids)
+        if num_ids == 0:
+            await message.answer(lt.nocitieserror[lang(u_id)])
+            await Status.A1.set()
+        a = db.ad((ids[0])[0])
+        print(a)
+        await message.answer("!")
+
+    else:
+        await message.answer("?")
+
+
 # +----------------------------------------------------
 @dp.message_handler(lambda message: message.text in lt.helpb, state=Status.A1)
 async def helper(message: types.Message):
@@ -289,22 +323,25 @@ async def chabout(message: types.Message):
 
 @dp.message_handler(lambda message: message.text in lt.addb, state=Status.A1)
 async def ad_adder(message: types.Message):
-    CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
-    mButton = InlineKeyboardMarkup().row(CancelB)
+    if db.set_status(message.from_user.id)[0] == 1:
+        CancelB = InlineKeyboardButton(lt.cancelb[lang(message.from_user.id)], callback_data="-")
+        mButton = InlineKeyboardMarkup().row(CancelB)
 
-    if int(db.all_ads(message.from_user.id)[0]) >= 3:
-        await message.answer(lt.pososi1[lang(message.from_user.id)])
-    elif int(db.all_ads(message.from_user.id)[0]) < 0:
-        await message.answer(lt.pososi2[lang(message.from_user.id)])
-    else:
-        if db.set_status(message.from_user.id)[0] == 1:
-            await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
-            time.sleep(1)
-            await Status.ad_naming.set()
-            await message.answer(lt.adname[lang(message.from_user.id)])
-
+        if int(db.all_ads(message.from_user.id)[0]) >= 3:
+            await message.answer(lt.pososi1[lang(message.from_user.id)])
+        elif int(db.all_ads(message.from_user.id)[0]) < 0:
+            await message.answer(lt.pososi2[lang(message.from_user.id)])
         else:
-            await message.answer("?")
+            if db.set_status(message.from_user.id)[0] == 1:
+                await message.answer(lt.adform[lang(message.from_user.id)], reply_markup=mButton)
+                time.sleep(1)
+                await Status.ad_naming.set()
+                await message.answer(lt.adname[lang(message.from_user.id)])
+
+            else:
+                await message.answer("?")
+    else:
+        await message.answer("?")
 
 
 @dp.message_handler(lambda message: message.text in lt.chstatusb, state=Status.A1)
@@ -337,14 +374,12 @@ async def settings(message: types.Message):
     AgeB = KeyboardButton(lt.chageb[lang(uid)], callback_data="age")
     AboutB = KeyboardButton(lt.chaboutb[lang(uid)], callback_data="about")
     CityB = KeyboardButton(lt.chcityb[lang(uid)], callback_data="city")
-    SsB = KeyboardButton(lt.settsearchb[lang(uid)], callback_data="sets")
     DelB = KeyboardButton(lt.deleteb[lang(uid)], callback_data="del")
     StatB = KeyboardButton(lt.chstatusb[lang(uid)], callback_data="stat")
 
     menu01 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB, LangB) \
         .row(NameB, AgeB, CityB) \
-        .row(AboutB, StatB, DelB) \
-        .row(SsB)
+        .row(AboutB, StatB, DelB)
 
     menu11 = ReplyKeyboardMarkup(resize_keyboard=True).row(BackB, ProfileB, LangB) \
         .row(NameB, CityB, StatB) \
@@ -355,7 +390,30 @@ async def settings(message: types.Message):
     await message.answer("⚙", reply_markup=mc1[userstatus])
 
 
-@dp.message_handler(lambda message: message.text in lt.backb, state=Status.A1)
+@dp.message_handler(lambda message: message.text in lt.backb or message.text in lt.menub, state=Status.A1)
+async def backtomenu(message: types.Message):
+    uid = message.from_user.id
+    userstatus = db.set_status(uid)[0]
+
+    FavB = KeyboardButton(lt.favb[lang(uid)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(uid)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(uid)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(uid)], callback_data="hel")
+    MyB = KeyboardButton(lt.myb[lang(uid)], callback_data="my")
+    AddB = KeyboardButton(lt.addb[lang(uid)], callback_data="add")
+    AplB = KeyboardButton(lt.aplb[lang(uid)], callback_data="apl")
+
+    menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
+    menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
+        .row(SettB, HelpB)
+
+    mc = (menu0, menu1)
+
+    await message.answer("⬅", reply_markup=mc[userstatus])
+
+
+@dp.message_handler(lambda message: message.text in lt.menub, state=Status.search)
 async def backtomenu(message: types.Message):
     uid = message.from_user.id
     userstatus = db.set_status(uid)[0]
@@ -380,47 +438,50 @@ async def backtomenu(message: types.Message):
 
 @dp.message_handler(lambda message: message.text in lt.myb, state=Status.A1)
 async def all_ads(message: types.Message):
-    if True:
-        u_id = message.from_user.id
-        ad_id = db.nn(u_id)  # all ids of ads
-        await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
-        for n in range(len(ad_id)):
-            num = ad_id[n]  # only 1 certain id of certain ad
+    if db.set_status(message.from_user.id)[0] == 1:
+        if True:
+            u_id = message.from_user.id
+            ad_id = db.nn(u_id)  # all ids of ads
+            await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
+            for n in range(len(ad_id)):
+                num = ad_id[n]  # only 1 certain id of certain ad
 
-            title = db.set_ad_title2(u_id, num[0])[0]
+                title = db.set_ad_title2(u_id, num[0])[0]
 
-            min_age = db.set_ad_minage2(u_id, num[0])[0]
-            if min_age == 0:
-                min_age = ""
+                min_age = db.set_ad_minage2(u_id, num[0])[0]
+                if min_age == 0:
+                    min_age = ""
 
-            max_age = db.set_ad_maxage2(u_id, num[0])[0]
-            if max_age == 999999:
-                max_age = ""
+                max_age = db.set_ad_maxage2(u_id, num[0])[0]
+                if max_age == 999999:
+                    max_age = ""
 
-            about = db.set_ad_about2(u_id, num[0])[0]
+                about = db.set_ad_about2(u_id, num[0])[0]
 
-            city = db.set_ad_city2(u_id, num[0])[0]
+                city = db.set_ad_city2(u_id, num[0])[0]
 
-            contact = db.set_ad_contact2(u_id, num[0])[0]
+                contact = db.set_ad_contact2(u_id, num[0])[0]
 
-            ader = db.set_name(u_id)[0]
+                ader = db.set_name(u_id)[0]
 
-            nkb = n
+                nkb = n
 
-            time.sleep(0.1)
-            await bot.send_message(u_id,
-                                   str(n+1) + ".\n" +
-                                   "(" + str(city) + ")" + str(title) + "\n" +
-                                   lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
-                                   "-----------------------------------\n" +
-                                   " " + str(about) + "\n" +
-                                   "-----------------------------------\n" +
-                                   "✉ " + str(contact) + " - " + str(ader),
+                time.sleep(0.1)
+                await bot.send_message(u_id,
+                                       str(n+1) + ".\n" +
+                                       "(" + str(city) + ")" + str(title) + "\n" +
+                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                       "-----------------------------------\n" +
+                                       " " + str(about) + "\n" +
+                                       "-----------------------------------\n" +
+                                       "✉ " + str(contact) + " - " + str(ader),
 
-                                   reply_markup=kb.adupd[nkb]
-                                   )
-        else:
-            await bot.send_message(u_id, lt.aderror1[lang(u_id)])
+                                       reply_markup=kb.adupd[nkb]
+                                       )
+            else:
+                await bot.send_message(u_id, lt.aderror1[lang(u_id)])
+    else:
+        await message.answer("?")
 
 
 # -------------------------------------------------------------------------------------------------
@@ -1465,12 +1526,105 @@ async def updater(call):
 
     try:
         if call.message:
-            if call.data == "del":
+            if call.data == "d1":
+                n1 = ad_id[0]
+                n = n1[0]
                 if int(db.all_ads(u_id)[0]) < 0:
                     await bot.send_message(u_id, "?")
                 else:
                     db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
 
+            elif call.data == "d2":
+                n1 = ad_id[1]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+
+            elif call.data == "d3":
+                n1 = ad_id[2]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+
+            elif call.data == "d4":
+                n1 = ad_id[3]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+
+            elif call.data == "d5":
+                n1 = ad_id[4]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+
+            elif call.data == "d6":
+                n1 = ad_id[5]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+
+            elif call.data == "d7":
+                n1 = ad_id[6]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+
+            elif call.data == "d8":
+                n1 = ad_id[7]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+
+            elif call.data == "d9":
+                n1 = ad_id[8]
+                n = n1[0]
+                if int(db.all_ads(u_id)[0]) < 0:
+                    await bot.send_message(u_id, "?")
+                else:
+                    db.minus_ad(u_id)
+                    db.del_ad(n)
+                    await bot.send_message(u_id, "———————————————————————————————")
+                    await bot.send_message(u_id, lt.ad_deleting[lang(u_id)])
+            # -----------------------------------------------
             elif call.data == "u1":
                 n1 = ad_id[0]
                 n = n1[0]
@@ -1858,6 +2012,8 @@ async def contact_changer(message: types.Message):
 
     await message.answer(lt.dcity[lang(u_id)])
     await Status.A1.set()
+#  -------------------------------------------------------------------------------------------
+
 #  -------------------------------------------------------------------------------------------
 
 

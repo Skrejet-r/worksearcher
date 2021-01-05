@@ -516,3 +516,13 @@ aderror1 = ("You have no ads",
              "У тебя нет объявлений",
              "Sie haben keine Anzeigen",
              "ليس لديك إعلانات")
+
+nocitieserror = ("",
+                 "",
+                 "",
+                 "")
+
+searching = ("Searching for matching ads ...",
+             "Поиск подходящих объявлений...",
+             "Suche nach passenden Anzeigen ...",
+             "البحث عن الإعلانات المطابقة ...")
