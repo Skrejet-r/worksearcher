@@ -517,12 +517,27 @@ aderror1 = ("You have no ads",
              "Sie haben keine Anzeigen",
              "ليس لديك إعلانات")
 
-nocitieserror = ("",
-                 "",
-                 "",
-                 "")
+nocitieserror = ("error",
+                 "error",
+                 "error",
+                 "error")
+
+nomorejobserror = ("error",
+                   "error",
+                   "error",
+                   "error")
 
 searching = ("Searching for matching ads ...",
              "Поиск подходящих объявлений...",
              "Suche nach passenden Anzeigen ...",
              "البحث عن الإعلانات المطابقة ...")
+
+favadded = ("favadded",
+            "favadded",
+            "favadded",
+            "favadded")
+
+send = ("send",
+        "send",
+        "send",
+        "send")

@@ -3,7 +3,6 @@ import logging
 import langtranslator as lt
 import keyboards as kb
 import time
-import random
 
 from aiogram.dispatcher import FSMContext
 from aiogram.types import ReplyKeyboardMarkup, \
@@ -23,6 +22,8 @@ bot = Bot(token=config.API_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 db = dbfuncs("db_ws.db")
+
+ol = 0
 
 
 @dp.message_handler(commands=["start"])
@@ -204,7 +205,7 @@ async def all_ads(message: types.Message):
 
                 time.sleep(0.1)
                 await bot.send_message(u_id,
-                                       str(n+1) + ".\n" +
+                                       str(n + 1) + ".\n" +
                                        "(" + str(city) + ")" + str(title) + "\n" +
                                        lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
                                        "-----------------------------------\n" +
@@ -222,28 +223,42 @@ async def all_ads(message: types.Message):
 
 @dp.message_handler(commands=["search"], state=Status.A1)
 async def job_searching(message: types.Message):
+    global ol
     u_id = message.from_user.id
-    if db.set_status(u_id)[0] == 0:
-        await Status.search.set()
+    age = db.set_age(u_id)[0]
+    city = db.set_city(u_id)[0]
+    ids = db.getting_all_suitable_ads(city, age)
+    num_ids = len(ids)
+    if ol < num_ids:
+        if db.set_status(u_id)[0] == 0:
+            await Status.search.set()
 
-        MenuB = KeyboardButton(lt.menub[lang(u_id)], callback_data="inmenu")
-        NextB = KeyboardButton(lt.nextb[lang(u_id)], callback_data="next")
+            MenuB = KeyboardButton(lt.menub[lang(u_id)], callback_data="inmenu")
+            NextB = KeyboardButton(lt.nextb[lang(u_id)], callback_data="next")
 
-        searchkb = ReplyKeyboardMarkup(resize_keyboard=True).row(MenuB, NextB)
+            searchkb = ReplyKeyboardMarkup(resize_keyboard=True).row(MenuB, NextB)
 
-        await message.answer(lt.searching[lang(u_id)], reply_markup=searchkb)
+            await message.answer(lt.searching[lang(u_id)], reply_markup=searchkb)
 
-        age = db.set_age(u_id)[0]
-        city = db.set_city(u_id)[0]
-        ids = db.getting_all_suitable_ads(city, age)
-        num_ids = len(ids)
-        if num_ids == 0:
-            await message.answer(lt.nocitieserror[lang(u_id)])
-            await Status.A1.set()
-        a = db.ad((ids[0])[0])
-        print(a)
-        await message.answer("!")
+            if num_ids == 0:
+                await message.answer(lt.nocitieserror[lang(u_id)])
+                await Status.A1.set()
+            r_id = (ids[ol])[0]
+            inf = db.ad(r_id)
+            time.sleep(1)
 
+            await message.answer("(" + str(inf[2]) + ") " + str(inf[0]) + "\n" +
+                                 "-----------------------------------\n" +
+                                 " " + str(inf[4]) + "\n" +
+                                 "-----------------------------------\n" +
+                                 "✉ " + str(inf[3]) + " - " + str(inf[1]),
+
+                                 reply_markup=kb.adkb
+                                 )
+            await Status.search2.set()
+
+        else:
+            await message.answer("?")
     else:
         await message.answer("?")
 
@@ -280,6 +295,48 @@ async def age_setter(message: types.Message):
     if db.set_status(message.from_user.id)[0] == 0:
         await message.answer(lt.aging1[lang(message.from_user.id)])
         await Status.age2.set()
+    else:
+        await message.answer("?")
+
+
+@dp.message_handler(lambda message: message.text in lt.searchb, state=Status.A1)
+async def job_searching(message: types.Message):
+    global ol
+    u_id = message.from_user.id
+    age = db.set_age(u_id)[0]
+    city = db.set_city(u_id)[0]
+    ids = db.getting_all_suitable_ads(city, age)
+    num_ids = len(ids)
+    if ol < num_ids:
+        if db.set_status(u_id)[0] == 0:
+            await Status.search.set()
+
+            MenuB = KeyboardButton(lt.menub[lang(u_id)], callback_data="inmenu")
+            NextB = KeyboardButton(lt.nextb[lang(u_id)], callback_data="next")
+
+            searchkb = ReplyKeyboardMarkup(resize_keyboard=True).row(MenuB, NextB)
+
+            await message.answer(lt.searching[lang(u_id)], reply_markup=searchkb)
+
+            if num_ids == 0:
+                await message.answer(lt.nocitieserror[lang(u_id)])
+                await Status.A1.set()
+            r_id = (ids[ol])[0]
+            inf = db.ad(r_id)
+            time.sleep(1)
+
+            await message.answer("(" + str(inf[2]) + ") " + str(inf[0]) + "\n" +
+                                 "-----------------------------------\n" +
+                                 " " + str(inf[4]) + "\n" +
+                                 "-----------------------------------\n" +
+                                 "✉ " + str(inf[3]) + " - " + str(inf[1]),
+
+                                 reply_markup=kb.adkb
+                                 )
+            await Status.search2.set()
+
+        else:
+            await message.answer("?")
     else:
         await message.answer("?")
 
@@ -468,7 +525,7 @@ async def all_ads(message: types.Message):
 
                 time.sleep(0.1)
                 await bot.send_message(u_id,
-                                       str(n+1) + ".\n" +
+                                       str(n + 1) + ".\n" +
                                        "(" + str(city) + ")" + str(title) + "\n" +
                                        lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
                                        "-----------------------------------\n" +
@@ -2012,11 +2069,84 @@ async def contact_changer(message: types.Message):
 
     await message.answer(lt.dcity[lang(u_id)])
     await Status.A1.set()
+
+
 #  -------------------------------------------------------------------------------------------
+@dp.message_handler(lambda message: message.text in lt.nextb, state=Status.search2)
+async def searching(message: types.Message):
+    u_id = message.from_user.id
+    age = db.set_age(u_id)[0]
+    city = db.set_city(u_id)[0]
+    ids = db.getting_all_suitable_ads(city, age)
+    num_ids = len(ids)
+    global ol
+    ol += 1
+    print(ol)
+    if ol < num_ids:
+        r_id = (ids[ol])[0]
+        inf = db.ad(r_id)
+        await message.answer("(" + str(inf[2]) + ") " + str(inf[0]) + "\n" +
+                             "-----------------------------------\n" +
+                             " " + str(inf[4]) + "\n" +
+                             "-----------------------------------\n" +
+                             "✉ " + str(inf[3]) + " - " + str(inf[1]),
+
+                             reply_markup=kb.adkb
+                             )
+    else:
+        await message.answer(lt.nomorejobserror[lang(u_id)])
+        await Status.A1.set()
+
+
+@dp.message_handler(lambda message: message.text in lt.menub, state=Status.search2)
+async def back(message: types.Message):
+    uid = message.from_user.id
+    userstatus = db.set_status(uid)[0]
+
+    FavB = KeyboardButton(lt.favb[lang(uid)], callback_data="fav")
+    SearchB = KeyboardButton(lt.searchb[lang(uid)], callback_data="sea")
+    SettB = KeyboardButton(lt.settb[lang(uid)], callback_data="set")
+    HelpB = KeyboardButton(lt.helpb[lang(uid)], callback_data="hel")
+    MyB = KeyboardButton(lt.myb[lang(uid)], callback_data="my")
+    AddB = KeyboardButton(lt.addb[lang(uid)], callback_data="add")
+    AplB = KeyboardButton(lt.aplb[lang(uid)], callback_data="apl")
+
+    menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
+        .row(SettB, HelpB)
+    menu1 = ReplyKeyboardMarkup(resize_keyboard=True).row(MyB, AplB, AddB) \
+        .row(SettB, HelpB)
+
+    mc = (menu0, menu1)
+
+    await message.answer("⬅", reply_markup=mc[userstatus])
+
+    await Status.A1.set()
+
+
+@dp.callback_query_handler(state=Status.search2)
+async def favorite_adder(call):
+    u_id = call.from_user.id
+    global ol
+    age = db.set_age(u_id)[0]
+    city = db.set_city(u_id)[0]
+    ids = db.getting_all_suitable_ads(city, age)
+    try:
+        if call.message:
+            if call.data == "fav":
+                ad_id = (ids[0])[0]
+                db.add_favorite(u_id, ad_id)
+                await bot.send_message(u_id, lt.favadded[lang(u_id)])
+
+            elif call.data == "send":
+                ad_id = (ids[0])[0]
+                db.sending(u_id, ad_id)
+                await bot.send_message(u_id, lt.send[lang(u_id)])
+
+    except Exception as e:
+        print(repr(e))
+
 
 #  -------------------------------------------------------------------------------------------
-
-
 @dp.message_handler(lambda message: message.text == "Hello" or
                                     message.text == "Hallo" or
                                     message.text == "Привет" or
