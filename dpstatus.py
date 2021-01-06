@@ -49,3 +49,4 @@ class Status(StatesGroup):
 
     # user 0
     search = State()
+    search2 = State()
