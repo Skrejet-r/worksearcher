@@ -29,7 +29,7 @@ ol = 0
 @dp.message_handler(commands=["start"])
 async def welcome(message: types.Message):
     if not (db.user_exists(message.from_user.id)):
-        await message.answer("Welcome")
+        await message.answer("Welcome, " + message.from_user.first_name)
         # if user isnt in the db - add him
         db.add_user(message.from_user.id)
         await Status.A3.set()
@@ -261,6 +261,12 @@ async def job_searching(message: types.Message):
             await message.answer("?")
     else:
         await message.answer("?")
+
+
+@dp.message_handler(commands=["test"], state=Status.A1)
+async def test(message: types.Message):
+    await message.answer("@" + message.from_user.username)
+    await message.answer(message.from_user.language_code)
 
 
 # +----------------------------------------------------
