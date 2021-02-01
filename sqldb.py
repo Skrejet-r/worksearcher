@@ -181,8 +181,10 @@ class dbfuncs:
 
     def ad_saving(self, user_id):
         with self.connection:
-            return self.cursor.execute('UPDATE "ads" SET "ad_status"=0 WHERE ("user_id", "ad_status")=(?,1)',
-                                       (user_id,))
+            a = self.cursor.execute('SELECT "source" FROM "users" WHERE "user_id"=?',
+                                    (user_id,)).fetchone()
+            return self.cursor.execute('UPDATE "ads" SET ("ad_status", "ader_source")=(0,?) WHERE '
+                                       '("user_id", "ad_status")=(?,1)', (a, user_id,))
 
     def xbutton1(self, user_id):
         with self.connection:
@@ -214,6 +216,7 @@ class dbfuncs:
             a = self.cursor.execute('SELECT "n_ads" FROM "users" WHERE "user_id"=?',
                                     (user_id,)).fetchone()
             b = a[0] + 1
+
             return self.cursor.execute('UPDATE "users" SET "n_ads" = ? WHERE "user_id"=?',
                                        (int(b), user_id,))
 
@@ -279,6 +282,16 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('INSERT INTO "favorites" ("user_id","ad_id", "send") VALUES (?,?,?)',
                                        (user_id, ad_id, 1,))
+
+    def upd_source(self, user_id, source):
+        with self.connection:
+            return self.cursor.execute('UPDATE "users" SET "source"=? WHERE "user_id"=?',
+                                       (source, user_id,))
+
+    def set_source(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "source" FROM "users" WHERE "user_id"=?',
+                                       (user_id,)).fetchone()[0]
 
     def close(self):
         self.connection.close()

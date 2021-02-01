@@ -32,6 +32,8 @@ async def welcome(message: types.Message):
         await message.answer("Welcome, " + message.from_user.first_name)
         # if user isnt in the db - add him
         db.add_user(message.from_user.id)
+        source = "@" + str(message.from_user.username)
+        db.upd_source(message.from_user.id, source)
         await Status.A3.set()
         time.sleep(1)
         await bot.send_message(message.from_user.id, "I see you are new here!\nSet language for yourself:",
@@ -39,6 +41,8 @@ async def welcome(message: types.Message):
     else:
         await message.answer(lt.welcome[lang(message.from_user.id)])
         await Status.A1.set()
+        source = "@" + str(message.from_user.username)
+        db.upd_source(message.from_user.id, source)
 
 
 @dp.message_handler(commands=["start"], state=Status.A1)
@@ -61,6 +65,8 @@ async def welcome(message: types.Message):
     await message.answer(lt.welcome[lang(message.from_user.id)],
                          reply_markup=mc[db.set_status(message.from_user.id)[0]])
     await Status.A1.set()
+    source = "@" + str(message.from_user.username)
+    db.upd_source(message.from_user.id, source)
 
 
 @dp.message_handler(commands=["help"], state=Status.A1)
@@ -505,44 +511,46 @@ async def all_ads(message: types.Message):
         if True:
             u_id = message.from_user.id
             ad_id = db.nn(u_id)  # all ids of ads
-            await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
-            for n in range(len(ad_id)):
-                num = ad_id[n]  # only 1 certain id of certain ad
-
-                title = db.set_ad_title2(u_id, num[0])[0]
-
-                min_age = db.set_ad_minage2(u_id, num[0])[0]
-                if min_age == 0:
-                    min_age = ""
-
-                max_age = db.set_ad_maxage2(u_id, num[0])[0]
-                if max_age == 999999:
-                    max_age = ""
-
-                about = db.set_ad_about2(u_id, num[0])[0]
-
-                city = db.set_ad_city2(u_id, num[0])[0]
-
-                contact = db.set_ad_contact2(u_id, num[0])[0]
-
-                ader = db.set_name(u_id)[0]
-
-                nkb = n
-
-                time.sleep(0.1)
-                await bot.send_message(u_id,
-                                       str(n + 1) + ".\n" +
-                                       "(" + str(city) + ")" + str(title) + "\n" +
-                                       lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
-                                       "-----------------------------------\n" +
-                                       " " + str(about) + "\n" +
-                                       "-----------------------------------\n" +
-                                       "✉ " + str(contact) + " - " + str(ader),
-
-                                       reply_markup=kb.adupd[nkb]
-                                       )
-            else:
+            if int(len(ad_id)) == 0:
                 await bot.send_message(u_id, lt.aderror1[lang(u_id)])
+            else:
+                await message.answer(lt.n_ads[lang(u_id)] + str(len(ad_id)))
+                for n in range(len(ad_id)):
+                    num = ad_id[n]  # only 1 certain id of certain ad
+
+                    title = db.set_ad_title2(u_id, num[0])[0]
+
+                    min_age = db.set_ad_minage2(u_id, num[0])[0]
+                    if min_age == 0:
+                        min_age = ""
+
+                    max_age = db.set_ad_maxage2(u_id, num[0])[0]
+                    if max_age == 999999:
+                        max_age = ""
+
+                    about = db.set_ad_about2(u_id, num[0])[0]
+
+                    city = db.set_ad_city2(u_id, num[0])[0]
+
+                    contact = db.set_ad_contact2(u_id, num[0])[0]
+
+                    ader = db.set_name(u_id)[0]
+
+                    nkb = n
+
+                    time.sleep(0.1)
+                    await bot.send_message(u_id,
+                                           str(n + 1) + ".\n" +
+                                           "(" + str(city) + ")" + str(title) + "\n" +
+                                           lt.chageb[lang(u_id)] + ": " + str(min_age) + "-" + str(max_age) + "\n" +
+                                           "-----------------------------------\n" +
+                                           " " + str(about) + "\n" +
+                                           "-----------------------------------\n" +
+                                           "✉ " + str(contact) + " - " + str(ader),
+
+                                           reply_markup=kb.adupd[nkb]
+                                           )
+
     else:
         await message.answer("?")
 

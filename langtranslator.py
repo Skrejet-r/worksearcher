@@ -473,19 +473,19 @@ xad_contact = ("Send me your new additional contacts: (for example: email, numbe
                "أرسل لي جهات اتصالك الإضافية الجديدة: (على سبيل المثال: البريد الإلكتروني ، الرقم)")
 
 n_ads = ("Number of your ads: ",
-         "Количество ваших объявленийКоличество ваших объявлений: ",
+         "Количество ваших объявлений: ",
          "Anzahl Ihrer Anzeigen: ",
          "عدد إعلاناتك: ")
 
-pososi1 = ("",  # if a>3
-           "",
-           "",
-           "")
+pososi1 = ("error",  # if a>3
+           "error",
+           "error",
+           "error")
 
-pososi2 = ("",  # if a<3
-           "",
-           "",
-           "")
+pososi2 = ("error",  # if a<3
+           "error",
+           "error",
+           "error")
 
 dtitle = ("Title changed✅",
           "Заголовок был изменен✅",
