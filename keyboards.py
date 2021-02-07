@@ -59,9 +59,8 @@ adupd9 = InlineKeyboardMarkup().row(Delete9B, Update9B)
 adupd = (adupd1, adupd2, adupd3, adupd4, adupd5, adupd6, adupd7, adupd8, adupd9)
 # --------------------------------------------------------------------------------
 FavB = InlineKeyboardButton("⭐", callback_data="fav")
-SendB = InlineKeyboardButton("✉", callback_data="send")
 
-adkb = InlineKeyboardMarkup().row(FavB, SendB)
+adkb = InlineKeyboardMarkup().row(FavB)
 # --------------------------------------------------------------------------------
 '''# Keyboard for status-choosing
 SearcherBut = InlineKeyboardButton(lt.status1[lang()])

@@ -4,29 +4,45 @@ welcome = ("Welcome back",
            "Willkommen zurück",
            "مرحبا بعودتك")
 
-helping0 = ("Hello! It's a bot which can help you find a job in any city.\n"
-            "You can use these commands:\n"
-            "/start - start the bot\n"
-            "/help - you use it now\n"
-            "/",
+helping0 = ("Hello! This is a bot that will help you find a job in any city.\n"
+            "Support: @N88005\n"
+            "For advertising: @Nanahoi\n"
+            "Donat: -",
 
-            "smth in russian",  # russian
+            "Здравствуйте! Это бот, который поможет вам найти работу в любом городе.\n"
+            "Служба поддержки: @N88005\n"
+            "По вопросам рекламы: @Nanahoi\n"
+            "Донат: -",  # russian
 
-            "smth in german",  # deutsch
+            "Hallo! Dies ist ein Bot, der Ihnen hilft, einen Job zu finden.\n"
+            "Support: @N88005\n"
+            "Für Werbung: @Nanahoi\n"
+            "Spende: -",  # deutsch
 
-            "smth in arabic")  # piggisch
+            "مرحبا! هذا روبوت سيساعدك في العثور على وظيفة.\n"
+            "الدعم: @N88005\n"
+            "للإعلان: @Nanahoi\n"
+            "تبرع: -")  # piggisch
 
-helping1 = ("Hello! It's a bot which can help you find a job in any city.\n"
-            "You can use these commands:\n"
-            "/start - start the bot\n"
-            "/help - you use it now\n"
-            "/",
+helping1 = ("Hello! With this bot, you can post ads for the search for employees in any city.\n"
+            "Support: @N88005\n"
+            "For advertising: @Nanahoi\n"
+            "Donat: -",
 
-            "smth in russian",  # russian
+            "Здравствуйте! С помощью этого бота вы можете размещать объявления для поиска работников в любом городе.\n"
+            "Служба поддержки: @N88005\n"
+            "По вопросам рекламы: @Nanahoi\n"
+            "Донат: -",  # russian
 
-            "smth in german",  # deutsch
+            "Hallo! Mit diesem Bot können Sie Anzeigen für die Suche nach Mitarbeitern in jeder Stadt schalten.\n"
+            "Support: @N88005\n"
+            "Für Werbung: @Nanahoi\n"
+            "Spende: -",  # deutsch
 
-            "smth in arabic")  # piggisch
+            "مرحبا! باستخدام هذا الروبوت ، يمكنك نشر إعلانات للبحث عن موظفين في أي مدينة.\n"
+            "الدعم: @N88005\n"
+            "للإعلان: @Nanahoi\n"
+            "تبرع: -")  # piggisch
 
 naming = ("Now your name is ",
           "Теперь твое имя ",
@@ -473,19 +489,20 @@ xad_contact = ("Send me your new additional contacts: (for example: email, numbe
                "أرسل لي جهات اتصالك الإضافية الجديدة: (على سبيل المثال: البريد الإلكتروني ، الرقم)")
 
 n_ads = ("Number of your ads: ",
-         "Количество ваших объявленийКоличество ваших объявлений: ",
+         "Количество ваших объявлений: ",
          "Anzahl Ihrer Anzeigen: ",
          "عدد إعلاناتك: ")
 
-pososi1 = ("",  # if a>3
-           "",
-           "",
-           "")
+pososi1 = ("You cannot add more than 3 ads (We took these measures to combat bots and spam)",  # if a>3
+           "Вы не можете добавлять больше, чем 3 объявления (Эти меры мы приняли для борьбы с ботами и спамом)",
+           "Sie können nicht mehr als 3 Anzeigen hinzufügen (Wir haben diese Maßnahmen ergriffen, "
+           "um Bots und Spam zu bekämpfen)",
+           "لا يمكنك إضافة أكثر من 3 إعلانات (لقد اتخذنا هذه الإجراءات لمكافحة الروبوتات والبريد العشوائي)")
 
-pososi2 = ("",  # if a<3
-           "",
-           "",
-           "")
+pososi2 = ("Unknown error, contact support",  # if a<3
+           "Неизвестная ошибка, обратитесь в службу поддержки",
+           "Unbekannter Fehler, wenden Sie sich an den Support",
+           "خطأ غير معروف ، اتصل بالدعم")
 
 dtitle = ("Title changed✅",
           "Заголовок был изменен✅",
@@ -517,27 +534,29 @@ aderror1 = ("You have no ads",
              "Sie haben keine Anzeigen",
              "ليس لديك إعلانات")
 
-nocitieserror = ("error",
-                 "error",
-                 "error",
-                 "error")
+nocitieserror = ("Unknown error, contact support",
+                 "Неизвестная ошибка, обратитесь в службу поддержки",
+                 "Unbekannter Fehler, wenden Sie sich an den Support",
+                 "خطأ غير معروف ، اتصل بالدعم")
 
-nomorejobserror = ("error",
-                   "error",
-                   "error",
-                   "error")
+nomorejobserror = ("No more offers available😟",
+                   "Нету больше доступных предложений😟",
+                   "Keine Angebote mehr verfügbar😟",
+                   "لا مزيد من العروض المتاحة😟")
+
+noageerror = ("❗You have to set the age in the settings❗",
+              "❗Вы должны установить возраст в настройках❗",
+              "❗Sie müssen das Alter in den Einstellungen einstellen❗",
+              "❗️عليك أن تحدد العمر في الإعدادات❗️")
 
 searching = ("Searching for matching ads ...",
              "Поиск подходящих объявлений...",
              "Suche nach passenden Anzeigen ...",
              "البحث عن الإعلانات المطابقة ...")
 
-favadded = ("favadded",
-            "favadded",
-            "favadded",
-            "favadded")
+favadded = ("Added to favorites⭐",
+            "Добавлено в избранное⭐",
+            "Zu den Favoriten hinzugefügt⭐",
+            "تمت الإضافة إلى المفضلة⭐️")
 
-send = ("send",
-        "send",
-        "send",
-        "send")
+
