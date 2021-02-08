@@ -50,3 +50,7 @@ class Status(StatesGroup):
     # user 0
     search = State()
     search2 = State()
+
+    # admin
+    ad = State()
+    ad2 = State()

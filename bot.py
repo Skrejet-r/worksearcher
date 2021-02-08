@@ -53,7 +53,6 @@ async def welcome(message: types.Message):
     HelpB = KeyboardButton(lt.helpb[lang(message.from_user.id)], callback_data="hel")
     MyB = KeyboardButton(lt.myb[lang(message.from_user.id)], callback_data="my")
     AddB = KeyboardButton(lt.addb[lang(message.from_user.id)], callback_data="add")
-    AplB = KeyboardButton(lt.aplb[lang(message.from_user.id)], callback_data="apl")
 
     menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
         .row(SettB, HelpB)
@@ -302,6 +301,58 @@ async def my_favs(message: types.Message):
         await message.answer("?")
 
 
+@dp.message_handler(commands=["ad"], state=Status.A1)
+async def ader(message: types.Message):
+    u_id = message.from_user.id
+    if u_id == 709987318 or u_id == 663017563:
+        await message.answer("+")
+        await message.answer("kopf")
+        await Status.ad.set()
+
+
+@dp.message_handler(state=Status.ad)
+async def ader2(message: types.Message):
+    ad_content = message.text
+    db.add_myadkopf(ad_content)
+    await Status.ad2.set()
+    await message.answer("text")
+
+
+@dp.message_handler(state=Status.ad2)
+async def stfu(message: types.Message):
+    content = message.text
+    db.add_myadtext(content)
+    await message.answer("nice")
+    await Status.A1.set()
+
+
+@dp.message_handler(commands=["startad"], state=Status.A1)
+async def stfu(message: types.Message):
+    u_id = message.from_user.id
+    if u_id == 709987318 or u_id == 663017563:
+        db.sav_ad()
+        await message.answer("nice")
+
+
+@dp.message_handler(commands=["stats"], state=Status.A1)
+async def stfu(message: types.Message):
+    u_id = message.from_user.id
+    if u_id == 709987318 or u_id == 663017563:
+        await message.answer("users: " + str(len(db.set_uid())))
+        await message.answer("saw ad: " + str(len(db.sawadusers())))
+        await message.answer("search: " + str(len(db.us0rs())) + "\n" + "offer: " + str(len(db.us1rs())))
+
+
+@dp.message_handler(lambda message: message.text, state=Status.A1)
+async def stfu(message: types.Message):
+    if db.useradstatus(message.from_user.id)[0] == 1:
+        ad = db.set_myad()
+        await bot.send_message(message.from_user.id,
+                               str(ad[0]) + "\n" +
+                               str(ad[1]))
+        db.upd_useradstatus(message.from_user.id, 0)
+
+
 # +----------------------------------------------------
 @dp.message_handler(lambda message: message.text in lt.helpb, state=Status.A1)
 async def helper(message: types.Message):
@@ -529,7 +580,6 @@ async def backtomenu(message: types.Message):
     HelpB = KeyboardButton(lt.helpb[lang(uid)], callback_data="hel")
     MyB = KeyboardButton(lt.myb[lang(uid)], callback_data="my")
     AddB = KeyboardButton(lt.addb[lang(uid)], callback_data="add")
-    AplB = KeyboardButton(lt.aplb[lang(uid)], callback_data="apl")
 
     menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
         .row(SettB, HelpB)
@@ -552,7 +602,6 @@ async def backtomenu(message: types.Message):
     HelpB = KeyboardButton(lt.helpb[lang(uid)], callback_data="hel")
     MyB = KeyboardButton(lt.myb[lang(uid)], callback_data="my")
     AddB = KeyboardButton(lt.addb[lang(uid)], callback_data="add")
-    AplB = KeyboardButton(lt.aplb[lang(uid)], callback_data="apl")
 
     menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
         .row(SettB, HelpB)
@@ -631,7 +680,6 @@ async def lan_set(call):
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
                 MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
                 AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
-                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
                 menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
                     .row(SettB, HelpB)
@@ -652,7 +700,6 @@ async def lan_set(call):
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
                 MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
                 AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
-                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
                 menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
                     .row(SettB, HelpB)
@@ -673,7 +720,6 @@ async def lan_set(call):
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
                 MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
                 AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
-                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
                 menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
                     .row(SettB, HelpB)
@@ -694,7 +740,6 @@ async def lan_set(call):
                 HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
                 MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
                 AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
-                AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
                 menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
                     .row(SettB, HelpB)
@@ -774,7 +819,6 @@ async def status_set(call):
     HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
     MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
     AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
-    AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
     menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
         .row(SettB, HelpB)
@@ -892,7 +936,6 @@ async def regabout(message: types.Message):
     HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
     MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
     AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
-    AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
     menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
         .row(SettB, HelpB)
@@ -933,7 +976,6 @@ async def regcity(message: types.Message):
     HelpB = KeyboardButton(lt.helpb[lang(u_id)], callback_data="hel")
     MyB = KeyboardButton(lt.myb[lang(u_id)], callback_data="my")
     AddB = KeyboardButton(lt.addb[lang(u_id)], callback_data="add")
-    AplB = KeyboardButton(lt.aplb[lang(u_id)], callback_data="apl")
 
     menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
         .row(SettB, HelpB)
@@ -2187,7 +2229,6 @@ async def back(message: types.Message):
     HelpB = KeyboardButton(lt.helpb[lang(uid)], callback_data="hel")
     MyB = KeyboardButton(lt.myb[lang(uid)], callback_data="my")
     AddB = KeyboardButton(lt.addb[lang(uid)], callback_data="add")
-    AplB = KeyboardButton(lt.aplb[lang(uid)], callback_data="apl")
 
     menu0 = ReplyKeyboardMarkup(resize_keyboard=True).row(FavB, SearchB) \
         .row(SettB, HelpB)

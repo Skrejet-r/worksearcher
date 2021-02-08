@@ -91,7 +91,7 @@ sucker = ("I'm just a bot",
 
 s0 = ("You are looking for a job",
       "Ты ищешь работу",
-      "Arbeitgeber",
+      "Du suchst einen Job",
       "كنت تبحث عن وظيفة")
 
 s1 = ("You are an Employer ",
