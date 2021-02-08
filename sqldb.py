@@ -26,6 +26,15 @@ class dbfuncs:
             return self.cursor.execute('SELECT "language" FROM "users" WHERE "user_id"=?',
                                        (user_id,))
 
+    def set_uid(self):  # proof language
+        with self.connection:
+            return self.cursor.execute('SELECT "user_id" FROM "users"').fetchall()
+
+    def set_uid2(self, usid):
+        with self.connection:
+            return self.cursor.execute('SELECT "user_id" FROM "users" WHERE "id"=?',
+                                       (usid,)).fetchone()
+
     def upd_name(self, user_id, name):  # set name for user
         with self.connection:
             return self.cursor.execute('UPDATE "users" SET "name"=? WHERE "user_id"=?',
@@ -304,6 +313,52 @@ class dbfuncs:
         with self.connection:
             return self.cursor.execute('SELECT "id_ad" FROM "favorites" WHERE "user_id"=?',
                                        (user_id,)).fetchall()
+
+    def add_myadtext(self, text):
+        with self.connection:
+            return self.cursor.execute('UPDATE "sent" SET "text"=? WHERE "id"=1',
+                                       (text,))
+
+    def add_myadkopf(self, text):
+        with self.connection:
+            return self.cursor.execute('UPDATE "sent" SET "kopf"=? WHERE "id"=1',
+                                       (text,))
+
+    def set_myad(self):
+        with self.connection:
+            kopf = (self.cursor.execute('SELECT "kopf" FROM "sent" WHERE "id"=1').fetchone())[0]
+            text = (self.cursor.execute('SELECT "text" FROM "sent" WHERE "id"=1').fetchone())[0]
+            pic = (self.cursor.execute('SELECT "n" FROM "sent" WHERE "id"=1').fetchone())[0]
+            status = (self.cursor.execute('SELECT "status" FROM "sent" WHERE "id"=1').fetchone())[0]
+
+            ad_infos = (kopf, text, pic, status)
+            return ad_infos
+
+    def useradstatus(self, user_id):
+        with self.connection:
+            return self.cursor.execute('SELECT "adstatus" FROM "users" WHERE "user_id"=?',
+                                       (user_id,)).fetchone()
+
+    def upd_useradstatus(self, user_id, adid):
+        with self.connection:
+            return self.cursor.execute('UPDATE "users" SET "adstatus"=? WHERE "user_id"=?',
+                                       (adid, user_id,))
+
+    def sav_ad(self):
+        with self.connection:
+            return self.cursor.execute('UPDATE "users" SET "adstatus"=1')
+
+    def sawadusers(self):
+        with self.connection:
+            return self.cursor.execute('SELECT "user_id" FROM "users" WHERE "adstatus"=0').fetchall()
+
+    def us0rs(self):
+        with self.connection:
+            return self.cursor.execute('SELECT "user_id" FROM "users" WHERE "status"=0').fetchall()
+
+    def us1rs(self):
+        with self.connection:
+            return self.cursor.execute('SELECT "user_id" FROM "users" WHERE "status"=1').fetchall()
 
     def close(self):
         self.connection.close()
